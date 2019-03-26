@@ -1,0 +1,986 @@
+/*
+FIRST PART OF CONSPECT
+
+
+	Статичні члени класу - члени класу, спільні для всіх його елементів
+	this - параметер який неявно створюється в усіх нестатичних методах і місттить адресу об'єкта який цей метод викликав
+
+	class A{
+		static int 4;
+		static A *obj;
+		int b;
+		static int getA(){ return a; }
+		a(){a++;} // move constructor to private
+		A(const A & p){ /* ... */ }
+	public:
+	int getB(){ return b; }
+	int setB(int b){ this->b = b; } // int b has higher priorited than b in class
+		<tilda>A(){ --a; }
+		static  A * instance(){
+			if(obj == nullptr)
+				obj=new A();
+			return obj;
+		}
+	};
+	void F(a A){
+		cout << a.getB() << endl;
+	}
+	int A::a=0;
+	A p,p1;
+	p.a==p1.a;
+	A * A::obj = nullptr;
+	cout << A::instance()->getA();
+	cout << A::getA() << endl;
+	cout << A::instance()->getB();
+	cout << A::getB() << endl;
+	//можна викликати A::getA(); не створюючи елементи
+
+	-------------
+
+	explicit - помічає конструктор, як такий, що забороняє неявні перетворення (забороняє передати int коли потрібно передати class)
+	константні методи - методи, що не змінюють своїх членів. Можуть бути виклаканими лише іншими константними методами (гарантуємо, що нічого не будемо змінювати в методі - не міняє змінні) - void show() const { /**/ }; . Якщо добавити varible = smth;, то видасть помилку
+	f(const A p) { // можна викликати лише константні методи
+		p.show();
+	}
+	f(A p) { // можна викликати константні і звичайні методи
+		p.show();
+	}
+
+	Деллигування конструкторв - процес, коли ми можемо виликати один конструктор в списку ініціалізації іншого
+	A(int ia): a(new int(ia)){
+		cout << ia;
+	}
+	A(): A(0) // A(new int(0)){
+		cout << ia;
+	}
+
+	---------------
+
+	Перегрузка операторів - A operator+(int p){ return A(a+p); }
+	c=a+b;
+	Унарни	 оператор - оператор, якому ніщо не передають - operator-(){ return A(-a); }
+	c=-a;
+	<тип> оператор<знак>(параметри)
+
+	Повт розадресацію
+
+	--------------
+	[] - оператор індексуання
+	type operator[](...)
+	() - оператор душки
+	type operator()(...)
+	operator <type>() - оператор приведення типу
+
+	Пошта вчителя - monkeypm@gmail.com
+
+	---------------
+	Лише для динамічної пам'яті:
+		оператор new - перегружається для виконання певних дій до створення об'єкта та видалееня пам'яті під об'єкт
+		оператор delete - перегружається для вивільнення пам'яті та виконанні певних дій при видаленні об'єкта
+		
+	---------------
+	explicit void gagaga(someClass A){} // never use custom operators for parrameter
+	gagaga(A["123"]) // will summon error
+
+	A(A && p){
+		a = p.a;
+		p.a = nullptr;
+	}
+	A someObj[otherObj] // will delete otherObj and asign it's varibles to someObj
+
+	A():A(0){} // this is best way to realize deafult constructor = делагування конструкторів
+
+	A rr;
+	A rrr = std::move(rr); // will use move constructor if def, else copy constructor
+
+	A() = default;
+	A(const A&);
+	// every class have some def constructors. this class will use predefined constructor over my copy constructor
+
+	A() = delete; // will forbit to use deafult constructor
+
+	--------------
+
+	Шаблон - генератора перегружених функції
+
+	template <class T,...>
+	type name(parameters)
+
+	class B{
+	public:
+		int b,c;
+		B (const int &i): b(i){}
+		bool operator<(const B&) const{
+			return (b < p.b);
+		}
+	}
+	template <class T,...>
+	T min(const T &a,const T &b){
+		T ss(15);
+		return (a<b)?a:b;
+	}
+	void main(){
+		B a={12},b={15};
+		cout << min(12,15) << endl;
+		cout << min(12.23,15.56) << endl;
+		cout << min(a,b).b << endl;
+	}
+
+	--------------
+
+	class A {
+	public:
+		static int x;
+		void Static fun(int val){
+			x=val;
+		}
+	}
+	int A::x=10;
+	main(){
+		A::x=25;
+		A a,b,,d;
+		c.x=100;
+		A::Fun(10);
+		cout << a.x;
+	}
+
+	A operator++(int k){\\postfix
+		x--;
+	}
+	A operator++(){\\prefix
+		x++;
+	}
+
+	template < template T> // if T will be def var
+	template < class    T> // if T will bet class obj
+
+	template < class T1>
+	template < class T2>
+	class Dictionary(){
+		T1 x;
+		T2 y;
+	public:
+		Dictionary(T1 a, T2 b){
+			x=a;
+			y=b;
+		}
+	};
+	void main(){
+		Dictionary <int,float>
+		obj(115,2.5);
+		Dictionary <char*,char*>
+		obj("Text1","Text2");
+	}
+
+	--------------
+
+	//FILES
+		| - побітове або
+		int x=5;
+		int y=10;
+		cout << x||y; // cout << true;
+		//00000101
+		//00001010
+		//--------
+		//00001111 = 15
+		cout << x|y; // cout << 15;
+
+
+
+
+		fstream - r and w
+		ifstream - r
+		ofstream - w
+
+		fstream f("D:\\file.txt");
+		enum K{L1,L2,M2,M4,S5};
+		enum K2{L1=10,L2,M2,M4=100,S5};
+		K2 A; // can be anything from list above only
+		a = L1;
+		A = M4;
+		fstream f2(f) // two descriptors are pointing same file + same parameters
+
+		fstream f("file.txt", ios::in); // read
+		//in - read
+		//out - write
+		//ate - poiner to end of file
+		//trunc - erase content
+		//_Nocreate - give error if file not exist
+		//_Noreplace - give error if file exist
+		//Bin - read file in bin mode
+
+		// 0 - reg file
+		// 1 - read only
+		// 2 - hiden
+		// 4 - system
+		// 8 - archived
+
+		fstream f(); // empty pointer
+		f.open("bike.negr",ios::in) // link file to pointer
+		f.close(); // closw file & clean buf with varibles
+		//now can use void open again
+		f.read(toWhereRead,length);
+		f.write(str,strlen(str));
+		f.write(str,strlen(str));
+		f.get(str,100/*,'+'*/);//read first 100 chars from file, but stop before /0 or /n // Third parameter is optional, will case stop not on /0 or /n but on '+'
+		int n = f.gcount(); // return number of chars readed during last read
+		f.peak() // return one following char, without moving poiner
+		f.seekg(25/*ios:beg // ois::end // ios::cur*/) // set poiner to 25th character // additional from end, from start or from cur. If using cur, can be negative value;
+		f.tellg() // retunt position of poiner (int)
+
+	--------------
+
+	class a(){
+		virtual void p(){ ... }
+	};
+	class b(): public a{ // folow function == includde a into b and all varibles. same names will be overwrited
+		void p(){} // a.p will be replaced with b.p if a.p has virtual
+	};
+
+
+	void main(){
+		a aa;
+		b *bb;
+		bb=&ba; // will get access to a.print(), eve thow, it was overriten with b.print
+	}
+
+	--------------
+
+	virtual void - gives ability to base class use methods from ancestors
+
+		class A(){
+			void show(){}//if add "virtual" objA.show will summon B.show(), else A.show()
+		};
+		class B: public A {
+			void shop(){}
+		};
+		void main(){
+			A objA;
+			objA.show();
+		}
+
+		#include <iostream>
+		using namespace std;
+		class Figure {
+		public:
+			Figure(){ }
+			virtual double square(){
+				return 0;
+			}
+		};
+		class Circle: public Figure {
+			double r;
+		public:
+			Circle(double ir): Figure(), r(ir) {}
+			double square() {
+				return 3.14159 * r;
+			}
+		};
+		class Rectangle: public Figure {
+			double a,b;
+		public:
+			Rectangle(double ia, double ib): Figure(), a(ia), b(ib) {};
+			double square() {
+				return a * b;
+			}
+		};
+		class Bar: public Rectangle {
+		public:
+			Bar(double ia): Rectangle(ia,ia) {};
+			double square() {
+				return Rectangle::bar;
+			}
+		};
+		void main(){
+			Figure *lst[10];
+			for(int i=0;i<10;i++)
+				lst[i] = ((rand()%2==1)? (Figure *)new Circle(rand()%10): new Rectangle(rand()%10,rand%10));
+			for(int i=0;i<10;i++)
+				cout << lst[i]->square() << endl;
+		}
+
+		#include <iostream>
+		using namespace std;
+		class Figure;
+		Figure field[8][8] = {};
+		class Figure {
+		protected:
+			int col,row;
+		public:
+			Figure(int icol, int irow): col(icol), row(irow) {
+				field[irow][icol]=this;
+			}
+			virtual char sign() = 0;
+			virtual bool check(int icol, int irow){
+					return (irow<=0 || irow>7 || icol<=0 || icol>7);	}
+			virtual bool goTo(int new_col, int new_row) = 0;
+		};
+		class Pawn(): public Figure{
+			int len;
+		public:
+			Pawn(int icol, int irow): Figure(iocl,irow), len(2){}
+			char sign(){
+				return 'P';
+			}
+			bool check(int icol, int row){
+				if(!Figure::check(icol,irow))
+					return false;
+				return (col==icol) && ((row+len==irow) || (row+1 == irow)) && (field[icol][irow]==NULL);
+			}
+			bool goTo(int new_col, int new_row){
+				if(check(new_col,new_row)){
+					field[row][col]=NULL;
+					col=new_col;
+					row=new_row;
+					field[row][col]=this;
+					len = 1;
+				}
+			}
+		};
+		class Bishop(): public Figure{
+			int len;
+		public:
+			Bishop(int icol, int irow): Figure(iocl,irow), len(2){}
+			char sign(){
+				return 'B';
+			}
+			bool check(int icol, int row){
+				if(!Figure::check(icol,irow))
+					return false;
+				return abs(icol-col)==abs(irow-row);
+			}
+			bool goTo(int new_col, int new_row){
+				if(check(new_col,new_row)){
+					field[row][col]=NULL;
+					col=new_col;
+					row=new_row;
+					field[row][col]=this;
+					len = 1;
+				}
+			}
+		};
+		void showField(){
+			for(int i=0;i<8;i++)
+				for(int ii=0;ii<8;ii++)
+					cout << (field[i][j])?field[i][j]:' ';
+		}
+		void main(){
+			Figure *fig = new Pawn(1,1);
+			showField();
+			fig->goTo(2,1);
+			showField();
+			fig->goTo(1,2);
+		}
+
+	--------------
+
+	//following
+		class a(){
+			virtual void p(){ ... }
+		};
+		class b(): public a{
+			//B(): A(){} // this can be used to launch a.costructor if it had one
+			void p() final {}  // forbit ancestors of b use custom version o p - "removes virtual". because every method which has virtual in parent will have it on child 
+		};
+
+		class a(){
+			virtual void p(int b){ ... }
+		};
+		class b(): public a{
+			void p(double b) override {}  // if b.p has different parameters than it's paren, will show eror
+		};
+
+		class a(){
+			virtual <tilda>a(int b){ ... }
+		};
+		class b(): public a{
+			<tilda>b(int b){ ... } // overwriting delete constuctor
+		};
+
+		//множинне наслідування - one class is child of multiple
+		//D(): B(),C(){} // launch constructors from other classes
+		//D(): B::A(),B::B(){} // same if methods have same name
+
+		//Interface - class which is used ONLY as templlate for virtualization
+
+		#include <iostream>
+		using namespace std;
+		void main(){
+			try{
+				cout<<"Try";
+				if(1=1)
+					throw 100;
+			}
+			catch(int g){//g=100
+				cout<<"catch " << g;
+			}
+		}
+
+		#include <iostream>
+		using namespace std;
+		void main(){
+			int a;
+			float b;
+			try{
+				cin << a << b;
+				if(a=0)
+					throw 1;
+				if(b==2)
+					throw 3.141592;
+				else
+					throw "bababa";
+			}
+			catch(int val){} // if throw == int
+			catch(float val){} // if throw == float
+			catch(...){} // if not one of prev (^int && ^float) // but it isnot getting any vars
+		}
+
+		#include <iostream>
+		using namespace std;
+		void Test(int t){
+			if(t==1)
+				throw 1;
+			else if(t==2)
+				throw 2;
+		}
+		void main(){
+			try{
+				Test(4);
+				Test(2);
+			}
+			catch(char*s)
+				cout<<s;
+		}
+
+	----------
+
+	Transformation of types
+	STL - шаблонні класи . шаблонні бібліотеки - стандартна бібліотека стилів - deafult styles library
+
+		int x;
+		float y;
+		y=(float)x;
+
+		void test_pow(const int* v){//get const pointer - can't be repointed
+			int*temp;//create new pointer
+			// *v=25 // summonning the error
+			temp=const_cast<int*>(v);//temp will be pointing to unconstant v2 // <int*> - because int*temp;//only way to create pointer to const
+			*temp= *v * *v;
+			//cout << *v; // will count new varible value
+		}
+
+		  -------------------
+			\|/                |
+		------------------------------
+		| x |     |  v  |  temp  |   |
+		------------------------------
+			/|\         |
+		  ------------
+
+		register int x; //will create this varible not in RAM, but in Processor! // only int can be register
+
+		АЛП - арифметично-логічні оператори // не запам'ятовувати
+		процесор вміє працювати з АЛП,(-*+/ та побітовими)
+
+		const int a = 5;
+		int *b;
+		b = const_cast<int *>(&a);
+		*b = 4;
+		cout << &a << " " << b << endl;//0x7d5f0bb93cac 0x7d5f0bb93cac
+		cout << a << " " << *b << endl;//5              4
+
+		//creating const s and giiving b permition to edit it
+		*b=4;
+		const char s='a';
+		char *b;
+		b=const_cast<char*>(s);
+
+		void f(int* p) {
+			cout << *p << endl;
+		}
+		void main() {//constant pointer to constant
+			const int a = 10;
+			const int* b = &a;
+			int* c = const_cast<int*>(b);
+			f(c);//10
+		}
+
+		dynamic_cast - perform transformation and check if same types // return 0 || 1
+
+		b - parent
+		a - class based on b
+		b > fun1
+		a > fun2, fun3
+		*pb ----
+		b      |
+		 ^     |
+		!=     |
+		 |     |
+		*pa    |
+		a  <----
+
+		Вказівник може вказувати на нащадки але не від нашадка на батьківський, бо батьківський може не мати тих методів 
+
+		ptr_d= dynamic_cast<D*> (&obj_b); // no posible conversation from class B to class D exist so it will return 0, else !0
+
+		static_cast - // woll convert if posible, else ignore. if ignored, than object is not existing than can lead to crash
+
+		class Base {};
+		class Derived : public Base {};
+		void main(){
+			Base *bp;
+			Derived *dp = new Derived();
+			bp = dp;//вказівник вказує на нащадок
+			dp = static_cast<Derived*>(bp);//повертаємо нащадок
+		}
+
+		reinterpret_cast - try to convert diferent classes return 0 on fail
+
+		int x;
+		char*str="This is string!!!";
+		x=reinterpret_cast<int>(str);
+		cout<<x<<"\n\n"; // will cout 4286208 (tryed to convert via ASCII table)
+
+		Fun1(){...}
+		Fun2(int x, Fun1 a){...}//forbiten
+		//solutin - use poiter to the function
+
+		int f() { return 42; }
+		int main(){
+			void(*fp1)() = reinterpret_cast<void(*)()>(f);
+			int(*fp2)() = reinterpret_cast<int(*)()>(fp1);
+			cout << fp2() << '\n'; 
+		}
+
+		void fun1(){...}
+		void fun2(){...}
+		void fun(int a, &p1() b);//parameters - int function
+
+		void(*fp1)();
+		int (*fp2)() = f;//fp2 - varible which is pointer to function f;
+		fp2();//summoning funtion f;
+		<int(*)()>
+		// fp2 > fp1
+
+		ООП - поліформізм, наслідування і інкапсуляція
+
+		struct A {};
+		struct I1 : A {};
+		struct I2 : A {};
+		struct D : I1, I2 {}; // d is haing 2 A
+		int main(){//D::I1::A.x
+			D* d = nullptr;
+			A* a = reinterpret_cast<A*>(d); 
+		}//a=null
+
+	/*
+	SSSSS TTTTT L
+	    S   T   L
+	SSSSS   T   L
+	S       T   L
+	SSSSS   T   LLLLL
+
+		#include <memory>
+
+		Контейнер - блок для зберігання даних (масив)
+		Алгоритм - функція дляроботи з даними в контейнері
+		Ітератор - вказівник, використований алгоритмами для переміщення по контейнеру
+		Функтор - механізм для інкапсуляції фї для використання іншими об'єктами
+		Аллокатор - роздільовач пам'яті. Конструкція, яка керує процесом виділення пам'яті для контейнера
+		Предікат - функція нестандартного типуб яка використовується в контейнері
+
+		class auto_ptr - autopatic pointer - controls object, recived via "new" and delete it when needed
+		*/
+
+		auto_ptr <int> p // 4 bytes
+		*p.get()=12;
+		//this class will delete itself automaticly. no need to delete
+		//object will be deleted if pointer to object is deleted
+
+		void main () {
+			auto_ptr<int> auto_pointer (new int);
+			int * manual_pointer;
+			*auto_pointer=10;
+			manual_pointer = auto_pointer.release();
+			cout << *manual_pointer;
+			delete manual_pointer; 
+		}//release - method for connectiong memory to pointer
+
+		void main () {
+			auto_ptr<int> p;
+			p.reset (new int);//4 bytes
+			*p=5;//p = 5
+			cout << *p;//5
+			p.reset (new int);//p delete and new p = 4 bytes
+			*p=10;/p = 10
+			cout << *p;//10
+		}//delete p
+
+		void main () {
+		 auto_ptr<int> p1 (new int (10));
+			auto_ptr<int> p2 (new int);
+			*p2 = *p1 * 2;
+			cout << *p1 << *p2;
+		}//p1 and p2 will be deleted here
+
+		void main () {
+		 auto_ptr<int> p1 (new int);
+		 *p1.get()=10;
+		 auto_ptr<int> p2 (p1);//p2 and p1 points to same cell 
+		 cout << *p2;//10
+		}//if p2 will be deleted first, then delete p1
+		//else delete p1 and then p2 because it is left
+
+		int main () {
+			auto_ptr<int> p[5];//create array
+			for(int i=0;i<5;i++){
+				p[i].reset(new int);//make it int
+				*p[i].get()=i+1;//set data
+			 cout << *p[i];//cout
+			}
+		}//delete
+
+		#include <iostream>
+		#include <memory>
+		using namespace std;
+		class TEMP{
+		public:
+			TEMP(){
+				cout<<"TEMP\n\n";
+			}
+			~TEMP(){
+				cout<<"~TEMP\n\n";
+			}
+			void TEST(){
+				cout<<"TEST\n\n";
+			}
+		};
+		void main(){
+			auto_ptr<TEMP>ptr1(new TEMP), ptr2;//ptr1 is pointer to obj of type TEMP//smart pointers with memory
+			ptr2=ptr1;
+			ptr2->TEST();
+			TEMP*ptr=ptr2.get();//just pointer, without memory
+			ptr->TEST();
+		}
+
+		void main () {
+			shared_ptr<int> x_ptr(new int(1));
+			shared_ptr<int> y_ptr(new int(2));
+			y_ptr = x_ptr;//delete y_ptr//y_ptr=x_ptr
+			cout << *x_ptr << *y_ptr;//1 2
+		}
+
+/*********************
+STRING
+*********************/
+	#include <string>
+	s.append("");//+=
+	s.assing(str);//=
+	iterator i=s.begin();//iterator i is poinint to begin of s
+	iteratot i=s.end();
+	s.clear();//''
+	s.compare()//strcmp
+	s.copy(where,lenghtOfCopy,startPosition);//copy s into where
+	char buf[20];
+	string str("TEST");
+	int lenght=str.copt(buf,2,2);//strlen("ST")//2
+	buf[lenght]='\0';//set end for str at second position
+	coit << buf;//cout TE
+
+	string str="123";
+	for(string::iterator it=str.begin();it!=str.end;it++)//cycle throw str
+		cout << *it;
+	string str("312");
+	string::reverse_iterator rit;
+	for(string::rit=str.rbegin();rit<str.rend();rit++)
+		cout << *rit;//reverce cycle throw str
+
+	s.erase(start,howMany)//delete n el
+	s.find(str,whereStart);
+	s.insert(start,str,beg,count);//insert str starting from beg+cound into s starting from start
+	int len=s.lenght();
+	s.push_back(symbol);//append with symbol
+	s.replace(index,n,str);//starting from index insert first n sumbols from str
+	str=s.substr(n,m);
+	s.swap(str);
+	s.size();//return number of elements in str
+	//operator[]//give access to nth symbol
+	s[20]='d';
+	//c_str();//return pointer to equal char array
+	char *str = s1.c_str();
+	//referene at(size_type pos)//return pointer to str starting from pos. If out of renge > generate std::out_of_range
+	//char& front() // return pointer to first character in str;
+	str.front(); 
+	str.back();
+
+-------------
+
+//VECTOR
+
+	#include <vector>
+
+	vector<int> v1(10);//vector of 10 int
+	vector<float> v2;//vector with unasigned ammount of float
+	vector<int> v3(10,0);//vector of 10 int with def value of 0
+	int ia[6]={1,2,3,4,5,6};
+	int ib[6]={1,2,3,4,5};
+	vector<int> a(ia,ia+6);//copy ia to vector
+	vector<int> b(ib,ia+6);//copy ib to vector
+	vector<int> ivec(&ia[2],&ia[5]);//comy from 2 to 5
+	//== < > <= >= != - vector operatots
+	vecotr::iterator<int> it;
+	it=b.begin();//set iteato it to begin of vector b;
+	a.assign(b.begin(),b.end());//append a with b
+	a.assign(5,0)//add 5 el with val of 0 to end
+ a.at(2)=10;//a[2]=10
+ int *p=a.back();//back returns link//ERROR HERE
+ int *p=a.end();//creation of link
+ a.capacity(); //how many where allocated
+	a.erace(p);//delete only one el
+	a.clear();//make vector empty//a size will be 0
+	//a.erase(a.begin(),a.end();//same as prev line
+	a.insert(a.begin()+2,10);//insert el with val of 10 on sec position
+	a.insert(a.begin()+2,b);//insert entire vector b into a starting from a
+	a.insert(a.begin(),2,10);//insert two el with val of 10 into start of a
+	a.insert(b.begin(),b.begin(),b.end());//insert half of a into b
+	a.max_size();//return max ammount of bites, system is allowing to use for this vector
+	class A{};
+	vector<A>aEl(10);
+	a.pop_back();//delete last
+	a.push_back(value);//append
+	a.rbegin(); //return reverse iterator that points to begin
+	a.rend();   //same
+	a.reverse(a.end());//reverse first n elements (in this case all)
+	a.resize(a.end()/2);//set new size
+	a.size();//how many el where writen
+	a.swap(b);//swap vectors
+	a.flip();//invers all bits
+	
+	vector<int> myvector;
+		int * p;
+		unsigned int i;// allocate an array with space for 5 elements using vector's allocator:
+		p = myvector.get_allocator().allocate(5);// construct values in-place on the array:
+		for (i=0; i<5; i++) 
+			myvector.get_allocator().construct(&p[i],i);
+		for (i=0; i<5; i++) 
+			cout << ' ' << p[i];
+		cout << '\n';
+		for (i=0; i<5; i++) 
+			myvector.get_allocator().destroy(&p[i]);// destroy and deallocate:
+		myvector.get_allocator().deallocate(p,5);
+
+//class list
+#include <list>
+typedef list<int> b;
+//list<int> b;//?
+//operators == < <= >= > !=
+b.assign(5,0);// +=5x0
+list<int>::iterator it;
+b.back();//return pointer || link
+b.begin();//return pointer || link
+b.clear();
+b.empty();//is empty() ?
+b.erace(iterator i)
+;//delete el
+b.erace(b.begin()+2);
+b.front();//return pointer, not iterator
+b.insert(iterator i, size_type num, const T&val);
+b.insert(b.begin(),2,3);//prepend b with 2x3
+b.insert(b.begin(),a.begin(),a.end());//prepend b with a
+b.max_size();//max size allowed by system
+b.merge(a);//merget two SORTED lists + a will be emtyed
+b.pop_back();//delete last
+b.pop_front();//delete first
+b.push_front(2);//prepend with 2
+b.push_back(2);//append with 2
+b.rbegin(); // return reverse iterator to end
+b.rend();   //
+b.reverse();
+b.remove(val);//remove all by value
+bool pr(int x){
+	return !x%2;
+}
+b.remove_if(UnPred pr);//унарний предікат // unary predicat // delete el for which pr == true
+b.resize(size,val);
+//b 1 2 3 4 5
+//b.resize(3);
+//b 1 2 3
+b.size();//count el
+//b 1 6 2 8 4
+b.sort();
+//b 1 2 4 6 8
+b.sort(Comp cmpfn);//задаємо фунтер //funter
+b.splice(iteratit i, list <T, Allocator > &ob>);
+b.splice(b.begin(),a); // cut a into b.begin()
+b.splice(b.begin,a,a.begin+2(),a.end()-2); // сге from a.begin()+2 to a.end() into b.begin()
+b.swap(a);
+b.unique(); //delete dublicates
+bool pr(int x, int y){ //binary predicat
+	return x < y;
+}
+b.unique(BinPred pr);
+
+---------------
+
+/* MAP */
+#include <map>
+map a;
+map b(a);
+map c(a.being(),a.end());
+map <int,char> e;
+map <int,char>::iterator it
+;
+b.begin()
+
+b.clear()
+b.count(key)//find // return count of finds
+bool b.empty()
+b.end()
+b.equal_range()
+b.rbegin()
+b.rend()
+b.erace(key)
+b.erace(b.begin()+2,b.end()-2);
+b.find(key);//return iterator
+b.equal_range(key);
+b.();
+pair<it1,it2> d = b.equal_range(key);//if map have several same keys, it1 wi ll point to first and it2 to last
+d.begin();// || end  - to accest returned iterators
+b.insert(it,a);//insert distint pair a after it
+d=b.insert(it);
+d.begin();// to accest places where they were inserted
+d.end(); // bool if it was inserted
+d=b.insert(b.begin()+2,b.end()-2);
+b.lover_bound(key);//return iterator to this key if it existing, else loverest value bigger than key
+b.upper_bound(key);
+b.max_size();
+int i = 2;
+b[i] = 'k'; // b.i = k // if not existing add it into b with val of k
+b.size();//count
+b.swap(a);
+pair<map<int, int>::iterator, bool> err =	our_map.insert(make_pair(key, val));//make pair from key and val and place result into iterator
+auto it=b.begin(); // iterator creates itself automaticly with same dta type as b and point to begin of b
+b.insert(make_pair(1,2));//same
+b.insert(pair<int,int>(1,2));//as here // anonim objects
+
+/*  MULTIMAP  */
+	#include <map>
+	pair<multimap<char,char>::iterator,multimap<char,char>::iterator>,it;
+	it=obj.equal_range('a');//return first and last aqquarence of this key in multimap
+	it->first;
+	it->last;
+	multimap <int,char> b
+	b.begin()
+	b.clear()
+	b.count(key)
+	b.empty() //bool
+	b.end()
+	b.erace(it)
+	b.erace('k')
+	b.find('k')
+	pair<multimap<char,char>::iterator,bool> it;
+	it = b.insert(it,val);
+	//first, second
+	b.lover_bound(key);
+	b.max_size();
+	b[i];
+	b.rbegin();
+	b.rend();
+	b.size();
+	b.swap(a);
+	b.upper_bound(key);
+
+/* Фунтери - functional object */
+	class Print {
+	public:
+		void operator()(int v){
+			cout << v;
+		}
+	};
+	vector<int> b;
+	for_each(mas.begin(),mas.end(),Print());
+	class Compare {
+	public:
+		void operator()(int v1, int v2){
+			return v1<v2;
+		}
+	};
+	sort(mas.begin(),mas.end(),Compare());
+
+	#include <functional>
+	vector<myClass*> a;
+	for_each(a.begin(),a.end(),mem_fun(&myClass::print));//when you dont have funtor but want to use for_each or sort
+
+/* Algoritms */
+#include <algoritms>
+class Sum{
+	int sum;
+	Sum(){sum=0;}
+	void operator()(int n){sum+=n;}
+};
+vector<int< a{1,2,3}
+for(auto i: a)
+	cout << i;
+Sum s = for_each(a.begin(),a.end(),Sum())//can be used to count odd elements
+count(a.begin(),a.end(),pred());//count if
+mirror_ends("12352321");//5
+mirror_ends("1234");//1
+mirror_ends("12343421");//3
+mispatch();//same but returns linkz
+bool equal(a,b,predicat());
+bool equal(a.fir,a.sec,b);
+string s("12321");
+equal(s.begin(),s.begin()+s.size/2,s.rbegin());//true
+find(first,last,val);//return poointger to first
+find_if(first,last,pred());
+find_if_not(first,last,pred());
+adjacent_find(first,last);//find too same followed el on range
+seach(first,last,s_f,s_l);
+copy(first,last,d_forst)
+auto f=copy_if(first,last,d_forst,pred())//return last operator
+copy_n(first+2,4;d_begin);//limit=4
+fill(first,last,val);
+[](int i){}//лямда функція - function without a name
+x=[](int i){}
+x(5)//summoon function
+string s("hell");
+transform(s.begin(),s.end(),s.begin()/*where frite*/,(int(*)(int))toupper);//transform str to upper case //HELL
+int inc(int i){return i++;}
+int sum(int i, int g){return i+g;}
+transform(a.begin(),a.end(),b.begin(),c.begin(),sum);
+generate(first,last,generatorFunc);
+remove(first,last,val);
+remove_if(first,last,ifFunc);
+remove_copy(first,last,d_first,val);//copy from fir to last to d_first not equal to val
+remove_copy_if(first,last,d_first,predicate);
+replace(first,last,old,newVal);
+replace_if(first,last,predicat,newVal);
+replace_copy(first,last,old,newVal);
+replace_copy_if(first,last,predicate,newVal);
+vector<int>::iterator it=vec.begin();
+iter_swap(a,b);//swap value where iterator is pointing
+reverse(first,last);
+reverse_copy(first,last,d_first);//reverse copy to d_first
+rotate(first,n_first,last);//rotate arr. n_first = nFirst. n_First-1=end
+random_shuffle(first,last);
+shuffle(first,last,func);
+stable_partition(first,last,uPredicate);//firstly uP=true then false
+lower_bound(begin,end,val);//sorted //iterator
+upper_bound(begin,end,val);//sorted
+binnary_seach(first,last,val);
+equal_range(first,last,val);//return all el equal to vaalue from first to last. Should be sorted
+merge(first1,last1,first2,last2,d_first)//merge f1 to l1 and f2 to l2 into d_first
+set_difference(first1,last1,first2,last2,d_first)//copy distinkt el from 1 to d_first
+max(a,b)
+max(a,b,compareFuntion)
+max_element(from,to)
+max_element(from,to,compareFunc)
+min(a,b)
+min(a,b,compare)
+min_element(from,to,comp)
+int sum = accumulate(first,last,0/*init*/ )
+int r1 = inner_product(first,last,first2,0);//?
+int a[]={1,2,3};
+qsort(a,3,sizeof(int),functionForSort);
+
+
