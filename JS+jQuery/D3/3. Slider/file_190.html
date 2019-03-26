@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+		body {
+			margin: 0;
+			background: #000;
+		}
+
+		#slider {
+			margin: 0 auto;
+			display: block;
+			max-width: 100%;
+			height: 100vh;
+		}
+
+		button {
+			position: absolute;
+			top: 0;
+			padding: 10px;
+		}
+
+		#left {
+			left: 0;
+		}
+
+		#right {
+			right: 0;
+		}
+
+	</style>
+</head>
+<body>
+
+	<button id="left">&lt;</button>
+	<button id="right">&gt;</button>
+	<img id="slider"></img>
+
+	<script>
+
+		baseUrl = "http://espanol.zzz.com.ua/images/slider/img_10";
+		extention = ".jpg";
+
+		slider = document.getElementById("slider");
+		left = document.getElementById("left");
+		right = document.getElementById("right");
+
+		i = 0;
+		max = 4;
+
+
+		function changePhoto() {
+			slider.src = baseUrl + (i + 1) + extention;
+		}
+
+		function nextSlide() {
+			i = (i + 1) % max;
+			changePhoto();
+		}
+
+		function prevSlide() {
+			i = (i - 1);
+			if( i < 0 )
+				i = 3;
+			changePhoto();
+		}
+
+		left.onclick = prevSlide;
+		right.onclick = nextSlide;
+
+		nextSlide();
+		setInterval(nextSlide, 2000);
+
+	</script>
+
+</body>
+</html>

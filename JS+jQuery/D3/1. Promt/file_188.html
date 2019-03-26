@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<script>
+
+		function ask() {
+			fullName = prompt('Full Name');
+			gender = prompt('Gender');
+			age = prompt('Age');
+			email = prompt('Email');
+		}
+
+		var tryes = 4;
+
+
+		do {
+			ask();
+			var str = "Tryes: " + tryes + "\nFull name: " + fullName + "\nGender: " + gender + "\nAge: " + age + "\nEmain: " + email;
+			tryes--;
+			if( tryes == 0 ){
+				alert("No more tryes");
+				break;
+			}
+		} while( !confirm(str) )
+
+
+	</script>
+
+</body>
+</html>
