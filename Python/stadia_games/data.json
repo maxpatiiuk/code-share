@@ -4,349 +4,349 @@
       "name": "Red Dead Redemption 2",
       "playtime": 350159,
       "price": 59.99,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Shadow of the Tomb Raider Definitive Edition",
       "playtime": 99132,
       "price": 24,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Rise of the Tomb Raider: 20 Year Celebration",
       "playtime": 86014,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "SteamWorld Quest: Hand of Gilgamech",
       "playtime": 69905,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Tom Clancy's Ghost Recon Breakpoint",
       "playtime": 44358,
       "price": 30,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "The Crew 2",
       "playtime": 35599,
       "price": 18,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Tomb Raider: Definitive Edition",
       "playtime": 32176,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Destiny 2",
       "playtime": 27573,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "GYLT",
       "playtime": 23889,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Just Dance 2020®",
       "playtime": 22727,
       "price": 29.99,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Lost Words: Beyond the Page",
       "playtime": 18543,
       "price": 10.04,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Crayta",
       "playtime": 16027,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Gunsport",
       "playtime": 15093,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Get Packed",
       "playtime": 13502,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
-      "name": "Just Shapes \\u0026 Beats",
+      "name": "Just Shapes \u0026 Beats",
       "playtime": 12750,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Trials Rising",
       "playtime": 10572,
       "price": 16,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Dead by Daylight",
       "playtime": 8452,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "GRID",
       "playtime": 7965,
       "price": 34,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "SUPERHOT",
       "playtime": 7198,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "Hello Neighbor",
       "playtime": 6971,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Thumper",
       "playtime": 5093,
       "price": 0,
-      "liked": "liked"
+      "status": "liked"
     },
     {
       "name": "SAMURAI SHODOWN (Standard Ver.)",
       "playtime": 5072,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "FINAL FANTASY XV",
       "playtime": 4793,
       "price": 20,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "RAGE 2",
       "playtime": 4617,
       "price": 26.4,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "The Division 2 - Standard Edition",
       "playtime": 4362,
       "price": 9.9,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "PLAYERUNKNOWN'S BATTLEGROUNDS",
       "playtime": 3585,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Spitlings",
       "playtime": 3019,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Borderlands®3",
       "playtime": 2708,
       "price": 38.99,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
-      "name": "Rock of Ages 3: Make \\u0026 Break",
+      "name": "Rock of Ages 3: Make \u0026 Break",
       "playtime": 2442,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "The Elder Scrolls Online: Tamriel Unlimited",
       "playtime": 2330,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Kona",
       "playtime": 2277,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Monopoly",
       "playtime": 2211,
       "price": 10,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Lara Croft and the Temple of Osiris",
       "playtime": 2204,
       "price": 10,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Assassin's Creed® Odyssey",
       "playtime": 1976,
       "price": 19.8,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Farming Simulator 19",
       "playtime": 1838,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Stacks On Stacks (On Stacks)",
       "playtime": 1603,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "SUPER BOMBERMAN R ONLINE",
       "playtime": 1488,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Embr Early Access",
       "playtime": 1089,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "Metro Exodus",
       "playtime": 1021,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "SteamWorld Dig 2",
       "playtime": 661,
       "price": 0,
-      "liked": "not_liked"
+      "status": "not_liked"
     },
     {
       "name": "SteamWorld Dig",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Serious Sam",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "SteamWorld Heist",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "The Turing Test",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Zombie Army 4",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Little Nightmares",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Power Rangers",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Panzer Dragon",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "West of Loathing",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Monster Boy",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Orcs Must Die 3",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Strange Brigate",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Metro 2033 Redux",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Hitman",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Human Fall Flat",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "SUPERHOT Mind Control Delete",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "CELESTE",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     },
     {
       "name": "Jotun",
       "playtime": 0,
       "price": 0,
-      "liked": "play_more"
+      "status": "play_more"
     }
   ],
   "initial_cost": 150,
