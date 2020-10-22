@@ -1,0 +1,6 @@
+# Shadow Game
+A unique game for Android that doesn't use your screen!
+
+A player opening the game would be greeted with a perfectly black screen. Though, things aren't as blank as they might appear. There is a hidden dot somewhere on the screen. No, you can't see it, BUT, you can try to guess where is it located. To do that press on the different parts of the screen repeatedly and you would feel vibration as a feedback. The duration of vibration corresponds how far you are from the point - the shorted the vibration, the closer you are to the hidden point. Once you found the point, you would feel a long and satisfying burst of vibration.
+
+The key idea behind this "unique" implementation of the game is that it allows you to play it, without having to look at the screen and without the screen even being lighted up (if you have an OLED display). In turn, you are able to play the game in dark environments, or play it without using much of your phone's battery or best of all - play it where playing is not allowed, as no one would notice you playing when the screen is off.
