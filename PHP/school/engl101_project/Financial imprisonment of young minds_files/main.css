@@ -1,0 +1,18 @@
+@import "api.css";
+
+a,a:hover {
+	text-decoration: none !important;
+}
+.full-width {
+	width: 100%;
+}
+.alert {
+	display: flex;
+	padding-right: 25px !important;
+}
+.alert:after {
+	content: '\2716';
+	position: absolute;
+	cursor: pointer;
+	right: 15px;
+}

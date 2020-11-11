@@ -1,0 +1,29 @@
+.container {
+	padding-top: 10vh;
+}
+a {
+	color: #000;
+}
+a:hover {
+	color: #444;
+}
+.border {
+	padding: 5px;
+	border-radius: 5px;
+}
+.imgContainer {
+	position: relative;
+	padding-top: 56.25%;
+}
+.imgContainer img {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+.post p {
+	text-align: justify;
+}
+.postPreview.product .border {
+	border-color: #00f6 !important;
+}
