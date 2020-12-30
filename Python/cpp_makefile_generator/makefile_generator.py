@@ -39,7 +39,8 @@ for file in files:
 # checking if objects are templates
 for object_name, object_data in objects.items():
 	with open(join(working_directory, '%s.h' % object_name)) as file:
-		if 'template <' in file.read():
+		file_content = file.read()
+		if file_content.find('template <') != -1 or file_content.find('template<') != -1:
 			object_data['is_template'] = True
 
 
