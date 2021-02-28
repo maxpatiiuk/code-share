@@ -1,3 +1,3 @@
 # code_share
-Repository for sharing useful parts of code and conspects<br>
-Previous address: https://mambo.in.ua/map/code/index.php
+A collection of random code pieces from different projects over the
+years

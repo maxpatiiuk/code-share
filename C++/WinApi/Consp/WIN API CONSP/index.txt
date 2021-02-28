@@ -1,1 +1,0 @@
-Consp: unicode,basics,mouse,timer,windows,modal,modaless,checkbox,edit control,list box

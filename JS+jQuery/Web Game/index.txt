@@ -1,3 +1,0 @@
-mambo.in.ua/map/files/d3_1.php
-mambo.in.ua/map/files/d3_19.php
-mambo.in.ua/map/files/d3_29.php
