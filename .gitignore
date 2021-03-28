@@ -8,3 +8,4 @@ Executable.dSYM
 *.out
 __pycache__
 venv
+package-lock.json

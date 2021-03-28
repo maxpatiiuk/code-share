@@ -15,6 +15,7 @@ A lot of the code present here was written durring my 4-year long
 programming bootcamp.
 
 Some of the languages and frameworks included here:
+ - Assembly (RISC-V)
  - Java (Android)
  - C (Arduino)
  - C++ (WinApi)
