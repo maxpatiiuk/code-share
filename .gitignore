@@ -9,3 +9,4 @@ Executable.dSYM
 __pycache__
 venv
 package-lock.json
+Misc/vim_macos_associator/Vim.app/
