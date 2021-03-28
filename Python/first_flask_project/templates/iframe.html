@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iFrame</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/iframe.css') }}">
+</head>
+<body>
+
+<button onclick="document.getElementById('main_iframe').src = document.getElementById('url').value">Go</button>
+
+<label>
+    <input type="url" value="http://localhost:5000/" id="url" placeholder="Link">
+</label>
+
+<iframe id="main_iframe" src="http://localhost:5000/"></iframe>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+{% import "config.html" as config %}
+{{ config.copyright }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ config.title }}</title>
+    <meta charset="utf-8">
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+            name="author"
+            content="{{ config.author }}">
+    <meta
+            name="theme-color"
+            content="{{ config.brand_color }}"/>
+    <meta
+            name="robots"
+            content="{{ config.robots }}">
+    <meta
+            name="apple-mobile-web-app-title"
+            content="{{ config.name }}">
+    <meta
+            name="application-name"
+            content="{{ config.name }}">
+    {% if config.browserconfig %}
+        <meta
+                name="msapplication-config"
+                content="https://espanol.zzz.com.ua/browserconfig.xml">
+    {% endif %}
+    <meta
+            name="msapplication-TileImage"
+            content="https://espanol.zzz.com.ua/public/images/icons/ms-icon-144x144.png">
+    <meta name="keywords" content="espanol, español, entrenamiento electrónico, entrenamiento moderno, electrónico, entrenamiento, escuela, escuela moderna, Maksym Patiiuk">
+    <meta name="description" content="Español - entrenamiento electrónico">
+    <link
+            rel="canonical"
+            href="https://espanol.zzz.com.ua/">
+    <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-57x57.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-60x60.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-72x72.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-76x76.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-114x114.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-120x120.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-144x144.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-152x152.png">
+    <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="https://espanol.zzz.com.ua/public/images/icons/apple-icon-180x180.png">
+    <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="https://espanol.zzz.com.ua/public/images/icons/android-icon-192x192.png">
+    <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="https://espanol.zzz.com.ua/public/images/icons/favicon-32x32.png">
+    <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="https://espanol.zzz.com.ua/public/images/icons/favicon-96x96.png">
+    <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="https://espanol.zzz.com.ua/public/images/icons/favicon-16x16.png">
+    <link
+            rel="stylesheet"
+            href="https://espanol.zzz.com.ua/public/css/main.min.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
+            crossorigin="anonymous">
+    <link
+            rel="manifest"
+            href="https://espanol.zzz.com.ua/manifest.json"><link rel="stylesheet" href="https://espanol.zzz.com.ua/public/css/index.min.css"><script src="https://espanol.zzz.com.ua/public/scripts/categories.min.js"></script>		<script src="https://espanol.zzz.com.ua/public/scripts/primary.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s="
+            crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-108610375-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-108610375-1');
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
+        {% endblock %}
+    </div>
+</body>
+</html>

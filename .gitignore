@@ -6,3 +6,5 @@ cmake-build-debug
 Executable
 Executable.dSYM
 *.out
+__pycache__
+venv
