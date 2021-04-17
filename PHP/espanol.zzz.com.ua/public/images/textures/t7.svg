@@ -1,0 +1,20 @@
+<svg xmlns = 'http://www.w3.org/2000/svg'
+     width = '75'
+     height = '100'>
+	<circle cx = '75'
+	        cy = '50'
+	        r = '28.3%'
+	        stroke-width = '12'
+	        stroke = '#fffc'
+	        fill = 'none' />
+	<circle cx = '0'
+	        r = '28.3%'
+	        stroke-width = '12'
+	        stroke = '#fffc'
+	        fill = 'none' />
+	<circle cy = '100'
+	        r = '28.3%'
+	        stroke-width = '12'
+	        stroke = '#fffc'
+	        fill = 'none' />
+</svg>
