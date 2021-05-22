@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<title>Unrandom Randomization</title>
+
+	<style>
+		:root {
+			--rows: 10;
+			/*--cells: 10;*/
+			--size: 500px;
+		}
+
+		body {
+			filter: invert(100%);
+			background: #000;
+		}
+
+		table {
+			border: 1px solid #000;
+		}
+
+		td.inverse {
+			background: #ccc;
+		}
+
+		/*tr {
+			width: calc(var(--size)/var(--cells));
+		}*/
+
+		td {
+			/*height: calc(var(--size)/var(--rows));*/
+			height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<button type="button" class="btn btn-outline-dark" id="clear">Clear</button>
+			</div>
+			<div class="col text-center">
+				<button type="button" class="btn btn-outline-dark" id="human">Human</button>
+				<button type="button" class="btn btn-outline-dark" id="compare">Compare</button>
+				<button type="button" class="btn btn-outline-dark" id="bot">Bot</button><!-- float-right-->
+			</div>
+			<div class="col">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col table_container" id="table_1"></div>
+			<div class="col table_container" id="table_2"></div>
+		</div>
+	</div>
+
+	<script>
+
+		//variables
+		let rows = 10;
+		let colls = 10;
+
+
+		//creating table
+		let table = '<table class="table mt-4">';
+
+		for( let i = 0 ; i < rows; i++ ){
+
+			table += '<tr>';
+
+			for( let ii = 0; ii < colls; ii++)
+				table += '<td></td>';
+
+			table += '</tr>';
+
+		}
+
+		table += '</table>';
+
+
+		//declaring variables
+		let table_1 = $('#table_1');
+		let table_2 = $('#table_2');
+		let tables = $.merge(table_1,table_2);
+		let root = document.documentElement;
+		let bot = $('#bot');
+		let human = $('#human');
+		let clear = $('#clear');
+		let compare = $('#compare');
+		let mode = 0;
+		let bot_generated = false;
+
+		//root.style.setProperty('--cols', colls + "px");
+		root.style.setProperty('--rows', rows + "px");
+
+
+		//showing tables
+		tables.html(table);
+
+
+		//onclick
+		$('#table_1 td').click(function(){
+			$(this).toggleClass('inverse');
+		});
+
+
+		//helpers
+		function min(a,b){
+			if( a<b )
+				return a;
+			return b;
+		}
+
+
+		//resizing tables
+		function recalculate(){
+
+			let table_width = table_1.width();
+			let table_height = table_2.height();
+
+			let min_value = min(table_width, table_height);
+
+			root.style.setProperty('--size', min_value + "px");
+		}
+
+
+		//mode changer
+		human.click(function() {
+			mode = -1;
+
+			table_1.show();
+			table_2.hide();
+		});
+
+		bot.click(function() {
+			mode = 1;
+
+			table_1.hide();
+			table_2.show();
+
+			regenerate_bot();
+		});
+
+		compare.click(function() {
+
+			if( mode === 0)
+				bot_generated = false;
+
+			mode = 0;
+
+			table_1.show();
+			table_2.show();
+
+			if( bot_generated === false )
+				regenerate_bot();
+		});
+		clear.click(function() {
+			bot_generated = false;
+
+			tables.find('td').removeClass('inverse');
+
+			if( mode === 0-1)
+				table_2.hide();
+			else if( mode === 1)
+				table_1.hide();
+		});
+
+
+		//regenerate bot
+		function regenerate_bot(){
+			bot_generated = true;
+
+			for( let i = 0 ; i < rows; i++ )
+				for( let ii = 0; ii < colls; ii++)
+					if( !(Math.random()+.5|0) )
+						table_2.find('tr:nth-child('+(i+1)+') td:nth-child('+(ii+1)+')').toggleClass('inverse');
+		}
+
+
+		//listeners
+		$( window ).resize(function(){
+			recalculate();
+		});
+		$( window ).on( "orientationchange", function() {
+			recalculate();
+		});
+
+	</script>
+</body>
+</html>
