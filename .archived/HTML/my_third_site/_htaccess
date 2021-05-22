@@ -1,3 +1,0 @@
-## SITE REFERRER BANNING
-RewriteCond %{HTTP_REFERER} sharebutton.to [NC,OR]
-RewriteRule .* - [F]
