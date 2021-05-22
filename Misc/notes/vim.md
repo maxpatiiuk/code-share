@@ -29,21 +29,21 @@ Ctrl+O/I - go to prev/next cursor position
 v:!ls / :r !ls - prints the output of `ls` in the current line
 R - replace mode (like insert, but replaces)
 yyp - duplicate line
-"+yy/p - copy/pase into system buffer
+"+yy/p - copy/paste into system buffer
 :set ic/noic - make search case insensitive/sensitive
 Ctrl+D - show suggestions when typing `:` commands or passing arguments
 >/< - indent/unindent
 
 # Search & Replace
-\*/# - find next/prev occurence of this word
-/word - search for word. n/N - show next/previous occurence
+\*/# - find next/prev occurrence of this word
+/word - search for word. n/N - show next/previous occurrence
 % - go to matching ([{
 :s/old/new/ -  replace first `old` with `new` in this line
 :s/old/new/g -     ... all   ...
 :10,20s/ild/new/g - ... between lines 10 and 20
 :%s/old/new/g - ... in entire file
-:%s/old/new/gc - ... with a prompt for each occurence
-:noh - clean search results highliting
+:%s/old/new/gc - ... with a prompt for each occurrence
+:noh - clean search results highlighting
 
 
 # Tabs
