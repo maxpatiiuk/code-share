@@ -1,4 +1,5 @@
 # code_share
+
 A collection of random code pieces from different projects over the
 years.
 
@@ -8,13 +9,18 @@ in 2012 to my research paper on a CMS system, to slides I used to
 present my now closed `Mambo Shop` during various competitions and
 other stuff.
 
-Most of the proejcts that are too small to deserve their own repository
+Most of the projects that are too small to deserve their own repository
 are also here.
 
-A lot of the code present here was written durring my 4-year long
+Only the most recent projects are stored on the `main` branch. For
+everything else, there is an [`archived` branch](
+https://github.com/maxxxxxdlp/code_share/tree/archived/).
+
+A lot of the code present here was written during my 4-year long
 programming bootcamp.
 
 Some of the languages and frameworks included here:
+
  - Assembly (RISC-V)
  - Java (Android)
  - C (Arduino)
@@ -46,6 +52,7 @@ If you want to clone this repository, keep in mind that, despite my
 best efforts, it weights about 1GB.
 
 ## Info
+
 Some files are in password-protected archives, but most are freely
 available.
 
@@ -61,6 +68,7 @@ were written before this repository was created, well, even before I
 knew about the existence of Git and GitHub).
 
 ## Abbreviations
+
 I used `D3` or `d3` in folder names and file names. This refers to
 homework assignments from my programming boot camp.
 
