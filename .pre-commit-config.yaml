@@ -43,11 +43,16 @@ repos:
       - id: check-case-conflict
       - id: check-docstring-first
       - id: check-json
+      - id: check-xml
+      - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
       - id: check-symlinks
       - id: detect-private-key
       - id: mixed-line-ending
       - id: requirements-txt-fixer
+      - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+      - id: forbid-new-submodules
 
   - repo: https://github.com/maxxxxxdlp/pre-commit
     rev: v1.0.5
@@ -112,7 +117,7 @@ repos:
     rev: v2.3.0
     hooks:
       - id: prettier
-        files: \.(js|jsx|ts|tsx|json|json5|yaml|css|scc|sass|html|less)?$
+        files: \.(js|jsx|ts|tsx|json|json5|yaml|css|scss|sass|html|less|md)?$
 
   - repo: https://github.com/awebdeveloper/pre-commit-stylelint
     rev: 0.0.2
@@ -169,6 +174,7 @@ repos:
     rev: v0.11.0
     hooks:
       - id: markdownlint
+        files: \.md$
         args:
           - --git-recurse
 
