@@ -55,12 +55,12 @@ repos:
       - id: forbid-new-submodules
 
   - repo: https://github.com/maxxxxxdlp/pre-commit
-    rev: v1.0.5
+    rev: v1.0.6
     hooks:
       - id: tsc
       - id: regex-blacklist
         args:
-          - /Users/maxxxxxdlp/site/git/dotfiles/git/regex-blacklist.txt
+          - ~/site/git/dotfiles/git/regex-blacklist.txt
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.0.0
@@ -104,7 +104,7 @@ repos:
         exclude: ^docs/
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.18.1
+    rev: v2.18.3
     hooks:
       - id: pyupgrade
 
@@ -130,7 +130,7 @@ repos:
           - stylelint-config-standard@^20.0.0
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v7.26.0
+    rev: v7.27.0
     hooks:
       - id: eslint
         files: \.(js|jsx|ts|tsx)?$
