@@ -139,6 +139,37 @@ And named tuples aren't much better. NamedTuples don't even work properly with
   Did they choose it because of brevity? Then why don't they choose `elf` -
   seems even briefer, but just as confusing.
 
+- Why do the following two code snippets look so similar but do different
+  things:
+
+  ```python
+  my_array = [
+    'item_1',
+    'item_2',
+    'item_3',
+  ]
+  ```
+
+  ```python
+  my_array = [
+    'item_1'
+    'item_2'
+    'item_3'
+  ]
+  ```
+
+- Same here:
+
+  ```python
+  if not some_variable:
+      and_some_other_variable = 'value'
+  ```
+
+  ```python
+  if not some_variable \
+     and some_other_variable == 'value':
+  ```
+
 # Performance
 
 Well, Python is slower than Node, so there isn't much to talk about here...
