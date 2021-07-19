@@ -105,7 +105,7 @@ repos:
         exclude: ^docs/
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.19.4
+    rev: v2.21.0
     hooks:
       - id: pyupgrade
 
@@ -136,13 +136,13 @@ repos:
           - stylelint-config-standard@^22.0.0
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v7.29.0
+    rev: v7.30.0
     hooks:
       - id: eslint
         types: [text]
         types_or: [javascript, jsx, ts, tsx]
         additional_dependencies:
-          - '@maxxxxxdlp/eslint-config@^1.0.3'
+          - '@maxxxxxdlp/eslint-config@^1.0.6'
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.2.1
@@ -155,7 +155,7 @@ repos:
       - id: gitlint
 
   - repo: https://github.com/IamTheFij/docker-pre-commit
-    rev: v2.0.0
+    rev: v2.0.1
     hooks:
       - id: docker-compose-check
 
