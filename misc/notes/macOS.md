@@ -21,7 +21,7 @@
 # Universal
 * Minimize - Cmd+M
 * Next/Prev find occurence - Cmd+G / Cmd+Shift+G
-* Go back/forward - Cmd+Right/Left arrow 
+* Go back/forward - Cmd+Right/Left arrow
 * Emoji menu - Cmd+Control+Space
 * Navigate between app's windows` - Cmd+`
 ## Learned
@@ -29,25 +29,22 @@
 
 
 # Chrome
-* Open file - Cmd+O
 * Open JS Console - Cmd+Option+J
 * Inspect Elements - Cmd+Option+C
 ## Learned
+* Open file - Cmd+O
 * View page source - Cmd+Option+U
 * Open DevTools - Cmd+Option+I
 
-# Terminal
-* Ctrl+R - reverse history search
 
 # Google Search
-* "exact phrase"
 * one OR two
 * -back -"Back forward"
 * 10..35, 2010..2011
 * site:google.com, site:.org
 * can filter by file type, similar URLS, date, search in URL/title only
-* in image searh can add `imagesize:500x400`
+* in image search can add `imagesize:500x400`
 * @twitter to search twitter
 * can search for $400 ammount or #hashtag
-* related siges: related:time.com, also cache:site.com
- 
+* related sites: related:time.com, also cache:site.com
+
