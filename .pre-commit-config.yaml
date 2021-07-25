@@ -68,7 +68,7 @@ repos:
           - --skip="./node_modules/,package-lock.json,./.idea/"
 
   - repo: https://github.com/psf/black
-    rev: 21.6b0
+    rev: 21.7b0
     hooks:
       - id: black
         args:
@@ -105,7 +105,7 @@ repos:
         exclude: ^docs/
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.21.0
+    rev: v2.21.2
     hooks:
       - id: pyupgrade
 
@@ -136,13 +136,13 @@ repos:
           - stylelint-config-standard@^22.0.0
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v7.30.0
+    rev: v7.31.0
     hooks:
       - id: eslint
         types: [text]
         types_or: [javascript, jsx, ts, tsx]
         additional_dependencies:
-          - '@maxxxxxdlp/eslint-config@^1.0.6'
+          - '@maxxxxxdlp/eslint-config@^1.0.7'
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.2.1
