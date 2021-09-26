@@ -7,6 +7,9 @@
 - :help user-manual
 
 # Sort this:
+ci)  (change inside parents)
+vim cheat sheat
+look into other's vimrc files
 
 # Main
 
@@ -37,18 +40,24 @@
 - n|  # go to nth char in line
 - g$  # go to last SCREEN column. Same for ^, 0, etc...
 - ^  # go to the first non blank character of a line
-- H/M/L  # cursor to the top/middle/bottom of the screen
+- H/M/L  # cursor to the nth line from top/middle/bottom of the screen
 - gM  # cursor to the middle of the line
 - 90gM  # move to 10% till the end of the line
 - 10%  # go to the 10% of the file
 - (/)  # move between sentences
 - {/}  # move between paragraphs
+- [/]  # move between code blocks
 - va"/'/`/`/{/[/>  # select text between symbols of type
-- vi"/"/...  # .. excluding the symbols
-- di/a... # ...
+- vi"/"/...  # .. excluding the symbols - di/a... # ...
+- Ctrl-u/d  # half page up / down
+- Ctrl-f/b  # page up / down
+- Ctrl-e/y  # scroll one line up / down
+- zz  # scroll viewport to have cursor at the middle
 
 # Search & Replace
 
+- ?query  # backwards search
+- *  # search for current word
 - tC  # like f, but cursor before next occurrence of C
 - TC  # like F, but cursor after previous occurrence of C
 - ;  # repeat last t, f, T, F
@@ -59,16 +68,19 @@
 - dgn  # delete next occurrence
 - %  # go to matching ([{
 - :%s/old/new/gc  #search&replace with a prompt
+- (in query) \< and \>  # regex's \b
+
 
 # Tabs
 
 - :tabfind file  # open file in new tab
-- gt/T  # go to the right/left tab
 - ngt  # go to the nth tab
 - :tabs  # list all tabs
 
 # Windows
 
+- vertical help  # open help in a vertical split
+- vsp file  # open file in a vertical split
 - Ctrl+w v/s  # open new vim window on the left/bottom
 - Ctrl+w c  # close window
 - Ctrl+w l/h/j/k  # switch to the window to the right/left/below/above
@@ -89,9 +101,16 @@
 
 # Markers
 
-- mk  # make marker
+- mk  # make marker k
+- ' moves to that line, while \` also moves to that col
 - `k` y'k  # copy from marker `k` till current position
 - :marks  # list all marks
+- 'k or `k  # go to mark k`
+- '' or ``  # jump to mark ``
+
+# Jumping
+- Ctrl-o/i - go to prev/next cursor jump position
+- g;/, - go to prev/next change list position
 
 # Folding
 
