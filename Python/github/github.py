@@ -18,7 +18,7 @@ arguments = {
 
 
 while True:
-    
+
     git_folder = os.path.join(search_directory, ".git/")
 
     if os.path.isdir(git_folder):
@@ -86,9 +86,6 @@ if '-b' in arguments:
     endswith = prefered_branch.startswith('.')
     startswith = prefered_branch.endswith('.')
     if startswith or endswith:
-        for branch in branches:
-            print(startswith,endswith)
-            print(branch,branch.startswith(prefered_branch[:-1]))
         matched_branches = [
             branch for branch in branches
             if (
@@ -105,7 +102,7 @@ if '-b' in arguments:
         if len(matched_branches) == 1:
             prefered_branch = matched_branches[0]
         elif len(matched_branches) > 1:
-            print("Matched multiple branches: %s", matched_branches)
+            print("Matched multiple branches: %s" % matched_branches)
             exit(0)
         elif report_failed_autocomplete:
             print("No branches matched")
