@@ -87,7 +87,7 @@ repos:
           - --extend-ignore=E203,E501
 
   - repo: https://github.com/terrencepreilly/darglint
-    rev: v1.8.0
+    rev: v1.8.1
     hooks:
       - id: darglint
         args:
@@ -99,7 +99,7 @@ repos:
       - id: pydocstyle
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910
+    rev: v0.910-1
     hooks:
       - id: mypy
         exclude: ^docs/
@@ -110,7 +110,7 @@ repos:
       - id: pyupgrade
 
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.17.0
+    rev: v1.18.0
     hooks:
       - id: setup-cfg-fmt
 
@@ -132,11 +132,11 @@ repos:
         files: \.(css|scss|sass|js|jsx|ts|tsx)$
         additional_dependencies:
           - stylelint@^13.13.1
-          - stylelint-config-prettier@^8.0.2
+          - stylelint-config-prettier@^9.0.3
           - stylelint-config-standard@^22.0.0
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.0.0-rc.0
+    rev: v8.0.1
     hooks:
       - id: eslint
         types: [text]
@@ -150,7 +150,7 @@ repos:
       - id: python-safety-dependencies-check
 
   - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.15.1
+    rev: v0.16.0
     hooks:
       - id: gitlint
 
