@@ -1,19 +1,14 @@
-import os 
+import os
 import sys
 import subprocess
 import webbrowser
+import re
 from pathlib import Path
 
 
+## Find Repository Root
 search_directory = os.getcwd()
 git_folder = None
-
-arguments = {
-    parameter:value
-    for parameter,value in zip(sys.argv, sys.argv[1:])
-    if parameter.startswith('-')
-}
-
 
 while True:
 
@@ -28,6 +23,44 @@ while True:
 
     search_directory = Path(search_directory).parent.absolute()
 
+## Run script in Github URL to CLI mode if URL was provided
+re_github_url = r"github\.com\/(?P<login>[^/]+)/(?P<repository>[^/]+)/?(?:(?P<type>tree|blob)/(?P<branch>[^/]+/?(?P<path>.*)))?"
+parsed_url = re.search(re_github_url, sys.argv[1]).groupdict() \
+        if len(sys.argv)==2 \
+        else None
+
+if parsed_url:
+
+    path=parsed_url['path'] if 'path' in parsed_url else ''
+    if not path:
+        path = '/'
+    full_path = os.path.join(search_directory, path)
+
+    is_file = 'type' in parsed_url and parsed_url['type']=='blob' \
+            and not path.endswith('/')
+    directory = os.path.dirname(full_path) if is_file else full_path
+
+    print(f'cd {directory} && ',end='')
+    if is_file:
+        editor = os.environ['EDITOR'] \
+                if 'EDITOR' in os.environ \
+                else 'open'
+        file_name = os.path.basename(path)
+        print(f'{editor} {file_name}')
+    else:
+        print(
+          os.environ['LIST_FILES'] if 'LIST_FILES' in os.environ
+          else 'ls')
+
+    exit(0)
+
+
+## Run script in CLI to GitHub URL mode
+arguments = {
+    parameter:value
+    for parameter,value in zip(sys.argv, sys.argv[1:])
+    if parameter.startswith('-')
+}
 
 refs_folder = os.path.join(git_folder, 'refs/remotes/')
 
@@ -102,7 +135,7 @@ if '-b' in arguments:
         elif len(matched_branches) > 1:
             print("Matched multiple branches: %s" % matched_branches)
             exit(0)
-        else
+        else:
             print("No branches matched")
             exit(0)
 else:
