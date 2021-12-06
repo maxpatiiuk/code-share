@@ -8,17 +8,19 @@
   - [ ] (in progress) Finish with honors
   - [ ] (in progress) Finish in May 2023
   - [ ] (in progress) Have a GPA of 3.85
-  - [ ] Consider enrolling in a coursework masters degree for 2026
+  - [x] Consider enrolling in a coursework masters degree for 2026
+    - Result: I would rather work in the industry instead
 - [ ] (in progress) Get a driver's licence
   - [ ] (in progress) Overcome my fear of cars
-  - [ ] (in progress) Take classes in December 2021 and take an exam in
-        January 2022
-- [ ] (in progress) Get a summer internship outside of Kansas
+  - [ ] (in progress) Take classes in December 2021
+- [ ] (in progress) Take a summer internship outside of Kansas
+  - Received two offers: Amazon and Unfolded.ai
 - [ ] (in progress) Excel in Web Development
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
     - [ ] (in progress) Decide if I can excel in AI and ML field
+    - [ ] (in progress) Decide if I can excel in the Data Science field
     - [ ] (in progress) Decide if I want to focus on Back-end/Front-end
           or stay in Full-stack
 - [ ] Handle my finances:
@@ -31,11 +33,10 @@
 ## Positive Routines
 
 - [ ] Get rid of my accent & improve pronunciation
-  - [ ] (in progress) Practice tongue-twisters every weekday for 15
-        minutes
-  - [ ] Practice pronunciation of challenging words once a week for 15
-        minutes
-  - [ ] Practice these until September 2022
+  - [ ] (in progress) Do one of these every weekday untill September
+      2022:
+    - Practice tongue-twisters
+    - Practice pronunciation of challenging words
 - [ ] Become less socially awkward and increase my EQ
   - [ ] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
@@ -49,9 +50,15 @@
     - [x] SpeciForum 2021
     - [x] Scientific Seminar of Siberia 2021
     - [x] TDWG 2021
+    - [ ] BiCIKL forum
 - [x] (in progress) Stay physically active
   - [ ] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
+  - [ ] "Quantified Self"
+    - [x] Get a fitness tracker
+    - Keep track of these things:
+      - Sleep schedule & quality
+      - Daily activity and long periods of inactivity
 - [x] Stay physically healthy
   - [x] Same as staying physically active, plus:
   - [x] Maintain very steady sleep schedule
@@ -60,6 +67,7 @@
 - [x] Finances
   - [x] Live minimalistically
   - [x] Be frugal with unnecessary expenses
+  - [x] Spend money to save time
   - [x] Be lavish on education and other beneficial things
 - [ ] Stay mentally active
   - [x] Listen to non-fiction and science-fiction audiobooks
