@@ -5,10 +5,8 @@ import webbrowser
 from pathlib import Path
 
 
-git_command = "git"
 search_directory = os.getcwd()
 git_folder = None
-report_failed_autocomplete = True
 
 arguments = {
     parameter:value
@@ -51,19 +49,19 @@ if '-r' in arguments:
     if arguments['-r'] not in remotes:
         print("Invalid remote specified")
         exit(-1)
-    prefered_remote = arguments['-r']
+    preferred_remote = arguments['-r']
 elif "origin" in remotes:
-    prefered_remote = "origin"
+    preferred_remote = "origin"
 else:
     print("Using %s as a remote" % remotes[0])
-    prefered_remote = remotes[0]
+    preferred_remote = remotes[0]
 
 
 origin_url = subprocess.check_output([
-    git_command,
+    "git",
     "config",
     "--get",
-    "remote.%s.url" % prefered_remote
+    "remote.%s.url" % preferred_remote
 ]).strip().decode("utf-8")
 
 if origin_url.endswith('.git'):
@@ -74,7 +72,7 @@ if not origin_url:
     exit(-1)
 
 
-origin_folder = os.path.join(refs_folder, prefered_remote)
+origin_folder = os.path.join(refs_folder, preferred_remote)
 
 branches = [
     item for item in os.listdir(origin_folder)
@@ -82,51 +80,51 @@ branches = [
 ]
 
 if '-b' in arguments:
-    prefered_branch = arguments['-b']
-    endswith = prefered_branch.startswith('.')
-    startswith = prefered_branch.endswith('.')
+    preferred_branch = arguments['-b']
+    endswith = preferred_branch.startswith('.')
+    startswith = preferred_branch.endswith('.')
     if startswith or endswith:
         matched_branches = [
             branch for branch in branches
             if (
                 (
                     not startswith or
-                    branch.startswith(prefered_branch[:-1])
+                    branch.startswith(preferred_branch[:-1])
                 ) and
                 (
                     not endswith or
-                    branch.endswith(prefered_branch[1:])
+                    branch.endswith(preferred_branch[1:])
                 )
             )
         ]
         if len(matched_branches) == 1:
-            prefered_branch = matched_branches[0]
+            preferred_branch = matched_branches[0]
         elif len(matched_branches) > 1:
             print("Matched multiple branches: %s" % matched_branches)
             exit(0)
-        elif report_failed_autocomplete:
+        else
             print("No branches matched")
             exit(0)
 else:
-    prefered_branch = subprocess.check_output([
+    preferred_branch = subprocess.check_output([
         "git",
         "branch",
         "--show-current"
     ]).strip().decode("utf-8")
 
-    if not prefered_branch:
+    if not preferred_branch:
 
         if len(branches) == 0:
             print("No branches found for this repository")
             exit(-1)
 
         elif "master" in remotes:
-            prefered_branch = "master"
+            preferred_branch = "master"
         elif "main" in remotes:
-            prefered_branch = "main"
+            preferred_branch = "main"
         else:
             print("Using %s as a branch" % branches[0])
-            prefered_branch = branches[0]
+            preferred_branch = branches[0]
 
 relative_path = os.getcwd()[len(str(search_directory))+1:]
 get_url = lambda file_name: \
@@ -134,7 +132,7 @@ get_url = lambda file_name: \
         origin_url,
         "blob" if file_name
         else "tree",
-        prefered_branch,
+        preferred_branch,
         relative_path,
         file_name
     )
