@@ -13,6 +13,8 @@ look into other's vimrc files
 
 # Main
 
+- .  # repeat last change command
+- ;  # repeat last find command
 - :open file  #  open file in current tab
 - :vs file  # open file in vertical split
 - :bn  # switch to nth buffer
@@ -33,7 +35,6 @@ look into other's vimrc files
 - Ctrl+C  # return to the normal mode
 - </>  # indent/unindent
 - ~Uu  # toggle/upper/lower case
-- <c-v>  # visual block
 
 # Movement
 
@@ -49,10 +50,16 @@ look into other's vimrc files
 - [/]  # move between code blocks
 - va"/'/`/`/{/[/>  # select text between symbols of type
 - vi"/"/...  # .. excluding the symbols - di/a... # ...
+- vis/vas  # select inner/a sentance
 - Ctrl-u/d  # half page up / down
 - Ctrl-f/b  # page up / down
 - Ctrl-e/y  # scroll one line up / down
 - zz  # scroll viewport to have cursor at the middle
+
+# Visual
+
+- <c-v>  # visual block
+- o/O  # toggle the horizontal/vertial direction of selection
 
 # Search & Replace
 
@@ -66,6 +73,7 @@ look into other's vimrc files
 - /word  # search for word
 - n/N  # show next/previous occurrence
 - dgn  # delete next occurrence
+- daw  # delete current word
 - %  # go to matching ([{
 - :%s/old/new/gc  #search&replace with a prompt
 - (in query) \< and \>  # regex's \b
@@ -143,3 +151,7 @@ yF?
 d}
 dj
 dvj
+yy3p
+dis
+cas
+diw

@@ -2,7 +2,7 @@
 git config --global user.name "Max Patiiuk"
 git config --show-origin --list
 git config --global alias.last 'log -1'  # alias `git last` to git log
-git config --global alias.check '!npx tsc'  # alias `git last` to tsc
+git config --global alias.check '!npx tsc'  # alias `git check` to tsc
 git config --local remote.pushDefault origin  # default remote
 
 
@@ -17,7 +17,7 @@ git status -s  # short summary
 
 # .gitignore
 # starting with / means non recursive
-# endind with / means a directory
+# ending with / means a directory
 # negation by starting with !
 [abc].*  # a.qw b.a c.ts
 [0-9]  # 1 2 3 4
@@ -52,9 +52,9 @@ git log main  # show log for the `main` branch
 git log --all  # show log from all brances
 git log remote/branch --not branch  # show commits that aren't on local
 git log -S mappings_path  # 'Pickaxe' # show commits that change the #
-# of occurrences of that string
+#                           of occurrences of that string
 git log -L :functionName:file.name  # show changes to a function
-git log -g  # shos HEAD's history
+git log -g  # shows HEAD's history
 
 
 # commit
@@ -126,7 +126,7 @@ git mergetool  # open a conflict resolution tool
 # rebase
 git rebase issue-53  # apply issue-53 onto current branch
 git rebase main issue-53  # apply issue-53 onto main
-git rebase -i HEAD~3  # launch interactive history rewritter
+git rebase -i HEAD~3  # launch interactive history rewriter
 # rebase every commit:
 git rebase -i --root `git rev-list --max-parents=0 HEAD`
 
@@ -179,4 +179,3 @@ git show hash  # show info about a commit
 
 # TODO:
 review git tools: `git difftool --tool-help` and `mergetool`
-create a code linter && code style hook
