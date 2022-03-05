@@ -43,10 +43,10 @@
     - [x] SpeciForum 2021
     - [x] Scientific Seminar of Siberia 2021
     - [x] TDWG 2021
-    - [ ] BiCIKL forum
+    - [x] BiCIKL forum
 - [x] (in progress) Stay physically active
   - [ ] (in progress) Take weekly dancing lessons until graduation
-  - [ ] (in progress) Play Just Dance daily during winter break 2022
+  - [x] (in progress) Play Just Dance daily during winter break 2022
   - [ ] Take weekly dancing lessons after graduation
   - [ ] "Quantified Self"
     - [x] Get a fitness tracker
@@ -69,5 +69,5 @@
     - [x] Read at least 60 books in 2019 (actually read 90)
     - [x] Read at least 90 books in 2020 (actually read 169)
     - [x] Read at least 170 books in 2021 (actually read 175)
-    - [ ] Read at least 150 books in 2022
+    - [ ] Read at least 170 books in 2022
     - [ ] Read at least 180 books in 2023
