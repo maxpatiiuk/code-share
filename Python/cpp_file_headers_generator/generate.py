@@ -2,7 +2,7 @@ import os
 import sys
 from datetime import date
 
-authot_name = 'Maksym Patiiuk'
+authot_name = 'Max Patiiuk'
 files_information = {
 	'cpp': 'The implementation for the %s class',
 	'h': 'The definitions for the %s class'
