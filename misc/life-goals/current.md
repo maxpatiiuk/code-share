@@ -7,13 +7,14 @@
   - [ ] (in progress) Finish with honors
   - [ ] (in progress) Finish in May 2023
   - [ ] (in progress) Have a GPA of 3.85
-- [x] (in progress) Get a driver's licence
-  - [x] (in progress) Overcome my fear of cars
-  - [x] (in progress) Take classes in December 2021
 - [ ] (in progress) Take a summer internship outside of Kansas
-  - Accepted Amazon offer in Seattle
+  - Accepted Amazon offer in Austin
+  - [x] Research Austin
+  - [x] Find housing
+  - [x] Research dining options
 - [ ] (in progress) Excel in Web Development
-  - Refactor and modernize code at work
+  - [ ] Test and push the new release of Specify 7 before summer
+        internship
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
@@ -29,11 +30,6 @@
 
 ## Positive Routines
 
-- [ ] Get rid of my accent & improve pronunciation
-  - [ ] (in progress) Do one of these every weekday until September 2022:
-    - Practice tongue-twisters
-    - Practice pronunciation of challenging words
-    - Practice reading aloud
 - [ ] Become less socially awkward and increase my EQ
   - [ ] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
@@ -44,20 +40,11 @@
     - [x] Scientific Seminar of Siberia 2021
     - [x] TDWG 2021
     - [x] BiCIKL forum
+    - [x] Board Meetings
 - [x] (in progress) Stay physically active
   - [ ] (in progress) Take weekly dancing lessons until graduation
-  - [x] (in progress) Play Just Dance daily during winter break 2022
   - [ ] Take weekly dancing lessons after graduation
   - [ ] "Quantified Self"
-    - [x] Get a fitness tracker
-    - Keep track of these things:
-      - Sleep schedule & quality
-      - Daily activity and long periods of inactivity
-- [x] Stay physically healthy
-  - [x] Same as staying physically active, plus:
-  - [x] Maintain very steady sleep schedule
-  - [x] Maintain healthy diet
-  - [x] Stop eating meat
 - [x] Finances
   - [x] Live minimalistically
   - [x] Be frugal with unnecessary expenses
