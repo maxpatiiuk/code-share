@@ -9,21 +9,16 @@
   - [ ] (in progress) Have a GPA of 3.85
 - [ ] (in progress) Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
-  - [x] Research Austin
-  - [x] Find housing
-  - [x] Research dining options
 - [ ] (in progress) Excel in Web Development
-  - [ ] Test and push the new release of Specify 7 before summer
-        internship
+  - [ ] (in progress) Test and push the new release of Specify 7 before
+        summer internship
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
     - [ ] (in progress) Decide if I can excel in AI and ML field
-    - [ ] (in progress) Decide if I can excel in the Data Science field
     - [ ] (in progress) Decide if I want to focus on Back-end/Front-end or stay
           in Full-stack
 - [ ] Handle my finances:
-  - [ ] (in progress) Improve credit score
   - [ ] After graduation:
     - [ ] Open a ROTH IRA account
     - [ ] Evaluate available volatile investment options
@@ -31,7 +26,7 @@
 ## Positive Routines
 
 - [ ] Become less socially awkward and increase my EQ
-  - [ ] (in progress) Take weekly dancing lessons until graduation
+  - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
   - [ ] (in progress) Consciously practise tips learned in day-to-day situations
   - [ ] (in progress) Continuously step outside the comfort zone
@@ -42,9 +37,9 @@
     - [x] BiCIKL forum
     - [x] Board Meetings
 - [x] (in progress) Stay physically active
-  - [ ] (in progress) Take weekly dancing lessons until graduation
+  - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
-  - [ ] "Quantified Self"
+  - [x] "Quantified Self"
 - [x] Finances
   - [x] Live minimalistically
   - [x] Be frugal with unnecessary expenses
