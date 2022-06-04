@@ -10,8 +10,6 @@
 - [ ] (in progress) Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
 - [ ] (in progress) Excel in Web Development
-  - [ ] (in progress) Test and push the new release of Specify 7 before
-        summer internship
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
@@ -36,6 +34,7 @@
     - [x] TDWG 2021
     - [x] BiCIKL forum
     - [x] Board Meetings
+    - [x] iDigBio Digital Data Conference 2022
 - [x] (in progress) Stay physically active
   - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
@@ -51,5 +50,5 @@
     - [x] Read at least 60 books in 2019 (actually read 90)
     - [x] Read at least 90 books in 2020 (actually read 169)
     - [x] Read at least 170 books in 2021 (actually read 175)
-    - [ ] Read at least 170 books in 2022
+    - [ ] Read at least 175 books in 2022
     - [ ] Read at least 180 books in 2023
