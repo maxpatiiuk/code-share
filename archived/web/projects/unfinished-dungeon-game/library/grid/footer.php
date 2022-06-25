@@ -1,0 +1,1 @@
+<script src="<?=LINK?>library/grid/static/js/index.js" defer></script>

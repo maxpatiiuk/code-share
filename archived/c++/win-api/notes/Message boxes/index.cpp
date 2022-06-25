@@ -1,0 +1,1 @@
+MessageBox(programSample/*0*/,ltext,ltitle,type);\r\n//type - MB_OK,MB_OKCZNCEL,MB_RETRYCANCEL,MB_YESNO,MB_YESNOCANCEL\r\n//to add icon, u need to combine than value with tone of those (|) - MB_ICONEXCELAMATION(!), MB_ICONINFORMATION(i), MB_ICONQUESTION(?), MB_ICONSTOPP(x)\r\n//return values: IDOK,IDCANCEL,IDABORT,IDIGNORE,IDYES,IDNO,IDRETRY,0(error on creating)

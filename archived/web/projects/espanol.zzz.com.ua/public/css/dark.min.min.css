@@ -1,0 +1,1 @@
+body{filter:invert(100%);background:#000}img,.dark_mode_invert,.btn,iframe,.custom-control-input,.text-danger,.text-success,.text-info,.text-warning{filter:invert(100%)}.alert{filter:hue-rotate(180deg)}.btn-outline-dark:not(hover){border-color:var(--t3);color:var(--t3)}.sm_icon{filter:grayscale(50%) invert(100%) !important}

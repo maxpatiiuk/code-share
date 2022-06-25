@@ -1,0 +1,30 @@
+:root {
+
+	--b1                  : #fff;
+	--b2                  : #eee;
+	--b3                  : #ddd;
+
+	--t1                  : #000;
+	--t2                  : #333;
+	--t3                  : #999;
+
+	/*--danger: #c69;
+	--success: #9c6;
+	--warning: #c96;
+	--info: #6c9;*/
+
+	--brand               : #fa1;
+	--logo                : url(../images/logo.png);
+
+	--shadow              : #000000bb;
+
+	--file_upload_outline : #9bb;
+	--file_upload_bg      : #cdd;
+
+	--gradient-color_1    : #0cf;
+	--gradient-color_2    : #07f;
+
+	--old                 : #f005;
+	--new                 : #0f05;
+
+}
