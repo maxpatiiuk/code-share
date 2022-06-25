@@ -51,6 +51,7 @@ git log -- /path/to/file.ts  # show commits that changed that file
 git log main  # show log for the `main` branch
 git log --all  # show log from all brances
 git log remote/branch --not branch  # show commits that aren't on local
+git log a...b  # a XOR b
 git log -S mappings_path  # 'Pickaxe' # show commits that change the #
 #                           of occurrences of that string
 git log -L :functionName:file.name  # show changes to a function
@@ -98,7 +99,7 @@ git branch -u origin/dev  # change remote tracking branch
 
 # renaming a branch
 git branch --move old new
-git push --set-upstream origin new
+git push -u origin new
 git push origin --delete old
 
 
@@ -107,6 +108,7 @@ git switch main  # switch to main
 git switch -  # switch to previous branch
 git switch -c dev  # create and checkout `dev`
 git switch -c dev --track origin/dev
+git switch -C dev  # force recreate `dev`
 
 
 # checkout
@@ -131,7 +133,6 @@ git rebase -i HEAD~3  # launch interactive history rewriter
 git rebase -i --root `git rev-list --max-parents=0 HEAD`
 
 
-
 # reset
 git reset --soft HEAD~1  # uncommit
 git reset HEAD~1 file.md  # unstage  # defaults to --mixed
@@ -143,6 +144,8 @@ git describe --all  # creata a desciption for the current git's state
 
 # interactive add
 git add -i
+# add a patch
+git add -p
 
 
 # stash
