@@ -7,8 +7,9 @@
   - [ ] (in progress) Finish with honors
   - [ ] (in progress) Finish in May 2023
   - [ ] (in progress) Have a GPA of 3.85
-- [ ] (in progress) Take a summer internship outside of Kansas
+- [x] Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
+  - In parallel, continue looking for other opportunities
 - [ ] (in progress) Excel in Web Development
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
@@ -16,10 +17,16 @@
     - [ ] (in progress) Decide if I can excel in AI and ML field
     - [ ] (in progress) Decide if I want to focus on Back-end/Front-end or stay
           in Full-stack
+
+## After Graduation
+- Get a full time job
+  - Accept Amazon offer
+    - Change location to Seattle
+- Rent an apartment
+- Get a VR headset to do "VR Traveling"
 - [ ] Handle my finances:
-  - [ ] After graduation:
-    - [ ] Open a ROTH IRA account
-    - [ ] Evaluate available volatile investment options
+  - [ ] Open a ROTH IRA account
+  - [ ] Evaluate available volatile investment options
 
 ## Positive Routines
 
