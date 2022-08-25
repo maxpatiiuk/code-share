@@ -3,10 +3,11 @@
 The second generation of the  website for e-Submission of Homework
 assignments from the Spanish Language classes.
 
-It was created arround 2019.
+It was created arround 2018 (when I was 16 years old).
 
-I used a previous version of this website in 2018 to win the first
-place in the All-Ukrainian competition on information technologies
+I used a previous version of this website in 2017 to [win the first
+place in the All-Ukrainian competition
+](https://drive.google.com/file/d/1GJm1lk5NuufC8vPcCYAYQDg-ItTr-Mdn/view?usp=sharing) in information technologies
 "iTalent" in the nomination "Web Development".
 
 ## Features
