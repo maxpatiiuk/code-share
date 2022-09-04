@@ -9,7 +9,7 @@
   - [ ] (in progress) Have a GPA of 3.85
 - [x] Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
-- [ ] Career
+- [ ] Gat a full-time job
   - Take training courses available at Amazon
   - Prepare for tech interviewees
   - From August, apply for full-time jobs
@@ -17,7 +17,6 @@
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
-    - [ ] (in progress) Decide if I can excel in AI and ML field
     - [ ] (in progress) Decide if I want to focus on Back-end/Front-end or stay
           in Full-stack
 
@@ -49,6 +48,7 @@
   - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
   - [x] "Quantified Self"
+- [x] Weekly virtual traveling
 - [x] Finances
   - [x] Live minimalistically
   - [x] Be frugal with unnecessary expenses
