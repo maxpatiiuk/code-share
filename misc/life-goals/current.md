@@ -3,17 +3,34 @@
 ## Achievements
 
 - [ ] (in progress) Get an undergraduate degree in Computer Science
-  - [ ] (in progress) Take a class in ML and AI to get a feel for these areas
+  - [x] Take a class in ML and AI to get a feel for these areas
+    Interesting area to keep track of, but not something I want to work
+    on
   - [ ] (in progress) Finish with honors
   - [ ] (in progress) Finish in May 2023
   - [ ] (in progress) Have a GPA of 3.85
 - [x] Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
-- [ ] Gat a full-time job
+    - [x] Research Austin
+    - [x] Find housing
+    - [x] Research dining options
+  - [x] Consider enrolling in a coursework masters degree for 2026
+    - Result: I would rather work in the industry instead
+- [x] Get a driver's licence
+  - [x] Overcome my fear of cars (almost), though I still
+      hate them
+  - [x] (in progress) Take classes in December 2021
+- [x] Gat a full-time job
   - [x] Take training courses available at Amazon
   - Prepare for tech interviews
-  - From August, apply for full-time jobs
+  - [x] From August, apply for full-time jobs
+  - [x] Accepted an SDE II position at ESRI
 - [ ] (in progress) Excel in Web Development
+  - Refactor and modernize code at work
+  - [x] Test and push the new release of Specify 7 before summer
+        internship
+    - Ended up working on this in paralell with Amazon internship.
+        Shipped the release by mid-summer
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
@@ -32,6 +49,11 @@
 
 ## Positive Routines
 
+- [x] Improve Pronunciation and accent
+  - [x] (in progress) Do one of these every weekday until September 2022:
+    - Practice tongue-twisters
+    - Practice pronunciation of challenging words
+    - Practice reading aloud
 - [ ] Become less socially awkward and increase my EQ
   - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
@@ -44,10 +66,23 @@
     - [x] BiCIKL forum
     - [x] Board Meetings
     - [x] iDigBio Digital Data Conference 2022
+    - [ ] ESRI Conferences
 - [x] (in progress) Stay physically active
   - [x] (in progress) Take weekly dancing lessons until graduation
   - [ ] Take weekly dancing lessons after graduation
+  - [x]  Play Just Dance daily during winter break 2022
   - [x] "Quantified Self"
+  - [x] Get a fitness tracker
+    - Keep track of these things:
+      - Sleep schedule & quality
+      - Daily activity and long periods of inactivity
+- [x] Stay physically healthy
+  - [x] Same as staying physically active, plus:
+  - [x] Maintain very steady sleep schedule
+  - [x] Maintain healthy diet
+  - [x] Stop eating meat
+    - Had to resume eating some due to limited dining option available.
+        Still, I am eating meet only once or twice a week
 - [x] Weekly virtual traveling
 - [x] Finances
   - [x] Live minimalistically
