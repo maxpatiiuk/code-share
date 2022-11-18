@@ -9,7 +9,10 @@
   - [ ] (in progress) Have a GPA of 3.85
 - [x] Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
-  - In parallel, continue looking for other opportunities
+- [ ] Career
+  - Take training courses available at Amazon
+  - Prepare for tech interviewees
+  - From August, apply for full-time jobs
 - [ ] (in progress) Excel in Web Development
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
