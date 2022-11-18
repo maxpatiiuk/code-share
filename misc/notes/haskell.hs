@@ -1,7 +1,7 @@
 -- From http://learnyouahaskell.com/
 
 [1,2,3,4] ++ [9,10,11,12]
-"Steve Buscemi" !! 6  -- 'B'
+"Vari" !! 3  -- 'i'
 -- head tail last init length reverse maximum minimum sum product
 null [1]  -- False
 take 1 [1,2,3]
@@ -20,7 +20,7 @@ replicate 3 [10]  -- [10,10,10]
 [x*2 | x <- [1..10], x*2 >= 12]
 [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
 [ x | x <- [10..20], x /= 13, x /= 15, x /= 19]
-[ x*y | x <- [2,5,10], y <- [8,10,11]] 
+[ x*y | x <- [2,5,10], y <- [8,10,11]]
 
 fst (8,11)
 snd (8,11)
@@ -56,7 +56,7 @@ third :: (a, b, c) -> c
 third (_, _, z) = z
 
 head' :: [a] -> a
-head' [] = error "Can't call head on an empty list, dummy!"
+head' [] = error "Can't call head on an empty list"
 head' (x:_) = x
 
 tell :: (Show a) => [a] -> String
@@ -66,15 +66,15 @@ tell (x:y:[]) = "The list has two elements: " ++ show x ++ " and " ++ show y
 tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y
 
 capital :: String -> String
-capital "" = "Empty string, whoops!"
+capital "" = "Empty string"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
 bmiTell :: (RealFloat a) => a -> a -> String
 bmiTell weight height
-    | bmi <= skinny = "You're underweight, you emo, you!"
-    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"
-    | bmi <= fat    = "You're fat! Lose some weight, fatty!"
-    | otherwise     = "You're a whale, congratulations!"
+    | bmi <= skinny = "underweight"
+    | bmi <= normal = "normal"
+    | bmi <= fat    = "fat"
+    | otherwise     = "whale"
     where bmi = weight / height ^ 2
           skinny = 18.5
           normal = 25.0

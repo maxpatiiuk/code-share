@@ -10,8 +10,8 @@
 - [x] Take a summer internship outside of Kansas
   - Accepted Amazon offer in Austin
 - [ ] Gat a full-time job
-  - Take training courses available at Amazon
-  - Prepare for tech interviewees
+  - [x] Take training courses available at Amazon
+  - Prepare for tech interviews
   - From August, apply for full-time jobs
 - [ ] (in progress) Excel in Web Development
   - Specific tools and technologies to learn are tracked in

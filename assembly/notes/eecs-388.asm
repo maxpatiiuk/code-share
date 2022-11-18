@@ -68,7 +68,7 @@ li x3, 0x4321  // li for big  // lui x3, 0x4; addi x3, x3, 0x321
 
 // PROCEDURE
 f:
-	// saving s0 and s1 to the call stack before chaning them
+	// saving s0 and s1 to the call stack before changing them
 	addi sp, sp, -8
 	sw s0, 4(sp)
 	sw s1, 0(sp)
