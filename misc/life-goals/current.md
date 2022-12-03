@@ -6,6 +6,8 @@
   - [x] Take a class in ML and AI to get a feel for these areas
     Interesting area to keep track of, but not something I want to work
     on
+  - [ ] (in progress) Finish Fall 2022 semester with all-A
+  - [ ] (in progress) Finish Spring 2023 semester with all-A
   - [ ] (in progress) Finish with honors
   - [ ] (in progress) Finish in May 2023
   - [ ] (in progress) Have a GPA of 3.85
@@ -29,13 +31,19 @@
   - Refactor and modernize code at work
   - [x] Test and push the new release of Specify 7 before summer
         internship
-    - Ended up working on this in paralell with Amazon internship.
+    - Ended up working on this in parallel with Amazon internship.
         Shipped the release by mid-summer
   - Specific tools and technologies to learn are tracked in
     [this project](https://github.com/maxxxxxdlp/code_share/projects/1)
   - [ ] (in progress) Evaluate emerging career options
     - [ ] (in progress) Decide if I want to focus on Back-end/Front-end or stay
           in Full-stack
+  - Winter Break Goals
+    - Finish UI for Batch Editing
+    - Finish Localization UI integration
+    - Fix Backups problem
+    - Finish UI for DataObjFormatters
+    - Finish UI for RemotePrefs
 
 ## After Graduation
 - Get a full time job
