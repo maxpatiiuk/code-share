@@ -3,6 +3,8 @@
 Make non-gui Vim open associated text files in Terminal on double click
 in finder
 
+The script is made for iTerm, but can be easily adapted for terminal
+
 ## Instructions
  1. Open Automator.app
  2. Choose 'New Document'
@@ -26,6 +28,6 @@ Enjoy!
 
 
 # Configuration
-Configuration options are described in the `vim_macos_associator.md` 
+Configuration options are described in the `vim_macos_associator.md`
 file
 
