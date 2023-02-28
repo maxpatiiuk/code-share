@@ -108,7 +108,7 @@ And named tuples aren't much better. NamedTuples don't even work properly with
   ```
 
 - Finally, and worse of all, I can't reuse the same quotes inside of f-strings!
-  That's like the works thing ever. Escaping doesn't work either. Seriously???
+  That's like the worst thing ever. Escaping doesn't work either. Seriously???
 
 # Spread syntax is bad!
 
@@ -119,7 +119,7 @@ And named tuples aren't much better. NamedTuples don't even work properly with
 
 # Syntax is confusing!
 
-- Someone please explain to me when I have to use '\' in multi line statements
+- Someone please explain to me when I have to use `\` in multi line statements
   because I am not smart enough to understand it.
 
   Same goes for ("writing" "strings" "without" "commas")
