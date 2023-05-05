@@ -1,0 +1,29 @@
+.cont p {
+	text-align: justify;
+}
+.cont img {
+	max-width: 40%;
+	min-width: 200px;
+	height: auto;
+	display: block;
+	padding: 2%;
+}
+.cont {
+	margin: 0 auto;
+	padding: 2% 10%;
+}
+@media (max-width: 800px){
+	.down div {
+		width: 28%;
+	}
+	.cont img {
+		margin: 0 auto;
+		width: auto;
+		max-width: 100%;
+		float: none;
+		padding: 2% 0;
+	}
+	.cont {
+		padding: 2% 5%;
+	}
+}

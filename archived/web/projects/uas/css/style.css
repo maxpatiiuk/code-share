@@ -1,0 +1,162 @@
+.block {
+	max-width: 100%;
+	height: 580px;
+	background-color: #ccc;
+	background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+}
+.btext {
+	background-color: rgba(0,0,0,0.5);
+	color: #fff;
+	width: auto;
+	max-width: 40%;
+	position: absolute;
+	left: 42px;
+	margin-top: 20%;
+	padding: 17px;
+}	
+.tblock {
+	height: auto;
+	padding: 0 10%;
+	margin: 0 auto;
+	overflow:hidden;
+	word-wrap:break-word;
+	color: #555;
+}
+.tb {
+	width: 48%;
+}
+/*.cd44, a#cd44 {color: #d44;}*/
+.c27c, a#c27c {
+	color: #27c;
+}
+
+.t1 {
+	padding: 5%;
+}
+.l.tb h1:last-child {
+	color: #fe5;
+}
+.t2, .t4 {
+	background-color: #333;
+	width: auto;
+	height: auto;
+	padding: 20px;
+	color: #fff;
+	text-align: center;
+}
+.t2 div img:hover, .t4 div img:hover {
+    border-color: #777;
+}
+.t2 h2:first-child, .t4 h2:first-child {
+	padding-bottom: 15px;
+}
+.t2 div img, .t4 div img {
+    border-radius: 100%;
+	border: 5px solid #ccc;
+}
+.t2 div h2 {
+	padding: 40px 0 15px 0;
+}
+.t2 div {
+    display: inline-block;
+    padding: 5%;
+	width: 35%;
+	text-align: left;
+}
+.t2 div h2 {
+	padding: 40px 0px 15px 0;
+}
+.t2 div img {
+    width: 40%;
+	display: block;
+	margin-right: 25px;
+}
+.t4 div {
+    display: inline-block;
+    padding: 5%;
+	width: 11%;
+}
+.t4 div img {
+    width: 100%;
+}
+
+.t3 h2 {
+	padding-bottom: 1%;
+}
+.cd44, .content .t3 a.cd44 {
+	color: #d44;
+}
+.t3 h3 {
+	font-size: 21px;
+	padding: 10px 0 5px 0;
+}
+.tblock.t3 {
+	padding: 4% 10%;
+}
+.t3 img {
+	width: 30px;
+	border-radius: 10px;
+}
+.cw {
+	background-color: #fff;
+	color: #000;
+}
+.cw div img {
+	border: 5px solid #333;
+}
+.cw div img:hover {
+	border-color: #999;
+}
+.t6 div img {
+	filter: invert(82%);
+}
+@media (max-width: 1400px){
+	.t2 div, .t4 div {
+		width: 55%;
+		text-align: center;
+	}
+	.t2, .t4 {
+		font-size: 30px;
+	}
+	.t2 div img, .t4 div img {
+		width: 75%;
+		margin: 0 auto;
+		float: none;
+	}
+}
+@media (max-width: 1016px){
+	.block {
+		height: 460px;
+	}
+}
+@media (max-width: 800px){
+	.block {
+		height: 400px;
+	}
+	.t2 div, .t4 div {
+		width: 88%;
+	}
+}
+@media (max-width: 730px){
+	.block {
+		height: 240px;
+	}
+	.btext {
+		margin-top: 5%;
+		padding: 5px;
+		font-size: 12px;
+	}
+	.tb {
+		font-size: 22px;
+	}
+}
+@media (max-width: 400px){
+	.block {
+		height: 170px;
+		font-size: 10px;
+	}
+}
