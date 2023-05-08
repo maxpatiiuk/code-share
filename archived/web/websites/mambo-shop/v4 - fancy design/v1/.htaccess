@@ -1,0 +1,19 @@
+ErrorDocument 404 /functions/404.php
+
+<filesMatch ".(jpg|jpeg|png|gif|bmp|jpjp|tiff|giff|xml|php56|txt)$">
+Header set Cache-Control "max-age=1728000, public"
+</filesMatch>
+
+<filesMatch ".(ico)$">
+Header set Cache-Control "max-age=30240000, public"
+</filesMatch>
+
+<filesMatch ".(html|js|css|php|xml|php56|txt)$">
+Header set Cache-Control "max-age=86400, public"
+</filesMatch>
+
+//Prevent viewing of .htaccess file
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>

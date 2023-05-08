@@ -1,0 +1,21 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #ccc;
+}
+header, footer {
+	height: 100px;
+	width: 100%;
+	background: #333;
+}
+footer {
+	position: absolute;
+	bottom: 0px;
+}
+.cont {
+	margin: 30px;
+}
+table a {
+	color: #000;
+	text-decoration: none;
+}

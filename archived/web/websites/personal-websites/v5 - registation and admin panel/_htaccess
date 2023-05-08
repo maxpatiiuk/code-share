@@ -1,0 +1,14 @@
+//Rewrite to www
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^mambo.in.ua[nc]
+RewriteRule ^(.*)$ http://www.mambo.in.ua/$1 [r=301,nc]
+
+//301 Redirect Entire Directory
+RedirectMatch 301 ^/profile/ http://shop.mambo.in.ua/profile/?
+
+//Prevent viewing of .htaccess file
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>

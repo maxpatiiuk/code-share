@@ -1,0 +1,81 @@
+body {
+	color: #666;
+	background: #ddd;
+}
+a, a:link, a:visited, a.an:hover {
+	color: #444;
+}
+a:hover {
+	color: #ccc;
+}
+a.ab {
+	color: #ddd;
+}
+a.aw {
+	color: #333;
+}
+a.ag {
+	color: #777;
+}
+.menu {
+	background: #ddd;
+}
+.menu a:first-child p:first-child {
+	color: #f00;
+}
+a.li:hover {
+	color: #fff;
+	background: #333;
+}
+.m_but {
+	background: #fff;
+}
+.mbut {
+	background-color: #ccc;
+}
+.mbut:hover {
+	background-color: #222;
+}
+.down {
+    background: #ccc;
+}
+.ow {
+	background: rgba(0,0,0,0);
+}
+.log a {
+	background: #111;
+}
+.user img, .l_f {
+	background: #ddd;
+	border: 0.5vw solid #ccc;
+}
+.p_b {
+	background: #ccc;
+}
+.pro {
+	color: #ccc;
+}
+.pro:hover {
+	background: #111;
+	color: #ccc;
+}
+.pro .p_p {
+	color: #0cf;
+}
+.tabs {
+	border-bottom: 5px solid #ccc;
+}
+.tabs button {
+	background: #ccc;
+	color: #111;
+}
+.tabs button:hover, .tabs button.cur {
+	background: #eee;
+}
+.prod .tab_c {
+	background: #fff;
+}
+#login input, #login a {
+    background: #ccc;
+    color: #444;
+}

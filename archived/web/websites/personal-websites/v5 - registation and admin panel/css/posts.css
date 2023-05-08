@@ -1,0 +1,15 @@
+.post h1 {
+	font-size: 31px;
+}
+.post * div {
+	display: flex;
+	line-height: 14px;
+	padding: 0.7vh 0;
+}
+.post img:not(.l) {
+	width: 45vw;
+	padding: 1vh 4vw;
+}
+.post div div img {
+	padding-right: 0.2vw;
+}

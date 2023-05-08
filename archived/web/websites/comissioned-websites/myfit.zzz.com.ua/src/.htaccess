@@ -1,0 +1,54 @@
+# Disable ETags
+<IfModule mod_headers.c>
+  Header unset ETag
+
+  #366 days
+  <filesMatch ".(ico)$">
+  Header set Cache-Control "max-age=31622400, public"
+  </filesMatch>
+
+  #30 days
+  <filesMatch ".(jpg|jpeg|png|gif|bmp|jpjp|tiff|giff|xml|php56)$">
+  Header set Cache-Control "max-age=2592000, public"
+  </filesMatch>
+
+  #7 days
+  <filesMatch ".(html|js|css|php)$">
+  Header set Cache-Control "max-age=604800, public"
+  </filesMatch>
+
+  #0 sec
+  <FilesMatch "\.(htaccess|txt|xml)$">
+  Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
+  </FilesMatch>
+
+</IfModule>
+FileETag None
+
+#366 days
+<filesMatch ".(ico)$">
+Header set Cache-Control "max-age=31622400, public"
+</filesMatch>
+
+#30 days
+<filesMatch ".(jpg|jpeg|png|gif|bmp|jpjp|tiff|giff|xml|php56)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+#7 days
+<filesMatch ".(html|js|css|php)$">
+Header set Cache-Control "max-age=604800, public"
+</filesMatch>
+
+#0 sec
+<FilesMatch "\.(htaccess|txt|xml)$">
+Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
+</FilesMatch>
+
+//Prevent viewing of .htaccess file
+//<Files .htaccess>
+//order allow,deny
+//deny from all
+//</Files>
+
+ErrorDocument 404 /functions/404.php

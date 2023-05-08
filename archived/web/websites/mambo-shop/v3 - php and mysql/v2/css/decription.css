@@ -1,0 +1,118 @@
+.c_bord {
+	height: 19.7vw;
+	color: #fff;
+	text-align: center;
+	line-height: 100%;
+	font-size: 2.5vw;
+	background: #444;
+}
+h1:first-child {
+	padding: 1vw;
+}
+iframe {
+	width: 40%;
+	height: 100%;
+}
+.images {
+	width: 60%;
+}
+.images div:first-child {
+	height: 13vw;
+}
+.images div img:first-child {
+	width: 43%;
+}
+.images div img {
+	height: 100%;
+}
+.images div .img2 {
+	width: 28%;
+}
+.images div:first-child img:last-child {
+	width: 27%;
+	margin-left: 0.5vw;
+}
+.images div:last-child {
+	height: 6.7vw;
+}
+.c_b {
+	width: 43%;
+	height: 100%;
+	display: block;
+	line-height: 6.5vw;
+	background: #0cf;
+}
+.c_p {
+	width: 20%;
+	height: 69%;
+	margin-left: 0.5vw;
+	background: #0cf;
+	padding-left: 7%;
+	padding-top: 4%;
+}
+.c_p p:last-child {
+	font-size: 70%;
+	padding-top: 3%;
+}
+.img4 {
+	width: 28%;
+}
+.com {
+    width: 47%;
+    min-height: 38vh;
+}
+@media screen and (max-width:750px) {
+	.tabs button {
+		font-size: 20px;
+	}
+	.com {
+		width: 100%;
+	}
+	.c_bord {
+		height: 20vw;
+	}
+	.images {
+		height: 100%;
+	}
+	.images div:first-child {
+		height: 20vw;
+		width: 72%;
+	}
+	.images div:last-child {
+		height: 100%;
+		width: 28%;
+		overflow: hidden;
+	}
+	.c_b {
+		width: 100%;
+		height: 50%;
+		line-height: 10vw;
+		margin-bottom: 5%;
+	}
+	.c_p {
+		width: 76%;
+		height: 30%;
+		padding-left: 24%;
+		margin: 0;
+		padding-top: 24%;
+		font-size: 19px;
+	}
+	h1:first-child {
+		font-size: 25px;
+		line-height: 23px;
+	}
+	.images div img {
+		display: none;
+	}
+	.images div img:first-child {
+		width: 100%;
+		display: block;
+	}
+	.images div {
+		float: left;
+	}
+	.imgages div img {
+		width: 100%;
+		height: 40%;
+	}
+}

@@ -1,0 +1,80 @@
+.posts {
+	border-bottom: 1px solid #ccc;
+	padding: 2vh;
+	overflow: hidden;
+}
+
+h2, h4 {
+	margin-top: 0;
+}
+
+.posts a h2 {
+	line-height: 30px;
+	margin: 0;
+}
+
+.posts a img:first-child {
+	max-height: 100%;
+	padding-right: 2vw;
+	width: 20%;
+	min-width: 100px;
+}
+
+.posts div {
+	line-height: 14px;
+	padding: 0.4vw 0;
+	font-size: 80%;
+}
+
+.posts div img {
+	padding-right: 0.2vw;
+}
+
+.carousel-inner > .item > a > img, .carousel-inner > .item > img {
+	width: 100vw;
+	height: 30vw;
+}
+
+.carousel h3, .carousel a, .carousel a:link, .carousel a:visited {
+	color: #eee;
+}
+
+.sidebar {
+	padding-right: 30px;
+}
+
+.sidebar p {
+	font-size: 16px;
+}
+
+.category:hover {
+	background: #ddd;
+	text-decoration: none;
+}
+
+.category {
+	height: 40px;
+	line-height: 40px;
+	border: none;
+	background: #eee;
+	border-radius: 20px;
+}
+
+@media (max-width: 991px) {
+	.sidebar {
+		padding: 0 30px;
+	}
+}
+
+@media (max-width: 767px) {
+	.category {
+		margin: 10px 0;
+	}
+}
+
+@media (min-width: 768px) {
+	.category {
+		margin: 10px;
+		width: unset !important;
+	}
+}

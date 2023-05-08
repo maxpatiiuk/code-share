@@ -1,0 +1,24 @@
+## SITE REFERRER BANNING
+
+RewriteCond %{HTTP_REFERER} sharebutton.to [NC,OR]
+RewriteRule .* - [F]
+Redirect 301 http://mambo.zzz.com.ua/shop.html http://mambo.zzz.com.ua/shop/
+Redirect /link/1 https://youpartnerwsp.com/join?89078
+Redirect /shop.html http://shop.mambo.zzz.com.ua/
+Redirect /video.html http://mambo.zzz.com.ua/
+Redirect /video/page/1/ http://mambo.zzz.com.ua/
+Redirect /links.html http://mambo.zzz.com.ua/links/
+Redirect /concurs.html http://mambo.zzz.com.ua/concurs/
+Redirect /wallpaper2.html http://mambo.zzz.com.ua/wallpaper2/
+Redirect /avatar.html http://mambo.zzz.com.ua/avatar/
+Redirect /stream2.html http://mambo.zzz.com.ua/stream2/
+Redirect /3d_game.html http://mambo.zzz.com.ua/3d_game/
+Redirect /coments4.html http://mambo.zzz.com.ua/coments4/
+Redirect /link/2 http://www.ex.ua/load/77134352
+ErrorDocument 404 http://mambo.zzz.com.ua/404.html
+ErrorDocument 400 /400.html/
+Redirect /video/ http://mambo.zzz.com.ua/
+Redirect /video/page/2/ http://mambo.zzz.com.ua/
+Redirect /video/page/3/ http://mambo.zzz.com.ua/
+Redirect /video/page/4/ http://mambo.zzz.com.ua/
+Redirect /shop/ http://shop.mambo.zzz.com.ua/

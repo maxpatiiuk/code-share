@@ -1,0 +1,9 @@
+User-Agent: *
+Disallow: /adm/
+Disallow: /css/
+Disallow: /functions/
+Disallow: /api/
+Disallow: /register/conf.php
+Disallow: /images/
+
+Sitemap: sitemap.xml

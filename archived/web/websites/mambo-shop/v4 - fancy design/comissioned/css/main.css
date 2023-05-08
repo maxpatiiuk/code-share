@@ -1,0 +1,200 @@
+body {
+	background: #eee !important;
+	color: #111 !important;
+	font-family: Tahoma, Geneva, 'Oswald','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode', sans-serif;
+	font-size: 13px;
+	max-width: 100vw;
+	overflow-x: hidden;
+	line-height: 1.5em;
+	outline-color: #bb2;
+}
+body > .row {
+	margin: 0;
+}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+*:not(a):focus {
+	outline: none !important;
+	border:none !important;
+	box-shadow: 0 0 10px #bb2 !important;
+	outline-color: #bb2 !important;
+}
+a, a:link, a:visited, a:hover, a:active {
+	color: #bb2 !important;
+	cursor: pointer !important;
+	text-decoration: none;
+}
+a:focus {
+	box-shadow: none !important;
+	outline-color: none !important;
+}
+a:hover, .comment a {
+	color: #000 !important;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.h1, .h2, .h3, h1, h2, h3 {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	padding-top: 20px; 
+	padding-bottom: 20px; 
+}
+::-webkit-scrollbar {
+	height: 0.5em;
+	width: 0.5em;
+}
+::-webkit-scrollbar-thumb {
+	background: #eee;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+	background: #454545;
+}
+.navbar-toggle .icon-bar {
+	background: #ccc;
+}
+form:not([action="index.php#contactsLink"]) .form-group {
+	display: flex !important;
+}
+a.btn-goldi {
+	color: #000 !important;
+}
+.btn-goldi {
+	border-radius: 0 !important;
+	border: 1px solid #bb2 !important;
+	background: #fff !important;
+	margin-top: 10px;
+}
+.btn-goldi:hover {
+	border-color: #ff0 !important;
+}
+.commentImg {
+	position: absolute;
+	width: 100%;
+	border-radius: 100vw;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+.comment {
+	padding: 0 15px;
+}
+.comment span {
+	color: #444;
+}
+.userCommentText {
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 64px;
+}
+.displayComments {
+	width: 100%;
+	padding-top: 20px;
+	text-align: center;
+	padding: 2vh 0;
+}
+.textH, .commentsH  {
+	display: none;
+}
+.container,.container-fluid {
+	padding-top: 50px;
+}
+.customizedH {
+	color: #000;
+	font-family: 'Oswald','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+}
+h2.customizedH {
+	text-align: center;
+}
+#menu {
+	background: #fff;
+	font-family: 'Oswald','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+	border: 0;
+	border-radius: 0;
+}
+#menu a {
+	text-transform: uppercase;
+	color: #000 !important;
+	font-size: 20px;
+	padding-top: 0;
+	padding-bottom: 0;
+	line-height: 5vh;
+	height: auto;
+}
+.content {
+	min-height: 92vh !important;
+	margin-bottom: 2vh; 
+}
+footer {
+	line-height: 2vh;
+	text-align: center;
+	background: #fff;
+	padding: 2vh 0;
+}
+a.t3 img {
+	width: 2vw;
+	min-width: 60px;
+	padding: 10px;
+}
+.form-control {
+	background: #eee !important;
+	outline: none;
+	border: 1px solid #333 !important;
+	padding: 2px 6px !important;
+	color: #444 !important;
+	border-radius: 0 !important;
+}
+.nav-tabs {
+	border: none !important;
+}
+.form-horizontal {
+	padding: 0 10px; 
+}
+.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+	border-radius: 0	!important;
+	background-color: #fff	!important;
+	border: none !important;
+	color: #000 !important;
+}
+.nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+	color: #bb2 !important;
+	background-color: #fff	!important;
+	border-color: none !important;
+}
+.nav-tabs>li {
+	margin-bottom: 0 !important;
+}
+.page-header {
+	border-bottom: none !important;
+}
+.thumbnail {
+	background-color: #ccc !important;
+	border: none !important;
+}
+.thumbnail .caption {
+	color: #000 !important;
+}
+.nav-tabs {
+	background: #fff !important;
+}
+.comment > a, .comment > div:first-child {
+	padding-bottom: 20%;
+}
+@media (min-width: 768px){
+	.navbar-right {
+		margin-right: 0 !important;
+	}
+}
+@media (max-width: 768px){
+	.navbar-right {
+		margin-top: -7.5px !important;
+	}
+}

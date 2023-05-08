@@ -1,0 +1,220 @@
+body {
+	color: #ccc;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em; 
+	background: #191919;
+}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+a, a:link, a:visited, a.an:hover {
+	color: #fff;
+	font-weight: 800;
+}
+h1 {
+	line-height: 30px;
+}
+a:hover {
+	color: #ccc;
+	font-weight: 800;
+}
+a.ar {
+	font-weight: normal;
+}
+a.ab {
+	color: #333;
+	font-weight: bold;
+}
+a.aw {
+	color: #fff;
+}
+a.ag {
+	color: #ccc;
+}
+a.ad {
+	display: block;
+}
+.p_b {
+	background: #333;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.df {
+	display: flex !important;
+}
+.oh {
+	overflow: hidden;
+}
+.menu {
+	background: #12171b;
+	width: 15%;
+	height: 100vh;
+	min-height: 550px;
+	text-align: right;
+	letter-spacing: 2px;
+	font-family: 'Yanone Kaffeesatz','Lucida Sans Unicode', sans-serif;
+	-webkit-overflow-scrolling: touch;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+.menu a:first-child p {
+	font-size: 240%;
+	line-height: 100%;
+	padding: 0% 10%;
+}
+.menu a:first-child p:first-child {
+	color: #c11;
+	padding-top: 5%;
+}
+.menu a:first-child p:last-child {
+	padding-bottom: 5%;
+}
+.menu a {
+    font-size: 160%;
+}
+a.li {
+	display: inherit;
+	font-weight: 100 !important;
+	padding: 3% 10%;
+	text-transform: uppercase;
+}
+.m_but {
+	display: none;
+}
+.mbut {
+	height: 75px;
+	width: 75px;
+	background-color: #191919;
+	background-image: url(https://s8.hostingkartinok.com/uploads/images/2017/05/51c236b4e5208552bda5850fc69c66de.png);
+	background-size: 97%;
+	background-repeat: no-repeat;
+	border: none;
+	font-size: 0px;
+	outline: none;
+}
+.mbut:hover {
+	background-color: #222;
+}
+.content {
+	width: 85%;
+	min-height: 94vh;
+}
+.down {
+    width: 100%;
+    height: 2vh;
+    text-align: center;
+    background: #111;
+    padding: 2vh 0;
+}
+.show {
+	opacity: 0.5;
+}
+.ow {
+	height: 100%;
+}
+.log a {
+	background: #222;
+	width: 11vw;
+	display: block;
+	padding: 10px 1vw;
+	margin: 1px 1vw;
+}
+.user, .log {
+	margin-top: auto;
+}
+.user {
+	text-align: left;
+}
+.l_f {
+	margin: 0.5vw 2vw;
+	width: 10vw;
+	height: 10vw;
+	border: 0.5vw solid #811;
+	background: #333;
+	border-radius: 100vw;
+}
+.user img {
+	margin: 0 0.5vw 1vw;
+	width: 5vw;
+	height: 5vw;
+	border: 3px solid #811;
+	background: #333;
+	border-radius: 100vw;
+}
+.user a {
+	padding: 0 8%;
+	margin: 0 auto;
+	display: block;
+}
+.fb-comments, .fb-comments iframe[style], .fb-comments span, .fb-comments iframe span[style] {
+	width: 100% !important;
+}
+@media screen and (max-width:1200px) {
+	.menu a:first-child p {
+		font-size: 200%;
+		line-height: 120%;
+	}
+}
+@media screen and (max-width:950px) {
+	.menu a:first-child p {
+		font-size: 150%;
+		line-height: 100%;
+	}
+}
+@media screen and (max-width:900px) {
+	.log a {
+		width: 13vw;
+		font-size: 14px;
+		padding: 10px 1px;
+	}
+}
+@media screen and (max-width:700px) {
+	.menu a:first-child p {
+		font-size: 110%;
+	}
+}
+@media screen and (max-width:650px) {
+	.content {
+		width: 100%;
+		min-height: 86vh;
+	}
+	.menu {
+		width: 30vw;
+		position: fixed;
+		display: none;
+		z-index: 10;
+		top: 0px;
+	}
+	.ow {
+		top: 75px;
+	}
+	.m_but {
+		display: block !important;
+		position: relative;
+	}
+	.user {
+		width: 30vw;
+	}
+	.log a {
+		width: 26vw;
+		font-size: 16px;
+		padding: 10px 1vw;
+	}
+	.down {
+		width: 100%;
+	}
+}
+@media screen and (min-width:650px) {
+	.ow {
+		display: block;
+	}
+}

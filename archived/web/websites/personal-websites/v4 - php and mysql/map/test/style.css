@@ -1,0 +1,51 @@
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+header {
+    min-height: 37vh;
+    background-image: url(http://www.thephotoargus.com/wp-content/uploads/2013/01/mountain-02.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 -100px;
+}
+.cont {
+    background-image: url(https://s8.hostingkartinok.com/uploads/images/2017/05/735aef2fa38597abaad131b8d17af92e.jpg);
+    height: 40vh;
+}
+footer {
+    background: #333;
+    height: 23vh;
+}
+form {
+    width: 40%;
+    position: absolute;
+}
+input.a1 {
+    display: block;
+    width: 90%;
+}
+input {
+    border-radius: 5px;
+    height: 3vh;
+    padding: 5px;
+    border: 0;
+    margin: 10px;
+}
+.a2 {
+    float: left;
+}
+.a2, .a3 {
+    width: 45%;
+    display: initial;
+}
+.a3 {
+    float: right;
+}

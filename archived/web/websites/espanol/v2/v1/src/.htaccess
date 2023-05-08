@@ -1,0 +1,13 @@
+AddDefaultCharset utf-8
+
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_URI} !^/favicon.ico
+RewriteCond %{REQUEST_URI} !^/.htaccess
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteRule ^(.*)$ index.php [NC,L,QSA]
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www. [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [L,NE,R=301]

@@ -1,0 +1,31 @@
+.tabs{
+	display:inline-block;
+}
+.tabs ul{
+	margin:0px;
+	padding:0px;
+}
+.tabs ul:after{
+	content:"";
+	display:block;
+	clear:both;
+	height:5px;
+	background:#1a1a1a;
+}
+.tabs ul li{
+	margin:0px;
+	padding:0px;
+	cursor:pointer;
+	display:block;
+	float:left;
+	padding:10px 15px;
+	background:#666;
+	color:#ccc;
+}
+.tabs ul li.active, .tabs ul li.active:hover{
+	background:#3f3f3f;
+	color:#fff;
+}
+.tabs ul li:hover{
+	background:#d6d6d7;
+}

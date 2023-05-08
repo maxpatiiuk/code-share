@@ -1,0 +1,84 @@
+.title {
+	margin: 2vw;
+}
+.title2 {
+	margin: 2vw 0;
+}
+.w_b {
+	min-height: 9vw;
+	width: 100%;
+}
+.w_b img {
+    height: 4vw;
+    padding: 2.5vw;
+}
+.w_b h3 {
+	padding: 1.5vw 0 0.5vw;
+}
+.information * {
+    margin: 20px;
+}
+.information img {
+	width: 69vw;
+	margin: 1vh 0 !important;
+}
+#login a {
+    width: auto;
+}
+#login input, #login a:not(.f-l-link){
+	display: flex;
+	border: 1px solid #141414;
+	padding: 1vh;
+	background: #222;
+	color: #ccc;
+	outline: none;
+}
+input[type="radio"], input[type="checkbox"] {
+	display: inline !important;
+}
+.pad2vw {
+	padding: 2vw;
+    min-height: 86vh;
+}
+.f_i_t {
+	width: 70vw;
+}
+.but {
+	width: 6vw;
+	min-width: 75px;
+	font-weight: 800;
+}
+label input {
+    margin: 3px 10px 0 0;
+}
+.profile {
+    overflow: hidden;
+}
+.profile .tab_c {
+    padding: 1vw;
+}
+.prof_img {
+	margin: 0 1vw 40% 0;
+}
+#login {
+    width: 90vw;
+	padding: 1vw;
+}
+a.title.l p:last-child {
+	text-align: center;
+}
+.dark {
+	background: #444;
+}
+@media screen and (max-width:1000px) {
+	.prof_img {
+		width: 15vw;
+		height: 15vw;
+		margin: 0 100% 0 0;
+	}
+}
+@media screen and (max-width:600px) {
+	.prof_img {
+		margin: 1vw 84vw 1vw 0;
+	}
+}

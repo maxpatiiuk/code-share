@@ -1,0 +1,172 @@
+
+.blooock .right li {
+    padding: 9px 9px 9px 0;
+}
+.blooock li:nth-child(2n+1) {
+}
+.blooock li {
+    list-style: outside none none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.disc-view ul, li, dl, dt, dd {
+    margin: 0;
+    padding: 0;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+.blooock {
+    color: #fff;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+body {
+    font: 12px/1.3em Arimo,Arial,Tahoma,Verdana;
+}
+
+
+.blooock ul.right {
+    float: left;
+    width: 90px;
+}
+.right {
+    float: left;
+    width: 784px;
+}
+
+
+.blooock .left li {
+    padding: 9px;
+}
+
+
+.blooock ul.left {
+    float: left;
+    font-weight: bold;
+    width: 110px;
+}
+.left {
+    float: left;
+    width: 176px;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+.blooock {
+    color: #fff;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+
+.blooock {
+    background: #333333 url("/img/buy-block-bg.png") repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    float: left;
+    font-size: 10px;
+    height: 197px;
+    text-transform: uppercase;
+    width: 211px;
+}
+
+
+span.check {
+    background: rgba(0, 0, 0, 0) url("/img/check.png") repeat scroll 0 0;
+    display: inline-block;
+    height: 12px;
+    margin-right: 5px;
+    width: 14px;
+}
+
+.delivery {
+    color: #000;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+
+.divlef {
+    float: left;
+}
+
+
+.garantbutton {
+    background: #ff9100 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    float: left;
+    font-family: "Open Sans",sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    height: 65px;
+    line-height: 65px;
+    margin: 15px auto;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    width: 210px;
+}
+
+
+element.style {
+    background-image: url("/uploads/1945391.jpg");
+    background-size: 100% auto;
+}
+.big-img {
+    border-radius: 3px;
+    height: 119px;
+    width: 256px;
+}
+
+
+.buy-block {
+    background: #333333 url("/img/buy-block-bg.png") repeat scroll 0 0;
+    border-radius: 3px;
+    height: 47px;
+    margin-top: 6px;
+    padding-top: 25px;
+    text-align: center;
+    width: 256px;
+}
+
+
+.big-price {
+    color: #fff;
+    font-size: 30px;
+    padding-left: 17px;
+}
+
+.buy-block {
+    text-align: center;
+}
+
+
+.big-price span {
+    font-family: Arial,sans-serif;
+    font-size: 40px;
+}
+
+
+.big-price span {
+    font-family: Arial,sans-serif;
+    font-size: 40px;
+}
+
+.safe {
+    color: #000;
+    font-size: 12px;
+    height: 15px;
+    margin: 14px 0 0 40px;
+    text-transform: uppercase;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font: 12px/1.3em Arimo,Arial,Tahoma,Verdana;
+}

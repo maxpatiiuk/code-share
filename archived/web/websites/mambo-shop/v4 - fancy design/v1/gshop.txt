@@ -1,0 +1,31 @@
+SHOP
+Які будуть мови - UA - EN - RU - DE
+Хостинг?
+Домен?
+Скільки адміністраторів - 1
+Як користувачі мають змінювати мову?
+
+create ?lang=1|2|3|4 will rewrite cookie + if isset get - use it, else if _ID_!=-1 and isset lang from sql, use this lang, else use cookie, else use primaty lang
+add to users, which lang was used during registration
+
+adm inputs:
+name 3
+price 3
+o0 3
+o1 3
+category 3
+display on main p
+display on menu
+img x
+unlimited photos
+Укр рус нім англ
+В магазині сорт
+
+UA - EN - RU - DE
+
+basket
+replace def image for posts and users
+
+
+____
+add Everything into a2input

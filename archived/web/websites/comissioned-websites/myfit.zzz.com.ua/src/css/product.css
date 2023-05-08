@@ -1,0 +1,61 @@
+.extraSpace .row {
+	padding: 10px 0;
+}
+.item {
+	padding-top: 56.25%;
+	width: 100%;
+	position: relative;
+}
+.item img {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+h1, .buy-container *, .special {
+	font-family: 'Montserrat','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+}
+.price {
+	font-size: 36px;
+	padding: 20px 0; 
+}
+.buy-container a, .buy-container a.limed:hover, .limed-container a.limed:hover, .limed-container > a:first-child {
+	color: var(--wh) !important;
+	border: 4px solid var(--a1);
+	background: unset;
+}
+.buy-container *, .limed-container a.limed {
+	line-height: 50px;
+	height: 58px;
+	font-size: 28px;
+}
+.buy-container a img, .limed-container a.limed img {
+	height: 90%;
+	margin-bottom: 8px;
+}
+.buy-container a:hover, .buy-container a.limed, .limed-container a.limed {
+	background: var(--a1);
+}
+.socialMedia img {
+	float: left;
+	height: 48px;
+	width: 48px;
+	padding: 8px;
+}
+.socialMedia img:hover {
+	filter: opacity(.3) drop-shadow(0 0 0 var(--a1));
+}
+.col-sm-7 p {
+	color: var(--scroll);
+}
+p.special {
+	line-height: 46px;
+	font-size: 20px;
+}
+p.special img {
+	width: 32px;
+	height: 32px;
+	margin: 0 5px;
+}

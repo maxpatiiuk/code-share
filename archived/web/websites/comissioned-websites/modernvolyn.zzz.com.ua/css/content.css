@@ -1,0 +1,55 @@
+.cont p {
+	text-align: justify;
+}
+.cont img {
+	max-width: 45%;
+	min-width: 200px;
+	height: auto;
+	display: block;
+	padding: 2%;
+}
+.centerImg {
+	margin: 0 auto;
+	width: auto;
+	max-width: 100%;
+	float: none;
+	padding: 2% 0;
+}
+.chip{
+	margin:10px 0;
+	display: inline-block;
+	padding: 0 25px;
+	height: 50px;
+	font-size: 16px;
+	line-height: 50px;
+	border-radius: 100vw;
+	background-color: #f1f1f1;
+}
+.chip img {
+	margin: 0 10px 0 -25px;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
+@media (min-width: 768px){
+	.r_sm {
+		float: right!important;
+	}
+	.chip {
+		float : left;
+	}
+}
+@media (max-width: 768px){
+	.chip {
+		display: block;
+	}
+}
+@media (max-width: 800px){
+	.cont img {
+		margin: 0 auto;
+		width: auto;
+		max-width: 100%;
+		float: none;
+		padding: 2% 0;
+	}
+}

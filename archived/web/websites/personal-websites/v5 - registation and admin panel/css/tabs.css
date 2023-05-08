@@ -1,0 +1,33 @@
+.tabs {
+	border-bottom: 5px solid #811;
+}
+.prod .tabs {
+	border: none;
+	padding-top: 2vh;
+}
+.tabs button {
+	padding: 10px;
+	border: none;
+	background: #222;
+	color: #ccc;
+	outline: none;
+}
+.tabs button:hover, .tabs button.cur {
+	background: #811;
+}
+.tab_c {
+	min-height: 40vh;
+	overflow: hidden; 
+}
+.prod .tab_c {
+	min-height: 38vh;
+	width: 50%;
+	padding: 1vw;
+	background: #333;
+}
+@media screen and (max-width:750px) {
+	.prod .tab_c {
+		width: 97.6%;
+		font-size: 17px;
+	}
+}

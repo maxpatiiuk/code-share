@@ -1,0 +1,103 @@
+body {
+	color: #191919;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em; 
+	background: #ccc;
+}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	outline: none;
+}
+a, a:link, a:visited, a.an:hover {
+	color: #000;
+	font-weight: 800;
+}
+h1 {
+	line-height: 30px;
+}
+a:hover {
+	color: #222;
+}
+a.ar, .ar {
+	font-weight: normal;
+}
+a.aw, .aw {
+	color: #fff;
+}
+a.ag, .ag {
+	color: #191919;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.menu {
+	background: #4b5;
+	max-width: 100vw;
+	height: 5vh;
+	letter-spacing: 2px;
+}
+.menu a:hover {
+	background: #4c5;
+}
+.menu a {
+	text-transform: uppercase;
+	padding: 0 1vw;
+	font-size: 18px;
+	line-height: 5vh;
+}
+#content {
+	min-height: 90vh;
+	background: #fff;
+	max-width: 1500px;
+	width: 1500px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.down {
+	width: 100%;
+	height: 5vh;
+	text-align: center;
+	background: #4b5;
+	line-height: 5vh;
+}
+#content > .l {
+    width: 55vw;
+    min-height: 88vh;
+    padding: 1vh 1vw;
+    height: 100%;
+    overflow: hidden;
+}
+#content > .r {
+    width: 19vw;
+    min-height: 88vh;
+    padding: 1vh 1vw;
+    height: 100%;
+    overflow: hidden;
+}
+.l_f {
+	margin: 0.5vw 2vw;
+	width: 10vw;
+	height: 10vw;
+	border: 0.5vw solid #811;
+	background: #333;
+	border-radius: 100vw;
+}
+.user img {
+	width: 2.5vw;
+	height: 2.5vw;
+	margin-right: 0.5vw;
+	background: #333;
+	border-radius: 100vw;
+}
+.user > a {
+	display: flex;
+}
+.fb-comments, .fb-comments iframe[style], .fb-comments span, .fb-comments iframe span[style] {
+	width: 100% !important;
+}

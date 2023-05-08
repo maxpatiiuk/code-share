@@ -1,0 +1,37 @@
+﻿<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>1.00</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/login/</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/register/</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.80</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/profile/</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.70</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/light</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.70</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/profile/?d=all</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.60</priority>
+	</url>
+	<url>
+		<loc>https://test.mambo.zzz.com.ua/profile/?id=1</loc>
+		<lastmod>2018-02-23T13:04:00+00:00</lastmod>
+		<priority>0.60</priority>
+	</url>
+</urlset>

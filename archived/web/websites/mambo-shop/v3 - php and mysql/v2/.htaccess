@@ -1,0 +1,8 @@
+//301 Redirect Entire Site
+Redirect 301 / http://shop.mambo.in.ua/
+
+//Prevent viewing of .htaccess file
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>

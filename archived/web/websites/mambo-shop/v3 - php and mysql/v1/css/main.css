@@ -1,0 +1,53 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #ccc;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em; 
+	background-color: #666666;
+	background-image: url(http://s8.hostingkartinok.com/uploads/images/2016/12/eb0bc08ab2b3d06cdfa0e74a07f76958.jpg);
+    background-size: 100%;
+	background-repeat: repeat;	
+}
+h1, h2, h3, h4, h5, h6 { color: #000; }
+h1 { font-size: 40px; font-weight: normal; margin: 0 0 20px 0; padding: 5px 0; }
+h2 { font-size: 28px; font-weight: normal; margin: 0 0 20px 0; padding: 10px 0 15px 0; color: #ccc;}
+h3 { font-size: 21px; font-weight: normal; margin: 0 0 15px 0; padding: 0; padding: 0 0 10px 0; }
+h4 { font-size: 18px; margin: 0 0 20px 0; padding: 0 0 10px 0; ; }
+h5 { font-size: 16px; margin: 0 0 10px 0; padding: 0; }
+h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
+
+a, a:link, a:visited { color: #222; text-decoration: none; font-weight: 800px}
+a:hover { color: #000; text-decoration: none; font-weight: 800px}
+a.hhh1:hover { color: #595959; text-decoration: none; }
+ul { margin: 0; padding: 0; }
+ul li { margin: 0; padding: 0; }
+
+a.ab {
+	color:#333;
+}
+a.aw {
+	color:#fff;
+}
+a.ag {
+	color:#ccc;
+}
+.menus {
+	background: #0d0d0d;
+	line-height: 34px;
+	height: 39px;
+}
+.menu {
+    width: 1000px;
+	margin: 0 auto;
+}
+.menu a {
+	font-weight: 800;
+	color: #fff;
+	margin-right: 20px;
+	display: inline-block;
+}
+.menu a:hover {
+	border-bottom: 5px solid #0BF;;
+}

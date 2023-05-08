@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^thelimebrand.com/ [NC,OR]
+RewriteCond %{HTTP_HOST} ^thelimebrand.com/ [NC]
+RewriteRule ^(.*)$ https://thelimebrand.com/$1 [L,R=301,NC]

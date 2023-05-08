@@ -1,0 +1,94 @@
+.format {
+	width: 104%;
+}
+.pro {
+	height: 15vw;
+	width: 23.3%;
+	margin: 0 1% 1% 0;
+	color: #ccc !important;
+	font-size: 2vh;
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	border: 1px solid #811;
+}
+.pro:hover, .pro:hover .p_n, .pro:hover div {
+	background: #333 !important;
+	color: #fff !important;
+}
+.pro img {
+	height: 11.5vw;
+	width: 100%;
+}
+.pro div {
+	position: absolute;
+	right: 0;
+	padding: 4%;
+	background: #191919;
+}
+.pro:hover div {
+	background: #222;
+}
+.pro .p_n {
+    width: 90%;
+    z-index: 5;
+    position: absolute;
+    bottom: 0;
+    display: block;
+    padding: 5%;
+    text-align: center;
+    line-height: 1.1em;
+    font-size: 18px;
+    background: #191919;
+}
+.pro .p_p {
+	color: #c11;
+}
+@media screen and (max-width:1500px) {
+	.pro {
+		height: 17vw;
+	}
+}
+@media screen and (max-width:1250px) {
+	.pro {
+		height: 18vw;
+	}
+	.pro img {
+		height: 15vw;
+	}
+	.pro .p_n {
+		font-size: 17px;
+	}
+}
+@media screen and (max-width:1000px) {
+	.pro {
+		height: 20vw;
+	}
+}
+@media screen and (max-width:850px) {
+	.pro {
+		height: 23vw;
+		width: 31.4%;
+	}
+	.pro .p_n {
+		padding-top: 3% !important;
+	}
+}
+@media screen and (max-width:650px) {
+	.pro {
+		height: 35vw;
+		width: 47.6%;
+	}
+	.pro img {
+		height: 25vw;
+	}
+	.pro .p_n {
+		padding-left: 3%;
+		width: 94%;
+	}
+}
+@media screen and (max-width:450px) {
+	.pro {
+		height: 40vw;
+	}
+}

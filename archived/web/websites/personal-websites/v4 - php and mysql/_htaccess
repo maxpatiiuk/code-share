@@ -1,0 +1,5 @@
+## SITE REFERRER BANNING
+
+RewriteCond %{HTTP_REFERER} sharebutton.to [NC,OR]
+RewriteRule .* - [F]
+Redirect 301 /s-life/ https://yadi.sk/d/I0MjFYX-3GPyZj

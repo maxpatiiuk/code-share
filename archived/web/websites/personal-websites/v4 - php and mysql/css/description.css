@@ -1,0 +1,40 @@
+.p_name {
+	font-size: 30px;
+	padding: 10px 0 20px 0;
+}
+.p_others {
+	font-size: 11px;
+	color: #333;	
+}
+.p_text {
+	font-size: 14px;
+	padding: 20px 0;
+}
+.p_clock {
+    height: 14px;
+    width: 18px;
+    padding: 3px 0 0 0;
+}
+.p_clock, .p_date {
+	float: left;
+}
+.l_button {
+	background-color:#1eade1;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:20px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-align: center;
+	width: 640px;
+}
+.l_button:hover {
+	background-color:#2bb9ed;
+	color: #fff;
+}
+.l_button:active {
+	position:relative;
+	top:1px;
+}

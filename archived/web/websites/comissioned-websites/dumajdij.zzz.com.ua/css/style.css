@@ -1,0 +1,62 @@
+.posts {
+	border-bottom: 1px solid #ccc;
+	padding: 2vh;
+	overflow: hidden;
+}
+h2,h4 {
+	margin-top: 0;
+}
+.posts a h2 {
+	line-height: 30px;
+	margin: 0;
+}
+.posts a img:first-child {
+	max-height: 100%;
+	padding-right: 2vw;
+	width: 20%;
+	min-width: 100px;
+}
+.posts div {
+	line-height: 14px;
+	padding: 0.4vw 0;
+	font-size: 80%;
+}
+.posts div img {
+	padding-right: 0.2vw;
+}
+.carousel-inner>.item>a>img, .carousel-inner>.item>img {
+	width: 100vw;
+	height: 30vw;
+}
+.carousel h3, .carousel a, .carousel a:link, .carousel a:visited {
+	color: #eee;
+}
+@media (max-width: 1016px){
+	.block {
+		height: 460px;
+	}
+}
+@media (max-width: 800px){
+	.block {
+		height: 400px;
+	}
+}
+@media (max-width: 730px){
+	.block {
+		height: 240px;
+	}
+	.btext {
+		margin-top: 5%;
+		padding: 5px;
+		font-size: 12px;
+	}
+	.tb {
+		font-size: 22px;
+	}
+}
+@media (max-width: 400px){
+	.block {
+		height: 170px;
+		font-size: 10px;
+	}
+}

@@ -1,0 +1,54 @@
+.extraSpace .row {
+	padding: 10px 0;
+}
+.item {
+	padding-top: 56.25%;
+	width: 100%;
+	position: relative;
+}
+.item img {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+h1, .buy-container *, .special {
+	font-family: 'Oswald','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+}
+.buy-container a {
+	color: #000 !important;
+	background: #bb2;
+}
+.buy-container div {
+	background: #ccc;
+}
+.buy-container * {
+	line-height: 75px;
+	font-size: 28px;
+}
+.buy-container a:hover {
+	background: #ff0;
+}
+.socialMedia img {
+	float: left;
+	height: 48px;
+	width: 48px;
+	padding: 8px;
+}
+.socialMedia img:hover {
+	filter: opacity(.3) drop-shadow(0 0 0 #bb2);
+}
+.col-sm-7 p {
+	color: #555;
+}
+p.special {
+	line-height: 46px;
+	font-size: 20px;
+}
+p.special img {
+	width: 32px;
+	height: 32px;
+	margin: 0 5px;
+}

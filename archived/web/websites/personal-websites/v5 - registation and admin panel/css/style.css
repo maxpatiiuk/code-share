@@ -1,0 +1,25 @@
+.posts {
+    border-bottom: 1px solid #ccc;
+    padding: 2vh;
+    height: 18vh;
+    overflow: hidden;
+}
+.posts a {
+    font-size: 28px;
+    line-height: 24px;
+}
+.posts a:hover {
+    color: #4b5;
+}
+.posts img:first-child {
+    height: 18vh;
+    padding-right: 2vw;
+}
+.posts div {
+    display: flex;
+    line-height: 14px;
+    padding: 0.3vh 0;
+}
+.posts div img {
+    padding-right: 0.2vw;
+}

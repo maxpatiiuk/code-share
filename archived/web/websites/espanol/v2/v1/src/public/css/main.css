@@ -1,0 +1,18 @@
+@import 'config.css';
+@import 'framework.css';
+
+#menu {
+	background: var(--b2);
+	border-bottom: 1px solid var(--b3);
+	padding-top: 10px;
+	margin-bottom: 30px;
+}
+
+#logo {
+	background: var(--logo) no-repeat center/contain var(--brand);
+	border-radius: 100%;
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+	display: block;
+}

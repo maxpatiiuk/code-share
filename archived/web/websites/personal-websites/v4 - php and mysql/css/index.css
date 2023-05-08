@@ -1,0 +1,39 @@
+.i_post {
+	width: 700px;
+	height: 170px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.i_post:hover {
+	background-color: #f2f2f2;
+}
+.i_p_text {
+    float: left;
+    padding: 0 0 37px 20px;
+    width: 414px;
+    height: 150px;
+}
+.i_p_name, .i_p_name_i{
+	font-size: 20px;
+}
+.i_p_name_i {
+    font-weight: 600;
+}
+.i_p_text {
+	font-weight: 100;
+}
+.i_p_description {
+    font-size: 13px;
+    padding-top: 8px;
+}
+
+.i_p_clock {
+    height: 14px;
+    width: 18px;
+    padding: 3px 0 0 0;
+}
+.i_p_clock, .i_p_date {
+	float: left;
+	font-size: 11px;
+	color: #333;	
+}

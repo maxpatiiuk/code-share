@@ -1,0 +1,16 @@
+User-Agent: *
+Disallow: 
+Disallow: /adm/
+Disallow: /api/
+Disallow: /css/
+Disallow: /function/
+Disallow: /map/
+Disallow: /.php56
+Disallow: /.htaccess
+Allow: /index.php
+Allow: /p/
+Allow: /login/
+Allow: /register/
+Allow: /profile/
+
+Sitemap: http://mambo.in.ua/map.txt

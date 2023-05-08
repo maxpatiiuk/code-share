@@ -1,0 +1,183 @@
+.colors0, .colors, .colors1, .colors2 {
+	background: #cc0000;
+	width: 50px;
+	height: 50px;
+	float: left;
+	border-radius: 25px;
+	box-shadow: 10px 10px 1px #888888;
+	transition: 0.1s;
+	margin: 10px;
+	cursor: pointer;
+}
+.colors0:active, .colors:active, .colors1:active, .colors2:active {
+	background: #800000;
+	box-shadow: 0px 0px 1px #888888;
+	transition: 0.1s;
+}
+* {
+	font-size:50px;
+	transition: 0.1s;
+	text-decoration: none;
+}
+span {
+	background: #d9d9d9;
+}
+.colors0:active ~ span {
+	border-left: 5px solid #6f6;
+}
+.divv, .divv2 {
+	transition: 1s;
+	float: left;
+	height: 100px;
+}
+.divv {
+	width: 10px;
+	background: #333;
+	transition-delay: 1s;
+}
+.colors:active ~ .divv, .colors1:active ~ .divv {
+	width: 100px;
+}
+.colors:active ~ .s1, .colors1:active ~ .s1 {
+	background: #0f0;
+}
+.colors:active ~ .s2, .colors1:active ~ .s2 {
+	background: #06f;
+}
+.colors:active ~ .s3, .colors1:active ~ .s3 {
+	background: #ff0;
+}
+.colors:active ~ .s4, .colors1:active ~ .s4 {
+	background: #c00;
+}
+.colors:active ~ .s5, .colors1:active ~ .s5 {
+	background: #0fc;
+}
+.colors:active ~ .s6, .colors1:active ~ .s6 {
+	background: #606;
+}
+.colors:active ~ .s7, .colors1:active ~ .s7 {
+	background: #f30;
+}
+.colors:active ~ .s8, .colors1:active ~ .s8 {
+	background: #f0f;
+}
+.colors1:active ~ .s1 {
+	transition-delay: 0.5s;
+}
+.colors1:active ~ .s2 {
+	transition-delay: 1s;
+}
+.colors1:active ~ .s3 {
+	transition-delay: 1.5s;
+}
+.colors1:active ~ .s4 {
+	transition-delay: 2s;
+}
+.colors1:active ~ .s5 {
+	transition-delay: 2.5s;
+}
+.colors1:active ~ .s6 {
+	transition-delay: 3.5s;
+}
+.colors1:active ~ .s7 {
+	transition-delay: 4s;
+}
+.colors1:active ~ .s8 {
+	transition-delay: 4.5s;
+}
+.colors2:active ~ .d1 {
+	color: #00ff00;
+}
+.colors2:active ~ .d2 {
+	color: #0066ff;
+}
+.colors2:active ~ .d3 {
+	color: #ffff00;
+}
+.colors2:active ~ .d4 {
+	color: #cc0000;
+}
+.colors2:active ~ .d5 {
+	color: #00ffcc;
+}
+.colors2:active ~ .d6 {
+	color: #660066;
+}
+.divv2 {
+	font-size: 100px;
+	color: #333;
+}
+.colors2:active ~ .divv2 {
+	font-size: 200px;
+}
+div.d {
+	width: 100px;
+	margin-left: 100px;
+	height: 100px;
+	background: red;
+	transition: width 2s, height 2s, transform 10000000s;
+}
+div.d:hover {
+	width: 300px;
+	height: 300px;
+	transform: rotate(1800000000000000deg);
+}
+div.g:hover {
+	background: #fff;
+	transition: 0.5s;
+	transition-delay: 0s;
+}
+div.b:hover {
+	background: #666;
+	transition: 2s;
+	transition-delay: 2s;
+}
+div.s:hover {
+	background: #333;
+	transition: 4s;
+	transition-delay: 4s;
+}
+div.l:hover {
+	background: #000;
+	transition: 1s;
+	transition-delay: 1s;
+}
+.model2 {
+	background: #000;
+	color: #fff;
+}
+.model3 {
+	-webkit-animation: rainbow 0.1s 999999999 linear;
+}
+@-webkit-keyframes rainbow {
+	0% {
+		background: #fff;
+	}
+	100% {
+		background: #000;
+	}
+}
+.mode {
+	float: left;
+	border: 5px solid #666;
+	margin: 5px;
+	width: 50px;
+	height: 50px;
+	border-radius: 30px;
+	text-align: center;
+	transition: 0.5s;
+}
+.mode:hover {
+	border-color: red;
+}
+.l1 {
+	background: #fff;
+}
+.l2 {
+	background: #000;
+}
+.l3 {
+	background: #0f0;
+	color: #fff;
+}

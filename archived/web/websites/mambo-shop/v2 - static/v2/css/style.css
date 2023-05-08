@@ -1,0 +1,278 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #333;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em; 
+	background-color: #666666;
+	background-image: url(http://s8.hostingkartinok.com/uploads/images/2016/09/28d20ff98034bf44ac7d866f940ce44f.jpg);
+    background-size: 100%;
+    background-attachment:fixed; 
+	background-repeat: repeat;	
+}
+h1, h2, h3, h4, h5, h6 { color: #000; }
+h1 { font-size: 40px; font-weight: normal; margin: 0 0 20px 0; padding: 5px 0; }
+h2 { font-size: 28px; font-weight: normal; margin: 0 0 20px 0; padding: 10px 0 15px 0; }
+h3 { font-size: 21px; font-weight: normal; margin: 0 0 15px 0; padding: 0; padding: 0 0 10px 0; }
+h4 { font-size: 18px; margin: 0 0 20px 0; padding: 0 0 10px 0; ; }
+h5 { font-size: 16px; margin: 0 0 10px 0; padding: 0; }
+h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
+
+a, a:link, a:visited { color: #e6e6e6; text-decoration: none; }
+a:hover { color: #f2f2f2; text-decoration: none; }
+a.hhh1:hover { color: #595959; text-decoration: none; }
+ul { margin: 0; padding: 0; }
+ul li { margin: 0; padding: 0; }
+
+    .buy {
+	border: solid 1px #dddddd;
+	width: 300px;
+	} 
+    .buy1 {
+	border: solid 1px #dddddd;
+	width: 1000px;
+	background: #FFFFFF;
+	}
+    .buy2 {
+	border: solid 1px #dddddd;
+	width: 1000px;
+	background: #f6f6f6;
+	} 	
+    .buy1:hover {
+	border: solid 1px #000000;
+	width: 1000px;
+	background: #4d4d4d;	
+	} 
+    .buy2:hover {
+	border: solid 1px #000000;
+	width: 1000px;
+	background: #4d4d4d;	
+	} 	
+	.prise1 {
+	background: #f6f6f6;
+	padding: 10px;
+	width: 700px;
+	} 
+	.prise2 {
+	background: #FFFFFF;
+	padding: 10px;
+	width: 700px;	
+	} 	
+	.prise {
+	background: #f6f6f6;
+	width: 280px;
+	padding: 10px;
+	} 
+	.buybutton {
+	background: #008cba;
+	padding: 10px;
+	}
+	.ruless {
+	background: PeachPuff;
+	padding: 10px;
+	}
+	.rul2 {
+	background: GhostWhite;
+	}
+	.hhh1 {
+	color: #000000;
+	}
+	.hhh2 {
+	color: #000000;
+	}	
+	
+	.buy1:hover .prise1{background:#3F3F3F;color="EF0000";}
+	.buy1:hover .hhh1{font-color:#FFFFFF;}
+			
+	
+	.buy2:hover .prise2{background:#3F3F3F;color="EF0000";}
+	.buy2:hover .hhh2{font-color:#FFFFFF;}
+
+.tabs2{
+	display:inline-block;
+
+}
+.tabs2 > div{
+	padding-top:10px;
+	height: 550px;
+}
+.tabs2 ul{
+	margin:0px;
+	padding:0px;
+}
+.tabs2 ul:after{
+	content:"";
+	display:block;
+	clear:both;
+	height:5px;
+	background:#e9eaeb;
+}
+.tabs2 ul li{
+	margin:0px;
+	padding:0px;
+	cursor:pointer;
+	display:block;
+	float:left;
+	padding:10px 15px;
+	background:#181a1b;
+	color:#707070;
+}
+.tabs2 ul li.active, .tabs ul li.active:hover{
+	background:#e9eaeb;
+	color:#404040;
+}
+.tabs2 ul li:hover{
+	background:#d6d6d7;
+}
+ul.css-menu-3 {
+list-style: none;
+padding: 11px;
+background: #404040;
+}
+
+ul.css-menu-3 li {
+display: inline
+}
+
+ul.css-menu-3 li a {
+color: #fefefe;
+text-decoration: none;
+background: #404040;
+font-weight: 800;
+font-size: 2;
+color: #fff;
+margin: 0;
+padding: 10px 14px 14px 10px
+}
+ul.css-menu-3 li a:hover {
+	background: #4d4d4d;
+}
+.title33 {
+	background: #0d0d0d;
+	color: #f2f2f2;
+    box-sizing: border-box;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.randomm {
+	background: #333333;
+	color: white;
+}
+.content {
+	width: 1000px;
+	background: #ffffff;
+	height: 100%;
+    margin: 0 auto;
+}
+#down {
+	width: 100%;
+	background: #000;
+	color: #404040;
+	text-align: center;
+}
+a.down {
+	  color: #e6e6e6;
+}
+.dis {
+	background: #f2f2f2;
+	color: #000;
+}
+.faq {
+	padding: 20px;
+}
+.contacts {
+padding: 40px;
+}
+
+.shotab0{
+	width: 1000px;	
+	}
+.shotab1 {
+	width: 490px;
+	float: left;
+	background: #f2f2f2;
+	padding: 20px;	
+	}
+.shomenu {
+	width: 427px;	
+	float: right;
+	}
+.tablas {
+    vertical-align: top;
+}	
+.qazw1 {
+	padding: 20px;	
+}
+
+	.buyy1:hover a.buyy2{background:url(http://s8.hostingkartinok.com/uploads/images/2016/09/4cf733721e893776508f46082902f56f.jpg);}
+	.buyy2:hover a.buyy1{background:url(http://s8.hostingkartinok.com/uploads/images/2016/09/5e228e5d794a984e2f9c166d484ca10c.jpg);}
+
+   a.buyy1 {
+    background: url(http://s8.hostingkartinok.com/uploads/images/2016/09/91a7fac35c02765beca557cd51a7e889.jpg);
+    display:block;
+    width:137px;
+    height:61px;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 50px;
+    padding-top: 20%;	
+	}
+   a.buyy1:hover {
+    background: url(http://s8.hostingkartinok.com/uploads/images/2016/09/5e228e5d794a984e2f9c166d484ca10c.jpg);
+   }   
+   a.buyy2 {
+    background: url(http://s8.hostingkartinok.com/uploads/images/2016/09/09259e68e6ac5a5f145d6c505f3a50cf.jpg);
+    display:block;
+    width:260px;
+    height:89px;
+	
+   }
+   a.buyy2:hover {
+    background: url(http://s8.hostingkartinok.com/uploads/images/2016/09/4cf733721e893776508f46082902f56f.jpg);
+	}  
+	
+#text {
+	margin: 20px;
+}
+.center2 {
+    margin: 0 auto;
+    width: 1004px;
+	height: 100px;
+    line-height: 1px;
+   }
+.tabs{
+	display:inline-block;
+}
+.tabs > div{
+	padding-top:10px;
+}
+.tabs ul{
+	margin:0px;
+	padding:0px;
+}
+.tabs ul:after{
+	content:"";
+	display:block;
+	clear:both;
+	height:5px;
+	background:#666666;
+}
+.tabs ul li{
+	margin:0px;
+	padding:0px;
+	cursor:pointer;
+	display:block;
+	float:left;
+	padding:10px 15px;
+	background:#e9eaeb;
+	color:#707070;
+}
+.tabs ul li.active, .tabs ul li.active:hover{
+	background:#666666;
+	color:#fff;
+}
+.tabs ul li:hover{
+	background:#d6d6d7;
+}

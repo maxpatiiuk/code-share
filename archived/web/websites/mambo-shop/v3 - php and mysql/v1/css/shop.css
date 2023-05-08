@@ -1,0 +1,51 @@
+.s1 {
+	background: #3F3F3F;
+}
+.s2 {
+	background: #333;	
+}
+.s1, .s2 {
+	width: 1000px;
+	height: 100px;
+	color: #000;
+}
+.s1:hover, .s2:hover {
+	background: #f2f2f2;
+}
+.s1_img, .s2_img {
+	width: 128px;
+	float: left;
+}
+.s1_name, .s2_name {
+	width: 700px;
+	float: left;
+    line-height: 5em;
+	font-weight: 300;
+	color: #ccc;
+	font-size: 18px
+}
+.s1_name:hover, .s2_name:hover, .s1:hover .s1_name, .s2:hover .s2_name {
+	color: #333;
+}
+.s1_price, .s2_price {
+	color: #00BFFF;
+	font-weight: 600;
+	padding: 40px 0 0 0;
+	padding-right: 20px;
+}
+.val:hover, .s1_price:hover, .s2_price:hover, .s1:hover .val, .s2:hover .val {
+	color: #333;
+}
+.val {
+	color: #ccc;
+	padding: 0 5 0 0;
+	float: right;	
+}
+.val, .val1, s1_name {
+	font-family: Verdana, Geneva, sans-serif;	
+	font-size: 18px;	
+}
+.val1 {
+	color: #0BF;
+	float: right;	
+}

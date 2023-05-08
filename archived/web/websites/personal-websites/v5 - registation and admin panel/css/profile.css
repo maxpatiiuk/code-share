@@ -1,0 +1,26 @@
+.colors div {
+	display: inline;
+}
+.colors input {
+	display: none !important;
+}
+div:first-child span {
+	background: #000;
+}
+input[type="radio"]:checked + label span {
+	border: 5px solid #CC3300;
+}
+input[type="radio"] + label span {
+	border: 5px solid #ccc;
+	display: inline-block;
+	width: 2vw;
+	height: 2vw;
+	margin: 0 0 0.4vw 0;
+	vertical-align: middle;
+	cursor: pointer;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+.colors div:last-child span {
+	background: #fff;
+}

@@ -1,0 +1,87 @@
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+body {
+	font-family: Tahoma, Geneva, sans-serif;
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+h3 {
+	color: #666;
+}
+p {
+	color: #999;
+}
+a, a:link, a:visited {color:#555;}/*color: #222;*/
+a:hover { color: #000;}
+a.ab {
+	color:#333;
+	font-weight: bold;
+}
+a.aw {
+	color:#fff;
+}
+a.ag {
+	color:#ccc;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.hidden {
+	display:none !important;
+}
+form {
+	overflow: hidden;
+}
+.down {
+	padding: 1% 13%;
+	margin-top: 10px;
+}
+.down div {
+	height: auto;
+	width: 18%;
+	padding: 1% 2%;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+.nav-tabs>li>a {
+	cursor: pointer;
+}
+.navbar-brand, .navbar-nav li a {
+	line-height: 75px;
+	height: 75px;
+	padding-top: 0;
+}
+.navbar-collapse > .nav > li > a {
+	padding: 0 6px;
+}
+.navbar-toggle .icon-bar {
+	margin: 6px;
+	width: 30px;
+	height: 4px;
+}
+.page-header {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.down div:first-child {
+	text-align: justify;
+}
+.down h4 {
+	color: #ddd;
+	padding: 25px 0 10px 0;
+}
+.l_down {
+	background-color: #222;
+	padding: 2%;
+	color: #888;
+}
+.down img {
+	width: 18%;
+}

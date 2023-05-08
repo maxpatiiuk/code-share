@@ -1,0 +1,106 @@
+body {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em;
+}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	transition: 0.5s;
+}
+a, .ab {
+	color: #333;
+	font-weight: bold;
+}
+.ah:hover {
+	color: #ccc;
+}
+.aw {
+	color: #fff;
+}
+.ag {
+	color: #ccc;
+}
+.ag:hover {
+	color: #fff;
+}
+
+.top {
+	width: 100%;
+	min-height: 5%;
+	position: fixed;
+	border-bottom: 5px solid #ccc;
+	font-size: 30px;
+	padding: 14px 10px 10px 100px;
+}
+.link {
+	height: 35px;
+	line-height: 35px;
+	padding: 5px 10px;
+	float: left;
+}
+.link:hover, .this {
+	background: #ccc;
+}
+.lang {
+	height: 35px;
+	width: 35px;
+	border: 5px solid #ccc;
+	border-radius: 35px;
+	margin: 0px 10px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.lang:hover {
+	border-color: #f00;
+}
+.l_ua {
+	background-image: url(https://s8.hostingkartinok.com/uploads/images/2017/04/639f38c17c57af35218f73046974898d.jpg);
+}
+.l_en {
+	background-image: url(https://s8.hostingkartinok.com/uploads/images/2017/04/b9630695c22668b9409c00a6f4f4507c.png);
+    margin-right: 200px;
+}
+.content {
+	height: 1000px;
+	width: 80%;
+	margin: 0 auto;
+	padding: 200px 0;
+}
+.t-block {
+	background: #ccc;
+	height: 40%;
+	width: 40%;
+	margin-top: 140px;
+	line-height: 380px;
+	font-size: 60px;
+}
+.t-list {
+	background: #ccc;
+	height: 20%;
+	width: 20%;
+	margin-top: 140px;
+	line-height: 190px;
+	font-size: 30px;
+}
+.t-block:hover, .t-list:hover {
+	background: #666;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+input.button.default:hover {
+    color: #000;
+}
+inspector-stylesheet:1
+input.button.default {
+    background: #2cc1c1;
+    width: 150px;
+    height: 50px;
+    border: 0;
+    color: #fff;
+}

@@ -1,0 +1,94 @@
+.grey h1 {
+	text-align: center;
+	font-size: 48px;
+	padding: 0 50px 20px 50px;
+	margin-bottom: 3vh;
+	font-family: 'Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+	background-image: -webkit-linear-gradient(left, #bb2, #ff0);
+	background-image: -moz-linear-gradient(left, #bb2, #ff0);
+	background-image: -ms-linear-gradient(left, #bb2, #ff0);
+	background-image: -o-linear-gradient(left, #bb2, #ff0);
+	background-image: linear-gradient(to right, #bb2, #ff0);
+	color:transparent;
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+.text {
+	font-size: 18px;
+}
+.aboutUsImages {
+	height: 16vw;
+	position: relative;
+}
+.aboutUsImages img {
+	position: absolute;
+	float: right;
+}
+#faq {
+	padding: 0 10px;
+}
+.post {
+	overflow-x: hidden;
+	position: relative;
+	padding-bottom: 20px;
+}
+.post div {
+	color: #000;
+}
+.post:hover {
+	text-decoration: none !important;
+}
+.post:hover div {
+	color: #bb2 !important;
+}
+.postImg {
+	display: block;
+	width: 100%;
+	height: auto;
+	position: relative;
+	overflow: hidden;
+	padding: 56.25% 0 0 0;
+}
+.postImg img {
+	margin: auto;
+	display: block;
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.postName {
+	padding-top: 5px;
+	font-size: 19px;
+}
+.postPrice {
+	font-style: italic;
+}
+.containerForImg {
+	margin-left: 3%;
+	float: left;
+	width: 47%;
+	margin-bottom: 3%;
+	padding-top: 40%;
+	overflow: hidden;
+	border: 10px solid #fff;
+	background: #fff;
+	background-size: auto 100%;
+	background-position: center;
+}
+@media (max-width: 768px){
+	.navbar-collapse, .navbar-form {
+		background: #eee;
+	}
+	.containerForContainers {
+		margin: 0 -2%;
+	}
+}
+@media (min-width: 1200px) and (max-width: 1366px){
+	.contactsL, .contactsR {
+		width: 100% !important;
+	}
+}

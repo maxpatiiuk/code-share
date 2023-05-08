@@ -9,10 +9,10 @@
 
 	$l = 0;
 	define('LINK', 'https:/mambo.in.ua/map/code/');
-	define('FILE', 'https:/mambo.in.ua/map/code/files/');
 	define('FILES', 'files/');
-	$mysqli = new mysqli('localhost', 'maxxxxxdlp', 'mmaaxx221133');
-	$mysqli->select_db('mambo_zzz_com_ua');
+	define('FILE', LINK.FILES);
+	$mysqli = new mysqli('MYSQL_HOST', 'MYSQL_USERNAME', 'MYSQL_PASSWORD');
+	$mysqli->select_db('MYSQL_DATABASE');
 
 	/*
 
@@ -241,7 +241,7 @@
 					$mysqli->query('UPDATE code SET id=id+900000 WHERE id=' . $a['id']);
 					$message .= "\n" . $a['id'] . "\t" . $a['parrent'] . "\t" . $a['ext'];
 				}
-				mail('maxxxxxdlp@gmail.com', 'Code share: Confirm deletion', 'Please confirm deletion of folowing post by clicking on this link (' . LINK . '?d=' . (900000 + $id) . '&real=1) : ' . $message);
+				mail('max@patii.uk', 'Code share: Confirm deletion', 'Please confirm deletion of following post by clicking on this link (' . LINK . '?d=' . (900000 + $id) . '&real=1) : ' . $message);
 			}
 		}
 

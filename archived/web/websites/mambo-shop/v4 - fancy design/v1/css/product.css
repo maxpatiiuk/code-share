@@ -1,0 +1,80 @@
+.yt-container {
+	width:100%;
+	padding-top:56.25%;
+	position:relative;
+}
+.yt-content {
+	position: absolute;
+	height: 100%;
+	bottom:0;
+	border:0;
+}
+.images-container {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.images-container img {
+	padding: 0;
+}
+h1, .buy-container *, .special {
+	font-family: 'Oswald','Roboto','Yanone Kaffeesatz','Lucida Sans Unicode',Tahoma, Geneva, sans-serif;
+}
+.buy-container a {
+	color: #fff !important;
+	background: #985;
+	line-height: 75px;
+}
+.buy-container div {
+	background: #333;
+}
+.buy-container * {
+	line-height: 75px;
+	font-size: 28px;
+}
+.buy-container a:hover {
+	background: #874;
+}
+.socialMedia img {
+	float: left;
+	height: 48px;
+	width: 48px;
+	padding: 8px;
+}
+.socialMedia img:hover {
+	-webkit-filter: opacity(.3) drop-shadow(0 0 0 #985);
+	filter: opacity(.3) drop-shadow(0 0 0 #985);
+}
+.tab-pane {
+	padding: 12px;
+}
+.col-sm-7 p {
+	color: #aaa;
+}
+.col-sm-7 b {
+	color: #ccc;
+}
+.col-sm-7 a, a b {
+	color: #985 !important;
+}
+p.special {
+	line-height: 46px;
+	font-size: 20px;
+}
+p.special img {
+	width: 32px;
+	height: 32px;
+	margin: 0 5px;
+}
+.nav-tabs .active a {
+	color: #984 !important;
+}
+.comment {
+	margin: 0;
+	padding-right: 0;
+}
+.comment .col-xs-10 {
+	padding-right: 0;
+}
+.comment + .alert {
+	margin-left: 15px;
+}
