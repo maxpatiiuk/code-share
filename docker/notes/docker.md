@@ -38,7 +38,7 @@ docker run -it --rm --name test alpine vi
 # syntax=docker/dockerfile:1
 FROM node:latest
 
-LABEL maintainer="Max Patiiuk <max.patiiuk@mambo.in.ua>"
+LABEL maintainer="Max Patiiuk <max@patii.uk>"
 
 WORKDIR /code
 
