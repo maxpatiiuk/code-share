@@ -1,0 +1,47 @@
+body {
+  /*background: black;*/
+  /*filter: invert(1);*/
+}
+
+/*
+ * Grid-based table implementation for increased flexibility
+ * Does not sacrifice accessibility thanks to the [role] attributes
+ * Allows for things like sticky headers and having entire row be a link/button
+ * You can set column sizes by adding a className like this:
+ *   grid-cols-[repeat(4,1fr)_auto_auto_min-content_minmax(10rem,1fr)]
+ * There is much more flexibility in how columns should be sized.
+ */
+.grid-table:is(table, [role~='table']) {
+  display: grid;
+}
+
+.grid-table :is(thead, tbody, tr, [role~='rowgroup'], [role~='row']) {
+  display: contents;
+}
+
+.grid-table
+  :is(th, td, [role~='columnheader'], [role~='rowheader'], [role~='cell']) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+#results-table {
+  grid-template-columns: min-content min-content auto 1fr;
+}
+
+.link {
+  max-width: 10rem;
+  overflow-wrap: break-word;
+}
+
+.message-container {
+  display: contents;
+}
+
+iframe {
+  width: 100%;
+  height: 50vh;
+}

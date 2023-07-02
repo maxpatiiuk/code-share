@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>Web Crawler</title>
+    <link rel="icon" type="image/x-icon" href="https://google.com/favicon.ico">
+</head>
+<body>
+<h1>Web Crawler</h1>
+<script type="module" src="./index.js"></script>
+<link rel="stylesheet" type="text/css" href="./index.css">
+
+<form id="form">
+    <label>
+        Start URL
+        <input type="text" id="url" required value="https://www.wikipedia.org/">
+    </label>
+    <input type="submit">
+</form>
+<table class="grid-table" id="results-table">
+    <thead>
+    <tr>
+        <th>Index</th>
+        <th>Type</th>
+        <th>URL</th>
+        <th>Response</th>
+    </tr>
+    </thead>
+    <tbody id="message-box"></tbody>
+</table>
+</body>
+</html>
