@@ -1,7 +1,7 @@
-# File/Dirrectory finder
+# File/Directory finder
 
 Searches for a file/directory with a given name in each parent
-directory untill the root directory.
+directory until the root directory.
 
 The first argument should be the name of the file/directory to search
 for. If the name ends with `/`, then the search looks for folders with
