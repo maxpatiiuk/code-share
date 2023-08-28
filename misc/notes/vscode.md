@@ -73,6 +73,8 @@ Installed extensions are absent from this list
 - [ ] Emmet
 - [ ] Shell Syntax
   - see if can be replaced by an ESLint plugin
+- [ ] Node.JS REPL
+  - try out "nodemon"
 
 ## Find extension for
 
