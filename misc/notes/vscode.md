@@ -8,12 +8,23 @@
 - [x] Go over default snippets and disable useless ones
 - [x] Go over all IDE settings
   - [ ] Did I break git diff gutters? -> update the css file
-  - [ ] Consider disabling editor.suggest.showIcons
   - [x] Go over welcome page, or reenable workbench.startupEditor
+  - [ ] https://github.com/microsoft/vscode/issues/90130
+  - [ ] Hide activity bar once I learn it or at least reduce it
+    - And likely create a shortcut for toggling it
+  - [x] Hide status bar once I learn it or at least reduce it
+  - [ ] Consider doing setting sync in git (maybe "Settings sync" extension)?
+    - or do regular takeouts (Profiles: Show Contents)
+    - or "Settings Sync: Show Synced Data" is enough?
+- [ ] Setup test workflow
   - [ ] Try out testing.showAllMessages?
   - [ ] Go over Karma settings, and come up with a workflow
   - [ ] Try out the Test Explorer and it's settings
-  - [ ] https://github.com/microsoft/vscode/issues/90130
+  - [ ] Check if "Jest (Extension)" component in Status Bar is needed
+  - [ ] Setup VS Code tasks (i.e, Jest)
+    - https://code.visualstudio.com/docs/editor/tasks
+    - https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-attributes
+    - create a problem matcher if not automatic
 - [x] TabNine vs GitHub Copilot vs GitHub Copilot Chat vs IntelliSence vs
       IntelliCode
   - https://www.youtube.com/watch?v=Fi3AJZZregI
@@ -30,37 +41,33 @@
         (workbench.action.toggleMaximizedPanel)
   - [ ] Go over TODOs in keymap list below
   - [ ] Learn keyboard shortcuts
+  - [ ] Convert all commonly used shortcuts to vim if possible
 - [x] Go over all plugins and their settings and theme settings
+- [x] Create a keyboard shortcut for going to nth tab
+  - Decided not to implement this - hid tabs instead
 - [ ] https://code.visualstudio.com/docs/nodejs/debugging-recipes
-- [ ] Setup VS Code tasks (i.e, Jest)
-  - https://code.visualstudio.com/docs/editor/tasks
-  - https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-attributes
-  - create a problem matcher if not automatic
-- [ ] Convert all commonly used shortcuts to vim if possible
-- [ ] { // Go to 2nd tab "key": "cmd+2", "Cmd":
-      "workbench.action.openEditorAtIndex1" }
-- [ ] Hide activity bar once I learn it or at least reduce it
-- [ ] Hide status bar once I learn it or at least reduce it
-- [ ] Consider doing setting sync in git (maybe "Settings sync" extension)?
-  - or do regular takeouts (Profiles: Show Contents)
-  - or "Settings Sync: Show Synced Data" is enough?
 - [ ] Create profile for Demos based on the main profile (and google/chatgpt
       nice settings for that - i.e autosave, font size) (or just zen mode?)
-- [ ] Turn sdk and api into single workspace?
+- Esri
+  - [x] Turn sdk and api into single workspace?
+    - Nope. My VS Code is terribly slow as is. Explorer takes 4 seconds to open.
+      Even scrolling the file freezes the IDE sometimes. All because there are
+      too many files already. And, the use case for searching/editing both of
+      these at the same time (that can't be done in separate windows) is very
+      narrow.
+  - Disable all SCSS support once Esri moved off to CSS
 - [ ] Consider always having a pinned full-screen terminal at Cmd+1
 - [ ] https://github.com/viatsko/awesome-vscode
-- [ ] Find out how to use https://github.com/microsoft/TypeScript/issues/29988
 
 ### Low
 
 - [ ] https://code.visualstudio.com/docs/getstarted/tips-and-tricks#_define-keyboard-shortcuts-for-tasks
 - [ ] Spend time learning VIM much better
 - [ ] https://code.visualstudio.com/docs/editor/variables-reference
-- [ ] https://docs.emmet.io/cheat-sheet/
 - [ ] https://code.visualstudio.com/docs/getstarted/tips-and-tricks#_language-specific-settings
 - [ ] https://code.visualstudio.com/api
 - [ ] Publish my theme
-- [ ] A "Key Promoter" extension
+- [ ] Find or create a "Key Promoter" extension
 - [ ] Learn debugger keyboard shortcuts - breakpoints (set, edit, toggle all),
       stepping...
 
@@ -70,18 +77,21 @@ Installed extensions are absent from this list
 
 ### Uninstall?
 
-- [ ] Emmet
 - [ ] Shell Syntax
   - see if can be replaced by an ESLint plugin
 - [ ] Node.JS REPL
   - try out "nodemon"
+- [ ] -- Go over git plugins and see if I need them (I am still a big fun of
+      using Git in the CLI, especially due to customization options and many
+      aliases I have)
 
 ## Find extension for
 
-- [ ] Refactoring (mainly, "Move to existing file")
-  - https://github.com/microsoft/TypeScript/issues/29988 is fixed, yet I can't
+- [x] Refactoring (mainly, "Move to existing file")
+  - https://github.com/microsoft/TypeScript/issues/29988 is fixed, yet I can'tb
     see it
-  - "Abracadabra, refactor this!" has this feature but it almost never works
+    - "Abracadabra, refactor this!" has this feature but it almost never works
+    - Update: now available in the August 2023 release
 - [x] There are a bunch of "git plugins - figure out (also .gitignore)
   - [x] gitignore
     - syntax highlighting available natively
@@ -91,7 +101,7 @@ Installed extensions are absent from this list
 - [ ] jsdoc
 - [ ] json
 - [ ] scopes extension OR vscode profiles:
-      https://code.visualstudio.com/docs/editor/profiles
+  - https://code.visualstudio.com/docs/editor/profiles
   - https://marketplace.visualstudio.com/items?itemName=cfcluan.project-scopes
 
 ## Don't forget to use
@@ -99,6 +109,13 @@ Installed extensions are absent from this list
 TODO: Review all installed plugins as a reminder. Also:
 
 - [ ] Node.js REPL
+  - Though, this might be better replaced by Chrome DevTools' snippets.
+    - Cons of DevTools' snippets:
+      - No Vim keyboard shortcuts
+      - No easy file system access
+    - Pros of DevTools' snippets:
+      - Always there, easily accessible, and can save snippets for later
+      - Access to the DOM
 - [ ] Search node_modules
 
 ### Maybe later
@@ -110,6 +127,14 @@ TODO: Review all installed plugins as a reminder. Also:
   - Is it redundant with the vim extension? (which can execute CLI commands
     too?)
 - [ ] Dev Containers
+- [ ] Emmet
+  - Little use for this. Don't write .html at all. Write little .css (especially
+    with Tailwind CSS). Write a lot of .tsx, but there props are often needed,
+    you rarely think 2-3 components ahead, and you never create a lot of similar
+    components at once (in favor of dry code: loops)
+  - [ ] https://docs.emmet.io/cheat-sheet/
+- [ ] Docker
+  - Not working with docker much nowadays, despite it being a useful technology
 
 ### Tried out and rejected
 
@@ -162,6 +187,8 @@ TODO: review the custom Vim plugin shortcuts
 - `gv` go to symbol
 - `gv` go to local symbol
 - `gb` actions
+- `Cmd+P Backspace %` quick search
+  - // TODO: change this
 - `Cmd+O` open file/folder
 
 ### Editing
@@ -212,6 +239,7 @@ TODO: review the custom Vim plugin shortcuts
 
 - `Cmd+Shift+E` explorer
 - `Cmd+Shift+F` search
+  - `(shift)+option+g` next/previous search result
 - `Cmd+Shift+D` debug
 - `Cmd+Shift+X` extensions
 - `Cmd+Shift+E` explorer
