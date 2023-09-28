@@ -28,6 +28,7 @@ a/**/z  # a/z a/b/z a/b/c/z
 git diff --cached
 git difftool  # vim
 git diff master...origin/master  # show xor'ed commits
+git diff HEAD tag | git apply  # un-apply all changes since tag
 
 
 # rm
