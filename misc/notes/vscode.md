@@ -15,6 +15,36 @@
   - [x] Hide status bar once I learn it or at least reduce it
   - [ ] Consider doing setting sync in git (maybe "Settings sync" extension)?
     - or do regular takeouts (Profiles: Show Contents)
+      - that includes too much data, and may contain sensitive data
+      - if publicizing, only publish settings.json, keystrokes.json, and
+          extension list
+      - Could use this snippet to help inspect the profile contents:
+        ```js
+        function inflateValue(obj) {
+          let value = obj;
+          try {
+            while (typeof value === "string") {
+              value = JSON.parse(value);
+            }
+          } catch {
+            return value;
+          }
+          return value;
+        }
+        function inflate(rawValue) {
+          const obj = inflateValue(rawValue);
+          return Array.isArray(obj)
+            ? obj.map(inflate)
+            : obj == null
+            ? null
+            : typeof obj === "object"
+            ? Object.fromEntries(
+                Object.entries(obj).map(([key, value]) => [key, inflate(value)]),
+              )
+            : obj;
+        }
+        inflate($("textarea").value);
+        ```
     - or "Settings Sync: Show Synced Data" is enough?
 - [ ] Setup test workflow
   - [ ] Try out testing.showAllMessages?
@@ -42,6 +72,10 @@
   - [ ] Go over TODOs in keymap list below
   - [ ] Learn keyboard shortcuts
   - [ ] Convert all commonly used shortcuts to vim if possible
+  - This is useful - https://marketplace.visualstudio.com/items?itemName=jasonlhy.hungry-delete
+    - But cmd+backspace seems to work natively now
+    - Also, check if vim provides a neat solution for this
+    - Any way to make "Hungry delete" be the default behaviour?
 - [x] Go over all plugins and their settings and theme settings
 - [x] Create a keyboard shortcut for going to nth tab
   - Decided not to implement this - hid tabs instead
