@@ -1,8 +1,12 @@
 # 1c-clone
 
-Date: somewhere around 2018
+Date: December 2018
 
-A simple shop profit tracking software.
+A simple shop revenue and expense tracking system.
+
+> NOTE, this project has been rewritten from scratch with more modern
+> tech stack. See
+> [small-retail-management](http://localhost:3000/projects/small-retail-management)
 
 Instead of paying for a licence of https://v8.1c.ru/, my parents asked me to
 create a similar software (albeit MUCH simpler, due to their simpler
