@@ -1,5 +1,6 @@
 <?php
 
+def('HASH','your md5-hashed password here');
 
 session_start();
 $sql = new sql('MYSQL_HOST', 'MYSQL_LOGIN', 'MYSQL_PASSWORD', 'MYSQL_DATABASE', content::$tables,
@@ -453,9 +454,9 @@ if($_GET['mode'] == "shop_data_send") {
 
 		public static function mayor_error($key) {
 
-			ua\controllers\MainController::actionHeader();
-			self::alert(ua\config\Errors::get($key, 2), 'danger');
-			ua\components\sessionManager::destroy_session();
+			\MainController::actionHeader();
+			self::alert(\Errors::get($key, 2), 'danger');
+			\sessionManager::destroy_session();
 			die;
 		}
 
@@ -480,7 +481,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 			if(is_array($array) && array_key_exists($key, $array))
 				return $array[$key];
-			else if($default === 'error')
+			elseif($default === 'error')
 				die('NO KEY ' . $key . ' IN ARRAY ' . $array . self::debug_info());
 			else
 				return $default;
@@ -501,15 +502,15 @@ if($_GET['mode'] == "shop_data_send") {
 
 			if(isset($_SERVER['HTTP_CLIENT_IP']))
 				self::$user_ip = $_SERVER['HTTP_CLIENT_IP'];
-			else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+			elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
 				self::$user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			else if(isset($_SERVER['HTTP_X_FORWARDED']))
+			elseif(isset($_SERVER['HTTP_X_FORWARDED']))
 				self::$user_ip = $_SERVER['HTTP_X_FORWARDED'];
-			else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+			elseif(isset($_SERVER['HTTP_FORWARDED_FOR']))
 				self::$user_ip = $_SERVER['HTTP_FORWARDED_FOR'];
-			else if(isset($_SERVER['HTTP_FORWARDED']))
+			elseif(isset($_SERVER['HTTP_FORWARDED']))
 				self::$user_ip = $_SERVER['HTTP_FORWARDED'];
-			else if(isset($_SERVER['REMOTE_ADDR']))
+			elseif(isset($_SERVER['REMOTE_ADDR']))
 				self::$user_ip = $_SERVER['REMOTE_ADDR'];
 			else
 				self::$user_ip = 'UNKNOWN';
@@ -541,7 +542,7 @@ if($_GET['mode'] == "shop_data_send") {
 				return self::$day_names[$week_day];
 		}
 
-		public static function month_to_lang($month_number, $use_alt = true) {
+		public static function month_to_lang($month_number, $use_alt = false) {
 
 			if($use_alt)
 				$return_arr = &self::$month_names_alt;
@@ -562,16 +563,36 @@ if($_GET['mode'] == "shop_data_send") {
 
 		//parameters
 
-		public static $link = 'https://mambo.in.ua/project/one_c_public/';
+		public static $link = 'http://mambo.zzz.com.ua/project/one_c/';
 		public static $tables = [
-			['categories', 'p_categories'],
-			['workers', 'p_workers'],
-			['shop', 'p_shop'],
-			['salary', 'p_salary'],
+			['categories', 'w_categories'],
+			['workers', 'w_workers'],
+			['shop', 'w_shop'],
+			['salary', 'w_salary'],
 		];
 
 
 		//public
+
+		public static function is_logged_in() {
+
+			if(isset($_SESSION) && array_key_exists('hash', $_SESSION) && $_SESSION['hash'] === HASH)
+				return true;
+			else
+				return false;
+		}
+
+		public static function login_validation() {
+
+			if(isset($_POST) && array_key_exists('submit', $_POST) && md5($_POST['password']) === HASH) {
+				$_SESSION['hash'] = md5($_POST['password']);
+				self::show_website();
+			}
+			else { ?>
+				<div class="alert alert-danger">Неправильний пароль.</div> <?php
+				self::login();
+			}
+		}
 
 		public static function show_website() {
 
@@ -585,16 +606,17 @@ if($_GET['mode'] == "shop_data_send") {
 						<a class="menu_item <?php if($_GET['d'] == 'workers') echo 'active'; ?>" href="<?= self::$link ?>?d=workers">Employees</a>
 						<a class="menu_item <?php if($_GET['d'] == 'money') echo 'active'; ?>" href="<?= self::$link ?>?d=money">Revenue</a>
 						<a class="menu_item <?php if($_GET['d'] == 'shop') echo 'active'; ?>" href="<?= self::$link ?>?d=shop">Shop</a>
+						<a class="menu_item <?php if($_GET['d'] == 'logout') echo 'active'; ?>" href="<?= self::$link ?>?d=logout">Log out</a>
 					</div>
 					<div class="col-md-9 col-lg-10"> <?php
 
 						if($_GET['d'] == 'categories')
 							self::show_categories();
-						else if($_GET['d'] == 'workers')
+						elseif($_GET['d'] == 'workers')
 							self::show_workers();
-						else if($_GET['d'] == 'money')
+						elseif($_GET['d'] == 'money')
 							self::show_money();
-						else if($_GET['d'] == 'shop')
+						elseif($_GET['d'] == 'shop')
 							self::show_shop();
 						else
 							self::logout();
@@ -636,7 +658,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 				if($_GET['a'] == 'confirm_delete' && array_key_exists('category_id', $_GET) && is_numeric($_GET['category_id']) && $_GET['category_id'] > 0) { ?>
 
-					<div class="alert alert-warning">Are you shure you want to delete this department? This will lead to the deletion of all its emplyees
+					<div class="alert alert-warning">Are you sure you want to delete this department? This will lead to the deletion of all its employees
 					</div> <?php
 					$c_data = $sql->res2data($sql->a('SELECT `name` FROM `workers` WHERE `id_category` = ?', $_GET['category_id']));
 					if(count($c_data) > 0) { ?>
@@ -767,7 +789,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 				if($_GET['a'] == 'confirm_delete' && array_key_exists('worker_id', $_GET) && is_numeric($_GET['worker_id']) && $_GET['worker_id'] > 0) { ?>
 
-					<div class="alert alert-warning">Are you shure that you want to delete this emplyee? This will delete all of his data records.
+					<div class="alert alert-warning">Are you sure that you want to delete this employee? This will delete all of his data records.
 					</div> <?php
 					$count = $sql->c('SELECT COUNT(`id`) FROM `salary` WHERE `id_worker` = ?', $_GET['worker_id']);
 					if($count) { ?>
@@ -784,7 +806,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 				if(array_key_exists('r', $_GET)) {
 
-					if($_GET['r'] == 'worker_created' && array_key_exists('worker_name', $_POST) && strlen($_POST['worker_name']) > 0 && array_key_exists('id_category', $_POST) && is_numeric($_POST['id_category']) && $_POST['id_category'] > 0 && array_key_exists('percent_salary', $_POST) && is_numeric($_POST['percent_salary'])) {
+					if($_GET['r'] == 'worker_created' && array_key_exists('submit', $_POST) && array_key_exists('worker_name', $_POST) && strlen($_POST['worker_name']) > 0 && array_key_exists('id_category', $_POST) && is_numeric($_POST['id_category']) && $_POST['id_category'] > 1 && array_key_exists('percent_salary', $_POST) && is_numeric($_POST['percent_salary'])) {
 						$sql->a('INSERT INTO `workers`(`name`,`id_category`,`percent`,`active`,`base_income`) VALUES(?,?,?,?,?)', $_POST['worker_name'], $_POST['id_category'], $_POST['percent_salary'], ($_POST['show_worker'] != "") ? "1" : "0", $_POST['base_income']);
 						helper::alert('Employee created', 'success');
 					}
@@ -905,18 +927,18 @@ if($_GET['mode'] == "shop_data_send") {
 				$active_menus = [];
 				if($_GET['m'] == '7')
 					$active_menus['7'] = true;
-				else if($_GET['m'] == '30')
+				elseif($_GET['m'] == '30')
 					$active_menus['30'] = true;
-				else if($_GET['m'] == '365')
+				elseif($_GET['m'] == '365')
 					$active_menus['365'] = true;
-				else if($_GET['m'] == 'all')
+				elseif($_GET['m'] == 'all')
 					$active_menus['all'] = true;
 
 				if($active_menus['7'])
 					$days_shown = 7;
-				else if($active_menus['30'])
+				elseif($active_menus['30'])
 					$days_shown = date('t', $_GET['date']);
-				else if($active_menus['365'])
+				elseif($active_menus['365'])
 					$days_shown = 365 + date('L', $_GET['date']);
 				else
 					$days_shown = false;
@@ -973,6 +995,7 @@ if($_GET['mode'] == "shop_data_send") {
 						else
 							$is_today = false;
 						$first_day_of_week = $_GET['date'] - $day_of_week * 86400;
+						$last_day_of_week = $first_day_of_week+7*86400;
 
 						if(array_key_exists('submit', $_POST)) {
 
@@ -986,6 +1009,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 									$worker_id = substr($keys[$i], $begin_id, $end_id);
 									$week_day = substr($keys[$i], $end_id + $begin_id + 1);
+									$week_day_unix = $first_day_of_week+$week_day*86400;
 
 									$profit = $_POST['worker_profit_' . $worker_id . '_' . $week_day];
 									$cost = $_POST['worker_product_cost_' . $worker_id . '_' . $week_day];
@@ -1001,6 +1025,7 @@ if($_GET['mode'] == "shop_data_send") {
 										$cost = 0;
 
 									if($profit >= 0 && $cost >= 0 && $worker_id >= 0 && $week_day >= 0 && $week_day < 7) {
+										/*
 										if($profit == 0 && $cost == 0)
 											$sql->a('DELETE FROM `salary` WHERE `id_worker` = ? AND YEAR(FROM_UNIXTIME(`date`)) = ? AND WEEK(FROM_UNIXTIME(`date`),1) = ? AND WEEKDAY(FROM_UNIXTIME(`date`)) = ?', $worker_id, $year, $week, $week_day);
 										else if($sql->c('SELECT COUNT(`id`) FROM `salary` WHERE `id_worker` = ? AND YEAR(FROM_UNIXTIME(`date`)) = ? AND WEEK(FROM_UNIXTIME(`date`),1) = ? AND WEEKDAY(FROM_UNIXTIME(`date`)) = ?', $worker_id, $year, $week, $week_day) == 1)
@@ -1009,14 +1034,27 @@ if($_GET['mode'] == "shop_data_send") {
 											$sql->a('INSERT INTO `salary`(`id_worker`,`amount`,`products_cost`,`date`) VALUES(?,?,?,?)', $worker_id, $profit, $cost, $first_day_of_week + $week_day * 86400);
 											//var_dump('INSERT INTO salary(id_worker,amount,products_cost,date) VALUES(?,?,?,?)', $worker_id, $profit, $cost, $first_day_of_week + $week_day * 86400);
 										}
+										*/
+										if($profit == 0 && $cost == 0)
+											$sql->a('DELETE FROM `salary` WHERE `id_worker` = ? AND `date` = ?', $worker_id, $week_day_unix);
+										elseif($sql->c('SELECT COUNT(`id`) FROM `salary` WHERE `id_worker` = ? AND `date` = ?', $worker_id, $week_day_unix) == 1)
+											$sql->a('UPDATE `salary` SET `amount` = ?, `products_cost` = ? WHERE `id_worker` = ? AND `date` = ?', $profit, $cost, $worker_id, $week_day_unix);
+										else {
+											$sql->a('INSERT INTO `salary`(`id_worker`,`amount`,`products_cost`,`date`) VALUES(?,?,?,?)', $worker_id, $profit, $cost, $week_day_unix);
+											//var_dump('INSERT INTO salary(id_worker,amount,products_cost,date) VALUES(?,?,?,?)', $worker_id, $profit, $cost, $first_day_of_week + $week_day * 86400);
+										}
 									}
 								}
 						}
 
 
-						$salary = $sql->res2data($sql->a('SELECT s.id_worker,s.amount,s.products_cost,s.date FROM salary s INNER JOIN workers w ON s.id_worker = w.id INNER JOIN categories c ON w.id_category = c.id WHERE w.active = 1 AND c.active = 1 AND YEAR(FROM_UNIXTIME(s.date)) = ? AND WEEK(FROM_UNIXTIME(s.date),1) = ? ' . $category_sql . ' ORDER BY w.id ASC,s.date ASC', $year, $week));
+						//$salary = $sql->res2data($sql->a('SELECT s.id_worker,s.amount,s.products_cost,s.date FROM salary s INNER JOIN workers w ON s.id_worker = w.id INNER JOIN categories c ON w.id_category = c.id WHERE w.active = 1 AND c.active = 1 AND YEAR(FROM_UNIXTIME(s.date)) = ? AND WEEK(FROM_UNIXTIME(s.date),1) = ? ' . $category_sql . ' ORDER BY w.id ASC,s.date ASC', $year, $week));
 
 						//var_dump('SELECT s.id_worker,s.amount,s.products_cost,s.date FROM salary s INNER JOIN workers w ON s.id_worker = w.id INNER JOIN categories c ON w.id_category = c.id WHERE w.active = 1 AND c.active = 1 AND YEAR(FROM_UNIXTIME(s.date)) = ? AND WEEK(FROM_UNIXTIME(s.date),1) = ? ' . $category_sql . ' ORDER BY w.id ASC,s.date ASC', $year, $week); ?>
+
+						$salary = $sql->res2data($sql->a('SELECT s.id_worker,s.amount,s.products_cost,s.date FROM salary s INNER JOIN workers w ON s.id_worker = w.id INNER JOIN categories c ON w.id_category = c.id WHERE w.active = 1 AND c.active = 1 AND s.date >= ? ' . $category_sql . ' AND s.date <= ? ORDER BY w.id ASC,s.date ASC', $first_day_of_week, $last_day_of_week));
+
+						//var_dump('SELECT s.id_worker,s.amount,s.products_cost,s.date FROM salary s INNER JOIN workers w ON s.id_worker = w.id INNER JOIN categories c ON w.id_category = c.id WHERE w.active = 1 AND c.active = 1 AND s.date >= ? ' . $category_sql . ' AND s.date <= ? ORDER BY w.id ASC,s.date ASC', $first_day_of_week, $last_day_of_week); ?>
 
 
 						<form method="post" action="?d=money&m=7&date=<?= $_GET['date'] ?>&category=<?= $category_url ?>">
@@ -1184,7 +1222,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 						</script> <?php
 					}
-					else if($_GET['m'] == 30) {
+					elseif($_GET['m'] == 30) {
 
 					$month = date('n', $_GET['date']);
 
@@ -1341,7 +1379,7 @@ if($_GET['mode'] == "shop_data_send") {
 						</script> <?php
 
 					}
-					else if($_GET['m'] == 365) {
+					elseif($_GET['m'] == 365) {
 
 					$year = date('Y', $_GET['date']);
 					$month = date('m', $_GET['date']) - 1;
@@ -1374,11 +1412,10 @@ if($_GET['mode'] == "shop_data_send") {
 
 										for($ii = 0; $ii < $count_workers; $ii++) {
 
-											if($ii > $month) {
-												echo '<td></td>';
-												break;
-											}
-
+											// if($ii > $month) {
+											// 	echo '<td></td>';
+											// 	break;
+											// }
 
 											if($i == 0)
 												$workers[$ii]['worker_ordering_id'] = 0;
@@ -1465,7 +1502,7 @@ if($_GET['mode'] == "shop_data_send") {
 						<canvas id="year_chart" width="1000" height="300"></canvas>
 						<canvas id="year_chart2" width="1000" height="300"></canvas>
 						<script>
-							$( '#sum_sqr' ).append( '<br>Revenue: <?=$workers_sum_profit?><br>Видано:  <?=$workers_sum_cost?><br>Salary:  <?=$workers_sum_salary?>' );
+							$( '#sum_sqr' ).append( '<br>Revenue: <?=$workers_sum_profit?><br>Products cost:  <?=$workers_sum_cost?><br>Salary:  <?=$workers_sum_salary?>' );
 							let months = [<?=helper::jsfy_array(helper::month_to_lang(false))?>];
 
 							$( 'th' ).click( function() {
@@ -1522,7 +1559,7 @@ if($_GET['mode'] == "shop_data_send") {
 									window.chart2.update();
 
 								}
-								else if( el.parent().parent().is( 'tbody' ) && el.parent().index() + 1 != 13 ){
+								elseif( el.parent().parent().is( 'tbody' ) && el.parent().index() + 1 != 13 ){
 									let month = el.text().trim();
 									let month_number = el.parent().index() + 1;//1-12 + 14
 									let profit_cells = el.parent().find( 'th:not(:first-child),td:not(:first-child)' );
@@ -1767,7 +1804,7 @@ if($_GET['mode'] == "shop_data_send") {
 											Revenue: <?= number_format($workers[$ii]['sum_profit'], 2, '.', ' ') ?><br>
 											Products cost: <?= number_format($workers[$ii]['sum_products_cost'], 2, '.', ' ') ?>
 											<br>
-											Salary: <?= number_format($workers[$ii]['sum_salaries'], 2, '.', ' ') ?>
+											Зарплата: <?= number_format($workers[$ii]['sum_salaries'], 2, '.', ' ') ?>
 										</td> <?php
 
 									} ?>
@@ -1778,7 +1815,7 @@ if($_GET['mode'] == "shop_data_send") {
 						<canvas id="all_time_chart" width="1000" height="300"></canvas>
 						<canvas id="all_time_chart2" width="1000" height="300"></canvas>
 						<script>
-							$( '#sum_sqr' ).append( '<br>Revenue: <?=number_format($workers_sum_profit,2,'.',' ')?><br>PRoducts cost:  <?=number_format($workers_sum_cost,2,'.',' ')?><br>Salary:  <?=number_format($workers_sum_salary,2,'.',' ')?>' );
+							$( '#sum_sqr' ).append( '<br>Revenue: <?=number_format($workers_sum_profit,2,'.',' ')?><br>Products cost:  <?=number_format($workers_sum_cost,2,'.',' ')?><br>Salary:  <?=number_format($workers_sum_salary,2,'.',' ')?>' );
 
 							let years = [<?=helper::jsfy_array($years)?>];
 
@@ -1840,7 +1877,7 @@ if($_GET['mode'] == "shop_data_send") {
 									window.chart2.update();
 
 								}
-								else if( el.parent().parent().is( 'tbody' ) && el.parent().is( ':not(:nth-last-child(2))' ) ){//clicked on year
+								elseif( el.parent().parent().is( 'tbody' ) && el.parent().is( ':not(:nth-last-child(2))' ) ){//clicked on year
 									let year = el.text().trim();
 									let year_number = el.parent().index() + 1;//1-12 + 14
 									let profit_cells = el.parent().find( 'td:not(:first-child),th:not(:first-child)' );
@@ -1981,11 +2018,11 @@ if($_GET['mode'] == "shop_data_send") {
 				$active_menus = [];
 				if($_GET['m'] == '7')
 					$active_menus['7'] = true;
-				else if($_GET['m'] == '30')
+				elseif($_GET['m'] == '30')
 					$active_menus['30'] = true;
-				else if($_GET['m'] == '365')
+				elseif($_GET['m'] == '365')
 					$active_menus['365'] = true;
-				else if($_GET['m'] == 'all')
+				elseif($_GET['m'] == 'all')
 					$active_menus['all'] = true;
 
 				$next_unix_day = 0;
@@ -1995,14 +2032,14 @@ if($_GET['mode'] == "shop_data_send") {
 					$next_unix_day = $unix_day + 7;
 					$prev_unix_day = $unix_day - 7;
 				}
-				else if($active_menus['30']) {
+				elseif($active_menus['30']) {
 					$days_shown = date('t', $unix_date);
 					$current_day_of_month = (int)date('d', $unix_date);
 
 					$next_unix_day = (int)(strtotime('+1 month', $unix_date) / 86400);
 					$prev_unix_day = (int)(strtotime('-1 month', $unix_date) / 86400);
 				}
-				else if($active_menus['365']) {
+				elseif($active_menus['365']) {
 					$days_shown = 365 + date('L', $unix_date);
 
 					$next_unix_day = (int)(strtotime('+1 year', $unix_date) / 86400);
@@ -2080,7 +2117,7 @@ if($_GET['mode'] == "shop_data_send") {
 								<th>Cash</th>
 								<th>Credit card</th>
 								<th>Sum</th>
-								<th>Withdraw</th>
+								<th>Withdrawn</th>
 								<th>Products cost</th>
 							</tr>
 
@@ -2118,9 +2155,9 @@ if($_GET['mode'] == "shop_data_send") {
 
 								if($row['date'] == $unix_day_today)
 									$tr_class = 'class="table-success"';
-								else if(date('w', $unix_time) == '0')
+								elseif(date('w', $unix_time) == '0')
 									$tr_class = 'class="bg-light" style="color: #ccc;"';
-								else if($row['id'] == -1 && $unix_day_today > $row['date'])
+								elseif($row['id'] == -1 && $unix_day_today > $row['date'])
 									$tr_class = 'class="table-warning"';
 								else
 									$tr_class = '';
@@ -2287,7 +2324,7 @@ EOD;
 												}, 1000 );
 											} )
 											.fail( function( xhr, ajaxOptions, thrownError ) {
-												alert( 'Error while saving changes!<br>' + xhr + ajaxOptions + thrownError );
+												alert( 'Error saving changes!<br>' + xhr + ajaxOptions + thrownError );
 												console.log( xhr );
 												console.log( ajaxOptions );
 												console.log( thrownError );
@@ -2360,7 +2397,7 @@ EOD;
 							}
 
 
-							else if($_GET['m'] == 30){
+							elseif($_GET['m'] == 30){
 
 							$month_name = helper::month_to_lang(date('n', $unix_date) - 1, false) . ' ' . date('Y', $unix_date);
 							$last_day_of_month = $days_shown - date('d', $unix_date) + $unix_day; ?>
@@ -2368,7 +2405,7 @@ EOD;
 								<h1><?= $month_name ?></h1> <?php
 
 								$row = $sql->r('SELECT GROUP_CONCAT(worker_ids SEPARATOR \',\') AS `worker_ids`,SUM(amount) AS `amount`,SUM(terminal) AS `terminal`,SUM(`out`) AS `out`,SUM(products_cost) as `products_cost` FROM shop WHERE (`date`+' . $days_shown . ') > ? AND `date` < ?', $last_day_of_month, $last_day_of_month);
-								var_dump($days_shown, $last_day_of_month);
+								//var_dump($days_shown, $last_day_of_month);
 
 								if(!is_array($row))
 									$row = ['worker_ids' => '', 'amount' => 0, 'terminal' => 0, 'out' => 0, 'products_cost' => 0];
@@ -2412,7 +2449,7 @@ EOD;
 							}
 
 
-							else if($_GET['m'] == 365) {
+							elseif($_GET['m'] == 365) {
 
 								$year = date('Y', $unix_date);
 
@@ -2505,7 +2542,7 @@ EOD;
 							}
 
 
-							else if($_GET['m'] == 'all') {
+							elseif($_GET['m'] == 'all') {
 
 								$year = date('Y', $unix_date);
 								$years_list = [];
@@ -2662,10 +2699,391 @@ EOD;
 			</div> <?php
 		}
 
+
+		//private
+
+		public static function logout() {
+
+			unset($_SESSION['hash']);
+			unset($_SESSION['mode']);
+			session_destroy();
+			header("Location: " . self::$link);
+		}
+
+		public static function login() { ?>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+
+						<form method="post" class="form-horizontal">
+							<input type="password" placeholder="Пароль" name="password" class="form-control mt-4 mb-4">
+							<input type="submit" class="btn btn-outline-dark" name="submit" value="Вхід">
+							<a href="?mode=shop_input">Магазин</a>
+						</form>
+
+					</div>
+				</div>
+			</div> <?php
+
+		}
+
+		public static function shop_input() {
+
+			global $sql;
+
+			$_SESSION['mode'] = "shop_input";
+
+			$shop_category_id = $sql->c('SELECT `id` FROM `categories` WHERE `name` LIKE \'%Socksy%\'');//12
+
+
+			$t_shop_sellers = $sql->res2data($sql->a('SELECT `id`,`name` FROM `workers` WHERE `id_category` = ? AND `active` = 1', $shop_category_id));
+			$shop_sellers = [];
+
+			foreach($t_shop_sellers as $data)
+				$shop_sellers[$data['id']] = $data['name'];
+
+
+			$days_to_show = 7;
+
+			$unix_now = time();
+			$days_since_unix = (int)($unix_now / 86400);
+			$original_days_since_unix = $days_since_unix;
+			$days_since_unix += (7 - date('N', $unix_now));
+			$unix_now = $days_since_unix * 86400;
+			$data = $sql->res2data($sql->a('SELECT `id`,`worker_ids`,`amount`,`terminal`,`out`,`date` FROM `shop` WHERE (`date`+' . $days_to_show . ') > ? ORDER BY `date` ASC', $days_since_unix));
+
+			for($i = $days_to_show - 1; $i >= 0; $i--)
+				if(!array_key_exists($days_to_show - 1 - $i, $data) || $data[$days_to_show - 1 - $i]['date'] != $days_since_unix - $i)
+					array_splice($data, $days_to_show - 1 - $i, 0, [['id' => -1, 'worker_ids' => 0, 'amount' => 0, 'terminal' => 0, 'out' => 0, 'date' => $days_since_unix - $i]]); ?>
+
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col">
+
+						<div class="mt-2 mb-2">
+							<a class="btn btn-danger" href="<?= self::$link ?>?d=logout">Log out</a>
+							<button id="save_changes" class="btn btn-success">Save changes</button>
+							<span class="btn btn-info" id="saved_alert" style="display:none!important">Saved!</span>
+						</div>
+
+
+						<table class="table shop_table table-striped table-bordered">
+							<thead>
+
+								<tr>
+									<th>Day</th>
+									<th>Sellers</th>
+									<th>Cash</th>
+									<th>Credit card</th>
+									<th>Sum</th>
+									<th>Withdrawn</th>
+								</tr>
+
+							</thead>
+							<tbody> <?php
+
+								foreach($data as $row) {
+
+
+									$unix_time = $row['date'] * 86400;
+									$day_name = helper::week_to_lang(date('w', $unix_time)) . ', ' . date('d', $unix_time) . ' ' . helper::month_to_lang(date('n', $unix_time) - 1) . ' ' . date('Y', $unix_time);
+
+									if($row['date'] == $original_days_since_unix)
+										$tr_class = 'class="table-success"';
+									elseif(date('w', $unix_time) == '0')
+										$tr_class = 'class="bg-light" style="color: #ccc;"';
+									elseif($row['id'] == -1 && $original_days_since_unix > $row['date'])
+										$tr_class = 'class="table-warning"';
+									else
+										$tr_class = '';
+
+
+									$sellers = explode(',', $row['worker_ids']);
+									$sellers_names = '';
+									foreach($sellers as $seller_id)
+										$sellers_names .= $shop_sellers[$seller_id] . ', ';
+
+									if($sellers_names !== '')
+										$sellers_names = substr($sellers_names, 0, -2);
+
+
+									if($row['amount'] == 0)
+										$amount = '';
+									else
+										$amount = number_format($row['amount'], 2, '.', false);
+									if($row['terminal'] == 0)
+										$terminal = '';
+									else
+										$terminal = number_format($row['terminal'], 2, '.', false);
+									if($row['amount'] + $row['terminal'] == 0)
+										$sum = '';
+									else
+										$sum = number_format($row['amount'] + $row['terminal'], 2, '.', false);
+									if($row['out'] == 0)
+										$out = '';
+									else
+										$out = number_format($row['out'], 2, '.', false);
+									if($row['products_cost'] == 0)
+										$products_cost = '';
+									else
+										$products_cost = number_format($row['products_cost'], 2, '.', false); ?>
+
+									<tr <?= $tr_class ?> data-modified="0" data-id="<?= $row['id'] ?>" data-unix_day="<?= $row['date'] ?>">
+										<th><?= $day_name ?></th>
+										<td class="sellers_names">
+											<label><input type="text" class="border-0 tags" value="<?= $sellers_names ?>"></label>
+										</td>
+										<td class="amount">
+											<label><input type="text" class="border-0" value="<?= $amount ?>"></label>
+										</td>
+										<td class="terminal">
+											<label><input type="text" class="border-0" value="<?= $terminal ?>"></label>
+										</td>
+										<td class="sum">
+											<label><input type="text" class="border-0" value="<?= $sum ?>" disabled></label>
+										</td>
+										<td class="out">
+											<label><input type="text" class="border-0" value="<?= $out ?>"></label>
+										</td>
+									</tr> <?php
+
+								} ?>
+
+							</tbody>
+						</table>
+
+						<script>
+							<?php echo <<<'EOD'
+!function(t){t.fn.tagsly=function(e){var i,a=[13,188],n=[8];e&&e.suggestions&&(i=e.suggestions);var s,o,l=e&&e.suggestOnFocus;e&&e.maxItems&&(s=e.maxItems),e&&e.maxItemSize&&(o=e.maxItemSize);var r="";e&&e.placeholder&&(r=e.placeholder);var c=t("<div/>",{class:"tagsly"}),f=t("<input/>",{type:"text",class:"tag-textbox"});f.prop("placeholder",r),o&&f.prop("maxlength",o);var v=t("<ul/>",{class:"suggest"}),p=this,h=0;function u(){var e=f.val();if(""!=e&&!(s&&h>=s)){var i=t("<span/>",{class:"tag",text:e,tabindex:"-1"}),a=t("<a/>",{text:"x",href:"#",tabindex:"-1"});a.click(function(){d(i)}),i.append(a),f.before(i),f.val(""),p.val(function(t,i){return i+(i?",":"")+e}),v.hide(),v.offset({left:f.position().left}),h++,s&&h>=s&&(f.prop("disabled",!0),f.prop("placeholder",""))}}function d(t){t.find("a").remove();var e=t.text();t.remove(),f.focus();var i=p.val().split(",");(i=i.map(function(t){return t.trim()})).splice(i.indexOf(e),1),p.val(i.join(",")),v.hide(),v.offset({left:f.position().left}),h--,s&&h<s&&(f.prop("disabled",!1),f.prop("placeholder",r))}f.focus(function(t){l&&g()}),f.focusout(function(t){u(),v.hide()}),f.keydown(function(t){return-1!=a.indexOf(t.which)?(u(),!1):-1!=n.indexOf(t.which)&&""==f.val()?(d(f.prev()),!1):38==t.which?((e=v.find("li.active")).length>0?(i=e.prev(),e.removeClass("active")):i=v.children().last(),i.addClass("active"),f.val(i.text()),!1):40==t.which?((e=v.find("li.active")).length>0?(i=e.next(),e.removeClass("active")):i=v.children().first(),i.addClass("active"),f.val(i.text()),!1):void(27==t.which&&v.hide());var e,i}),f.on("input",g);var x=0;function g(){if(i){var e=new Date;i(f.val(),function(i){x<e&&(!function(e){v.show(),v.empty();for(var i=0;i<e.length;i++){var a=t("<li/>",{text:e[i]});a.mousedown(function(e){f.val(t(this).text()),u(),setTimeout(function(){f.focus()},0)}),v.append(a)}}(i),x=e)})}}this.wrap(c),this.parent().append(f),this.parent().append(v),this.parent().click(function(){f.focus()}),this.hide();var m=this.val();if(m.length>0){this.val(""),m=m.split(",");for(var w=0;w<m.length;w++)f.val(m[w]),u()}return this}}(jQuery);
+EOD;
+							?>
+
+							$( function() {
+
+								let tbody = $( 'tbody' );
+								let tr = tbody.find( '> tr' );
+								let sellers_numeric = JSON.parse( '<?=json_encode(array_values($shop_sellers))?>' );
+								let sellers = JSON.parse( '<?=json_encode(array_flip($shop_sellers))?>' );
+								let saved_alert = $( '#saved_alert' );
+
+								$.each( $( '.tags' ), function( k, el ) {
+									$( el ).tagsly( {
+										suggestions : function( input, cb ) {
+											cb( sellers_numeric );
+										},
+										placeholder : '',
+										maxItems : 10,
+										suggestOnFocus : true,
+									} );
+								} );
+
+								$( '#save_changes' ).click( function() {
+
+									let data_to_send = [];
+
+									$.each( tr, function( k, el ) {
+
+										el = $( el );
+
+										if( el.attr( 'data-modified' ) === '0' )
+											return true;
+
+										let seller_ids = [];
+										let seller_names = [];
+
+										$.each( el.find( '.tag' ), function( k, el ) {
+											let t_name = $( el ).text();
+											t_name = t_name.substring( 0, t_name.length - 1 );
+											seller_names.push( t_name );
+										} );
+
+										seller_names = [...new Set( seller_names )];
+
+										$.each( seller_names, function( k, el ) {
+											seller_ids.push( sellers[el] );
+										} );
+
+
+										data_to_send.push( [el.attr( 'data-id' ), el.attr( 'data-unix_day' ), seller_ids.join(), el.find( '.amount input' ).val(), el.find( '.terminal input' ).val(), el.find( '.out input' ).val()] );
+
+									} );
+
+									$.ajax( {
+										method : 'POST',
+										url : '<?=content::$link . '?mode=shop_data_send'?>',
+										data : { 'data' : JSON.stringify( data_to_send ) },
+										dataType : 'json',
+									} ).done( function( json_data ) {
+
+										$.each( json_data, function( data, id ) {
+											let el = tbody.find( '> tr[data-unix_day="' + data + '"]' );
+											if( typeof el !== 'undefined' )
+												$( el ).attr( 'data-id', id );
+										} );
+
+										$.each( tr, function( k, el ) {
+											$( el ).attr( 'data-modified', 0 );
+										} );
+
+										saved_alert.show();
+										setTimeout( function() {
+											saved_alert.hide();
+										}, 1000 );
+									} )
+									.fail( function( xhr, ajaxOptions, thrownError ) {
+										alert( 'Error saving changes!<br>' + xhr + ajaxOptions + thrownError );
+										console.log( xhr );
+										console.log( ajaxOptions );
+										console.log( thrownError );
+									} );
+
+								} );
+
+								tr.click( function() {
+									$( this ).attr( 'data-modified', '1' ).removeClass( 'table-warning' );
+								} );
+
+								$( '.amount input, .terminal input, .out input, .products_cost input' ).focusout( function() {
+
+									let el = $( this );
+									let val = el.val();
+									let new_val;
+
+									if( /[+*\-/]/.exec( val ) == null )
+										return true;
+
+									new_val = eval( val );
+
+									if( typeof new_val == 'undefined' )
+										return true;
+
+									el.val( parseFloat( new_val ).toFixed( 2 ) );
+									calculate_sum( el );
+
+								} );
+
+								$( '.amount input, .terminal input' ).on( 'input', function() {
+									calculate_sum( $( this ) );
+								} );
+
+								function calculate_sum( input ) {
+									let td = input.parent().parent();
+									let tr = td.parent();
+									let val = input.val();
+
+									let amount = 0;
+									let terminal = 0;
+
+									if( td.hasClass( 'amount' ) ){
+										amount = val;
+										terminal = tr.find( '.terminal input' ).val();
+									}
+									else {
+										amount = tr.find( '.amount input' ).val();
+										terminal = val;
+									}
+
+
+									if( amount === '' )
+										amount = 0;
+									if( terminal === '' )
+										terminal = 0;
+
+									let sum = parseFloat( parseFloat( amount ) + parseFloat( terminal ) ).toFixed( 2 );
+									tr.find( '.sum input' ).val( sum );
+
+
+								}
+
+							} );
+
+						</script>
+
+
+					</div>
+				</div>
+			</div> <?php
+		}
+
+		public static function shop_save() {
+
+			global $sql;
+
+			try {
+
+				if(!array_key_exists('data', $_POST))
+					throw new Exception();
+
+				$data = json_decode($_POST['data']);
+				$unix_days = [];
+				$inserted_data = [];
+
+				$is_admin = array_key_exists('hash', $_SESSION) && array_key_exists(0, $data) && array_key_exists(6, $data[0]);
+
+				foreach($data as $row) {
+
+					$id = $row[0];
+					$date = $row[1];
+					$worker_ids = $row[2];
+					$amount = $row[3];
+					$terminal = $row[4];
+					$out = $row[5];
+
+					if(preg_match('/[+\-*\/]/', $amount))
+						eval('$amount = ' . $amount . ';');
+					if(preg_match('/[+\-*\/]/', $terminal))
+						eval('$terminal = ' . $terminal . ';');
+					if(preg_match('/[+\-*\/]/', $out))
+						eval('$out = ' . $out . ';');
+
+					if(!is_numeric($amount))
+						$amount = 0;
+					if(!is_numeric($terminal))
+						$terminal = 0;
+					if(!is_numeric($out))
+						$out = 0;
+
+					if($is_admin)
+						$products_cost = $row[6];
+					else
+						$products_cost = 0;
+
+					if($id == -1) {
+						$sql->a('INSERT INTO `shop`(`worker_ids`,`amount`,`terminal`,`out`,`date`,`products_cost`) VALUES(?,?,?,?,?,?)', $worker_ids, $amount, $terminal, $out, $date, $products_cost);
+						$inserted_data[$date] = $sql->c('SELECT LAST_INSERT_ID();');
+					}
+					else
+						$sql->a('UPDATE `shop` SET `worker_ids`=?, `amount`=?, `terminal`=?, `out`=?, `date`=?, `products_cost`=? WHERE `id`=?', $worker_ids, $amount, $terminal, $out, $date, $products_cost, $id);
+
+				}
+
+				echo json_encode($inserted_data);
+
+			}
+			catch(Exception $e) {
+			}
+
+		}
+
 	}
 
 
-	content::show_website();
+	if(array_key_exists('d', $_GET) && $_GET['d'] == 'logout') {
+		content::logout();
+		content::login();
+	}
+	elseif($_SESSION['mode'] == "shop" || $_GET['mode'] == "shop_input" || $_GET['mode'])
+		content::shop_input();
+
+	elseif(content::is_logged_in())
+		content::show_website();
+
+	elseif(array_key_exists('password', $_POST))
+		content::login_validation();
+
+	else
+		content::login();
 
 	/*
 

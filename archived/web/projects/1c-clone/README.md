@@ -31,6 +31,9 @@ writing this: almost all of the code was written in a single day.
 ## Configuration
 
 1. Install PHP 7.4
-2. Edit MySQL credentials at the top of the [`index.php`](./index.php) file
-3. Create a database based on the [`schema.sql`](./schema.sql) file
-4. Install a web server and start PHP
+2. Come up with a password, encrypt it using md5, and set the `HASH`
+   constant at the top of the [`index.php`](./index.php) to that
+   password
+3. Edit MySQL credentials at the top of the [`index.php`](./index.php) file
+4. Create a database based on the [`schema.sql`](./schema.sql) file
+5. Install a web server and start PHP
