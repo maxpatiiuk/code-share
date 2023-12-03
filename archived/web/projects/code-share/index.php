@@ -8,7 +8,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <?php
 
 	$l = 0;
-	define('LINK', 'https:/mambo.in.ua/map/code/');
+	define('LINK', 'https://max.patii.uk/map/code/');
 	define('FILES', 'files/');
 	define('FILE', LINK.FILES);
 	$mysqli = new mysqli('MYSQL_HOST', 'MYSQL_USERNAME', 'MYSQL_PASSWORD');

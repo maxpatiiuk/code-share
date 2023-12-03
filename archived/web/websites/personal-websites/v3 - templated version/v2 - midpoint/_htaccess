@@ -2,7 +2,7 @@
 
 RewriteCond %{HTTP_REFERER} sharebutton.to [NC,OR]
 RewriteRule .* - [F]
-Redirect 301 http://mambo.zzz.com.ua/shop.html http://mambo.zzz.com.ua/shop/
+Redirect 301 https://shop.mambo.in.ua http://mambo.zzz.com.ua/shop/
 Redirect /link/1 https://youpartnerwsp.com/join?89078
 Redirect /shop.html http://mambo.zzz.com.ua/shop/
 Redirect /video.html http://mambo.zzz.com.ua/

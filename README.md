@@ -13,7 +13,7 @@ Most of the projects that are too small to deserve their own repository
 are also here.
 
 Deprecated, obsolete or simply ugly code is located in the
-[archived](https://github.com/maxxxxxdlp/code_share/tree/main/archived/)
+[archived](https://github.com/maxpatiiuk/code_share/tree/main/archived/)
 folder
 
 A lot of the code present here was written during my 4-year long
@@ -53,7 +53,7 @@ Some of the languages, frameworks and topics included here:
  - Notes from university classes
 
 Files that are even more random are located in the
-[misc](https://github.com/maxxxxxdlp/code_share/tree/main/misc/)
+[misc](https://github.com/maxpatiiuk/code_share/tree/main/misc/)
 directory
 
 Keep in mind that most of the code present here does not represent

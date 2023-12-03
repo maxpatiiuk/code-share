@@ -437,7 +437,7 @@ class PostsController {
 
 		$payload = [
 			"sub" => "--omitted--", // unique user id string
-			"name" => "Maksym Patiiuk", // full name of user
+			"name" => "Max Patiiuk", // full name of user
 
 			// Optional custom user root path
 			// "https://claims.tiny.cloud/drive/root" => "/johndoe",

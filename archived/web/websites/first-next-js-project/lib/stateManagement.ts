@@ -1,7 +1,7 @@
 /*
 *
 * Generator of type safe-reducer and dispatches. Replaces the need for switch(){} statements
-* This code is based on https://github.com/maxxxxxdlp/typesafe_reducer
+* This code is based on https://github.com/maxpatiiuk/typesafe_reducer
 *
 * */
 

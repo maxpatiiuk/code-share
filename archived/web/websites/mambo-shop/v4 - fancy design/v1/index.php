@@ -179,7 +179,7 @@
 							accordion('Не працює акаунт/ключ/посилання','При несправності акауну/ключа/посилання зайдіть на сторінку опису цього товару. Прочитайте інструкцію (для того, щоб взнати про умови та можливість заміни/повернення грошей). Після цього зайдіть в розділ "Переписка" на сайті <a href="https://www.oplata.info/info/">oplata.info</a> (дивіться вище як це зробити). Напишіть продавцеві про несправність і ви отримаєте новий товар або повернення грошей');
 							accordion('Не співпадає ціна в магазині та oplata.info','Ціна товару оновлюється кожного дня в 5:30 та залежить від продавця і курсу гривні до рубля. Якщо ціна в магазині та на сайті oplata.info не співпвдвє то повідомте нам про це (дивіться нижче як це зробити)');
 							accordion('Як звязатися з нами?','Ви можете написати нам в розділі <a href="#contactsLink">"Контактів"</a>, на email - <a href="'._EMAIL_.'">"'._EMAIL_.'"</a> . Окрім цього, загляньте розділ <a href="#contactsLink">"Контакти"</a>');
-							accordion('Чи будуть відбуватися конкурси і розіграши?','Всі конкурси відбуваються на офіційному каналі магазину <a href="https://www.youtube.com/channel/UCSJcpWVrv6wVqH1YTmTCemw">"В гостях у MAMBO"</a>');
+							accordion('Чи будуть відбуватися конкурси і розіграши?','Всі конкурси відбуваються на офіційному каналі магазину <a href="https://youtube.patii.uk">"В гостях у MAMBO"</a>');
 							accordion('Правила','Адміністрація ніколи не просить дані від вашого акаунту.<br>Незнання правил не звільняє від відповідальності.<br>Заборонено використовувати аватарки, які порушують закони України або країни, в якій ви проживаєте.<br>Використання вад, помилок, проблем та недоробок сайту для обходу захисту або отримання вигоди, без попередження адміністрації за 2 тижі до цього заборонено.<br>Заборонено використовувати аватарки та слова (включно в назві акаунту), які несть в собі оманливий або образливий характер.<br>Заборонено рекламувати сторонні ресурси, пз, канали або веб сайти шляхом вказання їхньої назви в назвах акаунту, описі, аватарці, фоновому зображені або через коментарі.<br>Ми не гарантуємо заміну несправного товару, при порушені правил з вашої сторони.<br>Магазин залишає за собою повне право змінити правила без сповіщення про це користувачів.<br>Наший магазин не купує ключі/товари, а перенапрямлює клієнтів на провірених партнерів.<br>Заміна неробочого товару діє не на всі товари. Читайте опис товару.<br>Порушення правил карається за розглядом адміністрації, або відповідно до закону України, або країни в якій ви перебуваєте (стосується не всіх правопорушень).','rules');
 							?>
 						</div>
@@ -326,12 +326,12 @@
 									<a href="mailto:max@patii.uk" rel="author">Написати повідомлення</a>
 									<h4>Ми в соцмережах:</h4>
 									<div style="margin-left: -10px;"> <?php
-										sml('https://www.youtube.com/channel/UCSJcpWVrv6wVqH1YTmTCemw','https://s8.hostingkartinok.com/uploads/images/2018/01/4b64ece7d5e7bce7ade03ef1b1d576e7.png');
+										sml('https://youtube.patii.uk','https://s8.hostingkartinok.com/uploads/images/2018/01/4b64ece7d5e7bce7ade03ef1b1d576e7.png');
 										sml('https://www.youtube.com/channel/UCCrYADQvPZG8Vdw_Rl7bMNA','https://s8.hostingkartinok.com/uploads/images/2018/01/c849b942064afefe743aadb61c576bbb.png');
-										sml('https://www.facebook.com/mamboyoutube','https://s8.hostingkartinok.com/uploads/images/2018/01/09b625bc498d366d91ca874ed5595822.png');
-										sml('https://www.twitter.com/maxxxxxdlp1','https://s8.hostingkartinok.com/uploads/images/2018/01/0a2038d48cfce07ab41479f8372f13c1.png');
-										sml('https://www.instagram.com/mambo_youtube/','https://s8.hostingkartinok.com/uploads/images/2018/01/f1ec15166b4fc0c1729ab9c73204906c.png');
-										sml('https://www.vk.com/mambo_youtube','https://s8.hostingkartinok.com/uploads/images/2018/01/189c7d233d0e6edf49cdd0ef711a8046.png'); ?>
+										sml('https://facebook.patii.uk','https://s8.hostingkartinok.com/uploads/images/2018/01/09b625bc498d366d91ca874ed5595822.png');
+										sml('https://twitter.patii.uk','https://s8.hostingkartinok.com/uploads/images/2018/01/0a2038d48cfce07ab41479f8372f13c1.png');
+										sml('https://instagram.patii.uk/','https://s8.hostingkartinok.com/uploads/images/2018/01/f1ec15166b4fc0c1729ab9c73204906c.png');
+										sml('https://vk.patii.uk','https://s8.hostingkartinok.com/uploads/images/2018/01/189c7d233d0e6edf49cdd0ef711a8046.png'); ?>
 									</div>
 								</div>
 							</div>

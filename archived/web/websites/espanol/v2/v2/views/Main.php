@@ -1,4 +1,4 @@
-<!-- Developed by mambo (https://mambo.in.ua) -->
+<!-- Max Patiiuk (https://max.patii.uk) -->
 <!DOCTYPE html>
 <html lang="uk">
 	<head>

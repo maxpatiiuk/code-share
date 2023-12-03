@@ -20,7 +20,7 @@ app.add_url_rule('/public/css/<path:filename>',
                  endpoint='css',
                  view_func=app.send_static_file)
 
-root = '/Users/mambo/site/py_charm/flask/'
+root = '/Users/maxpatiiuk/site/py_charm/flask/'
 
 
 @app.route('/')

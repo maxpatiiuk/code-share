@@ -13,7 +13,7 @@ shell = '/usr/local/bin/zsh -ic'
 editor = 'v'
 
 # The location of the file that would store the data structure
-storage_file_location = '/Users/mambo/Documents/SPOTIFY.md'
+storage_file_location = '/Users/maxpatiiuk/Documents/SPOTIFY.md'
 
 
 def parse_file() -> typing.Dict[str, typing.List[str]]:

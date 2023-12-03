@@ -15,7 +15,7 @@ final class Site {
 
 	public const _DEAFULT_AVA_ = 'https://s8.hostingkartinok.com/uploads/images/2018/01/74c8325ebdff4081319b7ca7adf4e7e8.png';
 	public const _DEAFULT_IMG_ = 'https://s8.hostingkartinok.com/uploads/images/2017/10/6360f1658d1b1423e59ddb5c95e1d0d2.jpg';
-	public const _AUTHOR_ = 'Maxim Patiyuk';
+	public const _AUTHOR_ = 'Max Patiiuk';
 	public const _BRAND_COLOR_ = '#eeeeee';
 
 	public static $htmlLang="es";

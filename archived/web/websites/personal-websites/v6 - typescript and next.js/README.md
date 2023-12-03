@@ -4,7 +4,7 @@ Date: February 17, 2021
 
 This is the current [live version - max.patii.uk](https://max.patii.uk/).
 
-Source code: https://github.com/maxxxxxdlp/max.patii.uk
+Source code: https://github.com/maxpatiiuk/max.patii.uk
 
 Notable features of this website:
 1. Written using latest and greatest of web technologies:

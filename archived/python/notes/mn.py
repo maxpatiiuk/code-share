@@ -136,7 +136,7 @@ print(model(5))
 
 
 # go to comedy show tree here
-csv_file_path = "/Users/mambo/site/py_charm/first/data/people.csv"
+csv_file_path = "/Users/maxpatiiuk/site/py_charm/first/data/people.csv"
 df = pandas.read_csv(csv_file_path)
 
 d = {'UK': 0, 'USA': 1, 'N': 2}
@@ -153,7 +153,7 @@ decision_tree = DecisionTreeClassifier()
 decision_tree = decision_tree.fit(X, y)
 data = tree.export_graphviz(decision_tree, out_file=None, feature_names=features)
 graph = pydotplus.graph_from_dot_data(data)
-png_image_path = "/Users/mambo/site/py_charm/first/data/result.png"
+png_image_path = "/Users/maxpatiiuk/site/py_charm/first/data/result.png"
 graph.write_png(png_image_path)
 
 img = pltimg.imread(png_image_path)

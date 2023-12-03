@@ -1,6 +1,6 @@
 import os
 
-file_path = "/Users/mambo/site/py_charm/first/data/my_file.txt"
+file_path = "/Users/maxpatiiuk/site/py_charm/first/data/my_file.txt"
 my_file = open(file_path, "r")
 for x in my_file:
     print(x)  # loop through the file
@@ -21,7 +21,7 @@ my_file.close()
 if os.path.exists(file_path):
     os.remove(file_path)
 
-dir_path = "/Users/mambo/site/py_charm/first/directory"
+dir_path = "/Users/maxpatiiuk/site/py_charm/first/directory"
 if os.path.exists(dir_path):
     os.rmdir(dir_path)
 else:

@@ -1,6 +1,6 @@
 # Code Share
 
-Before [code_share](https://github.com/maxxxxxdlp/code_share/) repository got
+Before [code_share](https://github.com/maxpatiiuk/code_share/) repository got
 created, in fact, even before I knew GitHub existed, I had a need to small
 snippets of code in some place for easy retrieval in the future or for sharing
 with my friends.

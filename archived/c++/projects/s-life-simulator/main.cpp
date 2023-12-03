@@ -387,9 +387,9 @@ a:		title("Налаштування");
 	case 5:
 		system("CLS");
 		title("Про гру");
-		cout << "Гра ""S-LIFE Simulator"", створена MAMBO 2017 року. Саме тут ви маєте можливiсть пройти складний та цікавий шляг від бідного до міліардера" << endl << endl << "Версiя гри: 1.0" << endl << endl << "Програма та мова створення гри: Visual Studio 2012, Visual Studio 2015; C++" << endl << endl << "Веб сайт розробника:";
+		cout << "Гра ""S-LIFE Simulator"", Copyright 2017 Max Patiiuk. Саме тут ви маєте можливiсть пройти складний та цікавий шляг від бідного до міліардера" << endl << endl << "Версiя гри: 1.0" << endl << endl << "Програма та мова створення гри: Visual Studio 2012, Visual Studio 2015; C++" << endl << endl << "Веб сайт розробника:";
 		SetColor(0, 7);
-		cout << "www.mambo.zzz.com.ua; www.shop.mambo.zzz.com.ua";
+		cout << "max.patii.uk";
 		SetColor(7, 0);
 		cout << endl << endl << "Насолоджуйтеся грою!" << endl << endl;
 		decor('=');
@@ -4355,12 +4355,12 @@ void start() {
 	cout << endl;
 	for (ii = 0; ii<24; ii++)
 		cout << "  ";
-	cout << "S-LIFE Simulator (by MAMBO)" << endl;
+	cout << "S-LIFE Simulator (by Max Patiiuk)" << endl;
 	Sleep(2000);
 }
 int winapi()
 {
-	SetConsoleTitle(TEXT("S-LIFE Simulator (by MAMBO)"));
+	SetConsoleTitle(TEXT("S-LIFE Simulator (by Max Patiiuk)"));
 	HANDLE out_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD crd = { 119, 30 };
 	SMALL_RECT src = { 0, 0, crd.X - 1, crd.Y - 1 };

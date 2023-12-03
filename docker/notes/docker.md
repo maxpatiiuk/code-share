@@ -128,7 +128,7 @@ docker run sample --name name
 docker run -p 8080:80 sample
 docker run -d sample           # Detached
 docker run -w /app sample      # Working directory
-docker run -e LOGIN=maxxxxxdlp # Environmental variables
+docker run -e LOGIN=maxpatiiuk # Environmental variables
 
 # start
 docker start name
@@ -145,17 +145,17 @@ docker logs name
 docker logs name -f # Follow
 
 # tag
-docker tag sample maxxxxxdlp/sample
+docker tag sample maxpatiiuk/sample
 
 # push
-docker push maxxxxxdlp/sample # Latest
-docker push maxxxxxdlp/sample:v1.0.0
+docker push maxpatiiuk/sample # Latest
+docker push maxpatiiuk/sample:v1.0.0
 
 # rmi
-docker rmi maxxxxxdlp/sample # Remove image
+docker rmi maxpatiiuk/sample # Remove image
 
 # pull
-docker pull maxxxxxdlp/sample
+docker pull maxpatiiuk/sample
 
 # docker's rm -rf /
 docker system prune --all --volumes --force

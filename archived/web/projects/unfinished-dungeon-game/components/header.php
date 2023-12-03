@@ -22,7 +22,7 @@ ini_set('display_errors', 1);
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta
 		name="author"
-		content="Maksym Patiiuk">
+		content="Max Patiiuk">
 	<meta
 		name="theme-color"
 		content="#000"/>
@@ -40,7 +40,7 @@ ini_set('display_errors', 1);
 		content="Game">
 	<link
 			rel="icon"
-			href="https://mambo.in.ua/favicon.ico"><?php
+			href="https://max.patii.uk/favicon.ico"><?php
 
 	if(defined('CSS')) { ?>
 		<link

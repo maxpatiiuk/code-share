@@ -563,7 +563,7 @@ if($_GET['mode'] == "shop_data_send") {
 
 		//parameters
 
-		public static $link = 'http://mambo.zzz.com.ua/project/one_c/';
+		public static $link = 'http://max.patii.uk/project/one_c/';
 		public static $tables = [
 			['categories', 'w_categories'],
 			['workers', 'w_workers'],

@@ -5,7 +5,7 @@ final class Site{
 
 	public const _DEFAULT_AVA_ = 'https://s8.hostingkartinok.com/uploads/images/2018/01/74c8325ebdff4081319b7ca7adf4e7e8.png';//always true for admins
 	public const _DEFAULT_IMG_ = 'https://s8.hostingkartinok.com/uploads/images/2017/10/6360f1658d1b1423e59ddb5c95e1d0d2.jpg';
-	public const _AUTHOR_ = 'Maksym Patiiuk';//How many comments display // 0 = hidden
+	public const _AUTHOR_ = 'Max Patiiuk';//How many comments display // 0 = hidden
 	public const _BRAND_COLOR_ = '#ffaa11';
 	public const _LOGO_ = 'public/images/logo.png';//How many posts per page display // -1 - infinite
 	public const _PROTOCOL_ = 'https';

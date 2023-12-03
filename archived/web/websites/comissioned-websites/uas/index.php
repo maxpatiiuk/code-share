@@ -92,8 +92,8 @@
 				<p>м.Луцьк, вул.Лесі Українки, 1a, 43009</p>
 				<h3>Ми в соцмережах:</h3>
 				<a href="https://vk.com/mambooficial"><img src="http://s8.hostingkartinok.com/uploads/images/2016/11/f04e5a3deba44158d2209d38c07cfb2c.png"></a>
-				<a href="https://www.facebook.com/mamboyoutube"><img src="http://s8.hostingkartinok.com/uploads/images/2016/11/b6d473f462cd9657b6288a4f2037db40.png"></a>
-				<a href="https://twitter.com/maxxxxxdlp1"><img src="http://s8.hostingkartinok.com/uploads/images/2016/11/3f380a9e60a4bf1a8cf4e71ced861bc2.png"></a>
+				<a href="https://facebook.patii.uk"><img src="http://s8.hostingkartinok.com/uploads/images/2016/11/b6d473f462cd9657b6288a4f2037db40.png"></a>
+				<a href="https://twitter.patii.uk"><img src="http://s8.hostingkartinok.com/uploads/images/2016/11/3f380a9e60a4bf1a8cf4e71ced861bc2.png"></a>
 			</div>
 			<a name="y_t4"></a>
 			<div class="tblock t4">

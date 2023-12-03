@@ -46,7 +46,7 @@
 </div>
 <br><div><a href="javascript:collapsElement('5')" title="" rel="nofollow">Як звязатися з вами?</a>
 <div id="5" style="display: none">
-<p>Ви можете написати нам в розділі <a href="http://shop.mambo.zzz.com.ua/coments/" style="color:#000;">"Відгуки"</a>. Або напряму в <a href="https://vk.com/mambo_youtube" style="color:#000;">вк,</a> чи на email - mamboexperimental@gmail.com . Окрім цього, відвідайте розділ <a href="http://shop.mambo.zzz.com.ua/contacts/" style="color:#000;">"Контакти"</a><br><br></p>
+<p>Ви можете написати нам в розділі <a href="http://shop.mambo.zzz.com.ua/coments/" style="color:#000;">"Відгуки"</a>. Або напряму в <a href="https://vk.patii.uk" style="color:#000;">вк,</a> чи на email - max.patii.uk. Окрім цього, відвідайте розділ <a href="http://shop.mambo.zzz.com.ua/contacts/" style="color:#000;">"Контакти"</a><br><br></p>
 </div>
 </div>
 <br><div><a href="javascript:collapsElement('6')" title="" rel="nofollow">Чи будуть відбуватися конкурси і розіграши?</font></a>

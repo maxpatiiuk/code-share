@@ -10,7 +10,7 @@
 			$row = mysql_fetch_array($res);
 			head($row['name'],strip_tags($row['name']).', '.strip_tags($row['o1']),$row['name'].', '.$row['key_'],0,1,1,1);
 			echo '<meta property="og:url" content="'._LOCATION_.$row['url'].'/">
-			<meta property="fb:admins" content="mamboyoutube">';
+			<meta property="fb:admins" content="maxpatiiuk">';
 		?>
 	</head>
 	<body>

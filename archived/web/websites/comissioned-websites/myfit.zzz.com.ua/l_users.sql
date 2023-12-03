@@ -59,7 +59,7 @@ CREATE TABLE `l_users` (
 --
 
 INSERT INTO `l_users` (`id`, `login`, `val`, `r_date`, `date`, `r_ip`, `ip`, `email`, `conf`, `hesh`, `conf_c`, `type`, `facebook`, `youtube`, `twitter`, `instagram`, `pinterest`, `vis`, `phone`, `u_name`, `u_surname`, `u_date`, `about`, `city`, `lang`, `que`) VALUES
-(4, 'username-after-rot-13', 'some-password-after-rot-13', '07:17:40 27:02:18', '15:15:07 14:08:18', NULL, '1.1.1.1', 'max@patii.uk', b'1', 'hash', '::::', '2', 'https://www.facebook.com/mamboyoutube', 'https://www.youtube.com/channel/UCSJcpWVrv6wVqH1YTmTCemw', 'https://twitter.com/maxxxxxdlp1', 'https://www.instagram.com/mambo_youtube/', 'https://vk.com/mambo_youtube', b'0', '+380501234567', 'Максим', 'Патіюк', '2000-01-01', 'Інформація про мене', NULL, 1, '');
+(4, 'username-after-rot-13', 'some-password-after-rot-13', '07:17:40 27:02:18', '15:15:07 14:08:18', NULL, '1.1.1.1', 'max@patii.uk', b'1', 'hash', '::::', '2', 'https://facebook.patii.uk', 'https://youtube.patii.uk', 'https://twitter.patii.uk', 'https://instagram.patii.uk/', 'https://vk.patii.uk', b'0', '+380501234567', 'Максим', 'Патіюк', '2000-01-01', 'Інформація про мене', NULL, 1, '');
 
 --
 -- Indexes for dumped tables
