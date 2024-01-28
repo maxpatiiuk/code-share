@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" style="font-family: 'Helvetica Neue', sans-serif">
+  <title>HTML Notes</title>
+  <meta charset="utf-8" />
+
+  <h1>
+    Notes from
+    <a href="https://html.spec.whatwg.org/dev/">html.spec.whatwg.org/dev</a>
+  </h1>
+
+  <p>
+    The notes focus on reminding that some features exist, rather than on how to
+    use them - how to use them can be looked up when needed. In some cases, the
+    notes also include information that I found surprising/new (i.e the fact
+    that semantically, <code>&lt;ol&gt;</code> should be used in place of
+    <code>&lt;ul&gt;</code> whenever list item order does not matter)
+  </p>
+
+  <p>
+    Lots of useful information in the spec. Though, some "recommendations" are
+    legacy/non-practical (i.e advising to provide a fallback content for
+    <code>&lt;progress&gt;</code> even though it has been supported since 2010)
+  </p>
+
+  <p>
+    Interestingly, I recognize similarities or even 1:1 resemblance between some
+    pages in this spec, and
+    <a href="https://developer.mozilla.org/"
+      ><dfn><abbr title="Mozilla Developer Network">MDN</abbr></dfn></a
+    >
+    (presumably <abbr title="Mozilla Developer Network">MDN</abbr> is based on
+    this spec)
+  </p>
+
+  <p>
+    There are a ton of HTML elements and spec features, but most of them seem to
+    be geared toward text documents and blog posts (as that's what HTML has been
+    originally designed for, not complex single-page web apps)
+  </p>
+
+  <h2>1 Introduction</h2>
+
+  <ul>
+    <li>Beware of XSS - frameworks make this easier</li>
+    <li>
+      While HTML is very permissive, some restrictions exist to catch bugs or to
+      make future expansion easier
+    </li>
+  </ul>
+
+  <h2>2 Common infrastructure</h2>
+
+  <ul>
+    <li>
+      Boolean attribute must not have value, or the value must be equal to
+      attribute name
+    </li>
+  </ul>
+
+  <h2>2.6 Safe passing of structured data</h2>
+
+  <ul>
+    <li>Use <code>structuredClone()</code> for object deep clone</li>
+  </ul>
+
+  <h2>3 Semantics, structure, and APIs of HTML documents</h2>
+
+  <ul>
+    <li>
+      Put heading (<code>h1-6</code>) + tagline (<code>&lt;p&gt;</code>) into an
+      <code>&lt;hgroup&gt;</code>
+    </li>
+  </ul>
+
+  <h3>Kinds of content</h3>
+
+  <dl>
+    <dt>Flow content</dt>
+    <dd>most elements that are used in the <code>&lt;body&gt;</code></dd>
+
+    <dt>Metadata content</dt>
+    <dt>
+      some in the <code>&lt;head&gt;</code>, and some in the
+      <code>&lt;body&gt;</code>
+    </dt>
+
+    <dt>Sectioning content</dt>
+    <dd>article/aside/nav/section</dd>
+
+    <dt>Heading content</dt>
+    <dd>h1-6/hgroup</dd>
+
+    <dt>Phrasing content</dt>
+    <dd>
+      all elements that represent content (mostly text, but also include
+      img/video/audio/...)
+    </dd>
+
+    <dt>Embedded content</dt>
+    <dd>
+      audio/canvas/iframe/video (some are part of Phrasing content and
+      Interactive content)
+    </dd>
+
+    <dt>Interactive content</dt>
+    <dd>
+      was surprised that this list is way smaller than I expected (a, audio,
+      button, details, embed, iframe, img, input, label, select, textarea,
+      video) - I guess you can indeed build a lot with these!
+    </dd>
+
+    <dt>Palpable content</dt>
+    <dd>containers/wrappers for flow content/phrasing content/text</dd>
+
+    <dt>Script-supporting elements</dt>
+    <dd>script/template</dd>
+  </dl>
+
+  <p>
+    Paragraphs can be defined implicitly, not just explicitly using
+    <code>&lt;p&gt;</code> - pretty much every non-inline element that
+    interrupts/cuts text before and after it creates separate paragraphs
+  </p>
+
+  <p>
+    Can use <code>translate</code> attribute to hint whether content should be
+    machine-translatable
+  </p>
+
+  <h2>4 The elements of HTML</h2>
+
+  <ul>
+    <li>
+      For metadata that does not include a URL, use <code>&lt;meta&gt;</code>
+    </li>
+    <li>For metadata that does include a URL, use <code>&lt;link&gt;</code></li>
+    <li>
+      You can define your own metadata, but are encouraged to look first if
+      there is already some
+      <a href="https://wiki.whatwg.org/wiki/MetaExtensions"
+        >custom metadata extension defined</a
+      >
+    </li>
+  </ul>
+
+  <h2>4.3 Sections</h2>
+
+  <dl>
+    <dt>
+      <code>&lt;article&gt;</code>
+    </dt>
+    <dd>
+      for self-contained content that is independently distributable or reusable
+      (i.e comment, blog post link)
+    </dd>
+
+    <dt>
+      <code>&lt;section&gt;</code>
+    </dt>
+    <dd>
+      for generic thematic grouping of content (usually with a heading) (i.e
+      chapter). If using h1-h6 elements, sections are created implicitly
+    </dd>
+
+    <dt><code>&lt;nav&gt;</code></dt>
+    <dd>
+      a section of the page that represents links to other pages or
+      <b>to parts within the page</b>
+    </dd>
+
+    <dt><code>&lt;aside&gt;</code></dt>
+    <dd>
+      a section of a page that consists of content tangentially related to the
+      content around it. Can be used for sidebars or quote-like content within
+      the content (for representing real quotes with citation use
+      <code>&lt;blockquote&gt;</code> with <code>&lt;cite&gt;</code>)
+    </dd>
+
+    <dt><code>&lt;footer&gt;</code></dt>
+    <dd>
+      metadata about a section (or webpage in case of top-level footer).
+      <b>Does not need to be at the bottom</b>. Can have multiple
+      identical/similar footers (i.e "Back to home" link on top of the webpage
+      and at the bottom)
+    </dd>
+
+    <dt><code>&lt;address&gt;</code></dt>
+    <dd>
+      contact information that related to the section it is need (or entire
+      webpage in case of top-level). Address can be provided as a list of links,
+      or freeform text
+    </dd>
+
+    <dt><code>&lt;nav&gt;</code></dt>
+    <dd></dd>
+
+    <dt><code>&lt;nav&gt;</code></dt>
+    <dd></dd>
+  </dl>
+
+  <h2>4.4 Grouping content</h2>
+
+  <dl>
+    <dt>
+      <code>&lt;p&gt;</code>
+    </dt>
+    <dd>
+      use only when more specific element is not available (i.e
+      <code>&lt;footer&gt;</code>/<code>&lt;address&gt;</code>). Can not contain
+      <code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> children
+    </dd>
+
+    <dt>
+      <code>&lt;hr&gt;</code>
+    </dt>
+    <dd>a thematic break/change/transition</dd>
+
+    <dt>
+      <code>&lt;pre&gt;</code>
+    </dt>
+    <dd>
+      pre-formatted content. can put <code>&lt;code&gt;</code> inside of it for
+      computer code, <code>&lt;saml&gt;</code> for computer output, and
+      <code>&lt;kbd&gt;</code> to indicate text that the user is to enter
+    </dd>
+
+    <dt><code>&lt;blockquote&gt;</code></dt>
+    <dd>
+      section that is quoted from somewhere else (could also denote quoting
+      previous comment in a reply). Can add
+      <code>cite</code> attribute with the URL to original content.
+      Attribution/citation must be placed outside of
+      <code>&lt;blockquote&gt;</code>, potentially using
+      <code>&lt;figure&gt;</code>+<code>&lt;figcaption&gt;</code>
+
+      <pre>
+      <code>
+&lt;figure&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;Some long quote here.&lt;/p&gt;
+  &lt;/blockquote&gt;
+  &lt;figcaption&gt;Carl Sagan, in "&lt;cite&gt;Wonder and Skepticism&lt;/cite&gt;", from
+  the &lt;cite&gt;Skeptical Inquirer&lt;/cite&gt; Volume 19, Issue 1 (January-February
+  1995)&lt;/figcaption&gt;
+&lt;/figure&gt;
+      </code>
+    </pre>
+    </dd>
+
+    <dt><code>&lt;ol&gt;</code></dt>
+    <dd>
+      for any
+      <b
+        >list of items where changing the order of items would affect the
+        meaning of the document</b
+      >. Could use <code>reversed</code> or <code>start</code> attribute
+    </dd>
+
+    <dt><code>&lt;ol&gt;</code></dt>
+    <dd>
+      for any
+      <b
+        >list of items where changing the order of items won't materially affect
+        the meaning of the document</b
+      >
+    </dd>
+
+    <dt><code>&lt;menu&gt;</code></dt>
+    <dd>
+      identical to <code>&lt;ul&gt;</code>, but is semantically a "toolbar"
+    </dd>
+
+    <dt><code>&lt;dl&gt;</code></dt>
+    <dd>
+      an association list (not necessarily definitions; ordering may matter)
+      with one or more <code>&lt;dt&gt;</code> (could even have several
+      sequentially) followed by one or more <code>&lt;dd&gt;</code> (could even
+      have several sequentially).
+
+      <pre><code>
+&lt;dl&gt;
+  &lt;dt lang="en-US"&gt; &lt;dfn&gt;color&lt;/dfn&gt; &lt;/dt&gt;
+  &lt;dt lang="en-GB"&gt; &lt;dfn&gt;colour&lt;/dfn&gt; &lt;/dt&gt;
+  &lt;dd&gt; A sensation which (in humans) derives from the ability of
+  the fine structure of the eye to distinguish three differently
+  filtered analyses of a view. &lt;/dd&gt;
+&lt;/dl&gt;
+      </code></pre>
+
+      <pre><code>
+The term &lt;dfn&gt;organic food&lt;/dfn&gt; refers to food produced without synthetic chemicals.
+      </code></pre>
+
+      Can group a single definition or multiple definitions using a
+      <code>&lt;div&gt;</code>.
+      <a
+        href="https://html.spec.whatwg.org/dev/grouping-content.html#the-dl-element"
+        >More great code samples</a
+      >
+    </dd>
+
+    <dt><code>&lt;figure&gt;</code></dt>
+    <dd>
+      represents a self-contained (but not necessarily independent) flow content
+      with an optional caption (<code>&lt;figcaption&gt;</code>). For unrelated
+      content, use
+      <aside>&lt;figcaption&gt;</aside>
+      . Can caption not only media element (or several media elements), but also
+      a quote, or several nested related <code>&lt;figure&gt;</code>
+    </dd>
+
+    <dt><code>&lt;main&gt;</code></dt>
+    <dd>
+      dominant content on the page. i.e the target of the "Skip to content"
+      link. Should not include
+      <code>&lt;header&gt;</code>/<code>&lt;footer&gt;</code>. Only one per page
+      (unless others have <code>hidden</code> attribute)
+    </dd>
+
+    <dt><code>&lt;search&gt;</code></dt>
+    <dd>
+      part of the document that contains a <code>&lt;form&gt;</code> with
+      <code>&lt;input type="search"&gt;</code> (not for search results, but
+      could contain search suggestions)
+    </dd>
+
+    <dt><code>&lt;div&gt;</code></dt>
+    <dd>
+      no special meaning. Use only when no other semantic tag applies. Could
+      contain <code>lang</code> or other attributes
+    </dd>
+  </dl>
+
+  <h2>4.5 Text-level semantics</h2>
+
+  <dl>
+    <dt><code>&lt;a&gt;</code></dt>
+    <dd>
+      if does not contain a <code>href</code>, then denotes
+      <q>
+        a placeholder for where a link might otherwise have been placed, if it
+        had been relevant
+      </q>
+      . Can even wrap entire <code>&lt;section&gt;</code> in a link, as long the
+      the wrapped content is not interactive. Can have
+      <code>ping</code> attribute to make browser ping some other URL on link
+      click
+    </dd>
+
+    <dt><code>&lt;em&gt;</code></dt>
+    <dd>
+      puts emphasis (italics) on content. Can be nested for greater emphasis
+    </dd>
+
+    <dt><code>&lt;strong&gt;</code></dt>
+    <dd>
+      represents content of importance, seriousness or urgency (can also be used
+      in headings for more important sections). Can be nested for greater
+      importance
+    </dd>
+
+    <dt><code>&lt;b&gt;</code></dt>
+    <dd>
+      bolden text, without semantics, only for styling. Use only if no other
+      element fits better.
+    </dd>
+
+    <dt><code>&lt;i&gt;</code></dt>
+    <dd>
+      span of content in an alternative voice/mood or denoting different quality
+      of text (taxonomic designation, technical term, phrase, transliteration).
+      Use only if no other element fits better
+    </dd>
+
+    <dt><code>&lt;u&gt;</code></dt>
+    <dd>
+      underline. Could be used to denote misspelling. Use only if no other
+      element fits better (i.e
+      <code>&lt;mark&gt;</code>)
+    </dd>
+
+    <dt><code>&lt;mark&gt;</code></dt>
+    <dd>
+      <q
+        >a run of text in one document marked or highlighted for reference
+        purposes, due to its relevance in another context</q
+      >. Can use for highlight inside of a quote. Use to denote relevance, not
+      importance (use <code>&lt;strong&gt;</code> for that)
+    </dd>
+
+    <dt><code>&lt;small&gt;</code></dt>
+    <dd>
+      for comments such as small print (disclaimers, caveats, legal
+      restrictions, copyrights, attribution). Used for short content. For long
+      content, use <code>&lt;aside&gt;</code>
+    </dd>
+
+    <dt><code>&lt;s&gt;</code></dt>
+    <dd>for content that is no longer accurate or relevant (crossed out)</dd>
+
+    <dt><code>&lt;cite&gt;</code></dt>
+    <dd>
+      wrap the name of any mentioned/cited/referenced work in this element (not
+      for names of people though). Only the name of hte work is to be wrapped in
+      this element (not author or metadata)
+    </dd>
+
+    <dt><code>&lt;q&gt;</code></dt>
+    <dd>
+      For inline quoted content (with optional URL in the
+      <code>cite</code> attribute). Quotation marks are inserted by user-agent.
+      Can be nested in case of quotation inside of quotation
+    </dd>
+
+    <dt><code>&lt;dfn&gt;</code></dt>
+    <dd>
+      the defining instance of a term
+
+      <pre><code>
+&lt;p&gt;The &lt;dfn&gt;&lt;abbr title="Garage Door Opener"&gt;GDO&lt;/abbr&gt;&lt;/dfn&gt;
+is a device that allows off-world teams to open the iris.&lt;/p&gt;
+&lt;!-- ... later in the document: --&gt;
+&lt;p&gt;Teal'c activated his &lt;abbr title="Garage Door Opener"&gt;GDO&lt;/abbr&gt;
+and so Hammond ordered the iris to be opened.&lt;/p&gt;
+      </code></pre>
+    </dd>
+
+    <dt><code>&lt;abbr&gt;</code></dt>
+    <dd>
+      abbreviation/acronym with optional expansion
+
+      <pre><code>
+&lt;p&gt;The &lt;dfn id=whatwg&gt;&lt;abbr
+title="Web Hypertext Application Technology Working Group"&gt;WHATWG&lt;/abbr&gt;&lt;/dfn&gt;
+is a loose unofficial collaboration of web browser manufacturers and
+interested parties who wish to develop new technologies designed to
+allow authors to write and deploy Applications over the World Wide
+Web.&lt;/p&gt;
+      </code></pre>
+      alternative:
+      <pre><code>
+&lt;p&gt;The &lt;dfn id=whatwg&gt;Web Hypertext Application Technology
+Working Group&lt;/dfn&gt; (&lt;abbr
+title="Web Hypertext Application Technology Working Group"&gt;WHATWG&lt;/abbr&gt;)
+is a loose unofficial collaboration of web browser manufacturers and
+interested parties who wish to develop new technologies designed to
+allow authors to write and deploy Applications over the World Wide
+Web.&lt;/p&gt;
+</code></pre>
+      with link to definition:
+      <pre><code>
+&lt;p&gt;The &lt;a href="#whatwg"&gt;&lt;abbr
+title="Web Hypertext Application Technology Working Group"&gt;WHATWG&lt;/abbr&gt;&lt;/a&gt;
+community does not have much representation from Asia.&lt;/p&gt;
+      </code></pre>
+
+      Using abbr is not mandatory. Useful when you want to give a definition in
+      a title or when audience may be unfamiliar with the term. Every
+      <code>&lt;abbr&gt;</code> within the page is independent
+    </dd>
+
+    <dt><code>&lt;data&gt;</code></dt>
+    <dd>
+      a wrapper for human readable value with machine-readable value in the
+      <code>value</code> attribute. Can be combined with microdata
+    </dd>
+
+    <dt><code>&lt;time&gt;</code></dt>
+    <dd>
+      wrap around date/time/datetime/duration/time zone offset with
+      machine-readable date in <code>datetime</code> attribute (the value of
+      which defaults to the content of the element)
+    </dd>
+
+    <dt><code>&lt;code&gt;</code></dt>
+    <dd>
+      for single line or multi-line (if inside of <code>&lt;pre&gt;</code>)
+      code. Can add <code>class</code> attribute with value of
+      <code>language-<kbd>LanguageName</kbd></code>
+    </dd>
+
+    <dt><code>&lt;var&gt;</code></dt>
+    <dd>
+      wrap variable identifier in this element (programming, math, physics) (but
+      use <abbr>MathML</abbr> for more complicated equations)
+    </dd>
+
+    <dt><code>&lt;samp&gt;</code></dt>
+    <dd>
+      sample output from a program (use <code>&lt;output&gt;</code> in case of
+      live output)
+    </dd>
+
+    <dt><code>&lt;kbd&gt;</code></dt>
+    <dd>
+      expected input/actual input from user. Can nest them:
+
+      <pre><code>
+&lt;p&gt;To make George eat an apple, press &lt;kbd&gt;&lt;kbd&gt;Shift&lt;/kbd&gt; + &lt;kbd&gt;F3&lt;/kbd&gt;&lt;/kbd&gt;&lt;/p&gt;
+      </code></pre>
+
+      or use <code>&lt;samp&gt;</code> to denote that some input is based on
+      output/display of the program
+
+      <pre><code>
+&lt;p&gt;To make George eat an apple, select
+  &lt;kbd&gt;&lt;kbd&gt;&lt;samp&gt;File&lt;/samp&gt;&lt;/kbd&gt;|&lt;kbd&gt;&lt;samp&gt;Eat Apple...&lt;/samp&gt;&lt;/kbd&gt;&lt;/kbd&gt;&lt;/p&gt;
+      </code></pre>
+    </dd>
+
+    <dt><code>&lt;sub&gt;</code>/<code>&lt;sup&gt;</code></dt>
+    <dd>
+      superscript/subscript, only whe it has semantic meaning, not just styling.
+      Could be used inside of <code>&lt;var&gt;</code>
+    </dd>
+
+    <dt><code>&lt;span&gt;</code></dt>
+    <dd>
+      no semantics. Use when need global attribute, or <code>class</code> for
+      styling
+    </dd>
+
+    <dt><code>&lt;br&gt;</code></dt>
+    <dd>
+      used only when line break does not mean different paragraph(use
+      <code>&lt;p&gt;</code> for that) - when line breaks is actually part of
+      content (i.e. in a poem or address)
+    </dd>
+  </dl>
+
+  <h2>4.7 Edits</h2>
+
+  <dl>
+    <dt><code>&lt;ins&gt;</code></dt>
+    <dd>
+      represents an addition to the document. Should not span several
+      paragraphs. Can annotate with date using <code>datetime</code> attribute.
+      Can provide a context URL using <code>cite</code> attribute. Can be used
+      not just for text diffing, but for indicating added list items or table
+      rows
+    </dd>
+
+    <dt><code>&lt;del&gt;</code></dt>
+    <dd>
+      represents a removal from the document. Same rules apply as for
+      <code>&lt;ins&gt;</code>
+    </dd>
+
+    <dt><code>&lt;pre&gt;</code></dt>
+    <dd></dd>
+
+    <dt><code>&lt;pre&gt;</code></dt>
+    <dd></dd>
+
+    <dt><code>&lt;pre&gt;</code></dt>
+    <dd></dd>
+  </dl>
+
+  <h2>4.8.4 Images</h2>
+
+  <dl>
+    <dt><code>&lt;picture&gt;</code></dt>
+    <dd>
+      can be used alongside <code>&lt;source&gt;</code> and
+      <code>&lt;img&gt;</code> to provide several variants of an image in
+      different sizes - to let browser pick best. For simpler selectors, can use
+      the <code>srcset</code> attribute on <code>&lt;img&gt;</code>
+    </dd>
+
+    <dt><code>alt</code> attribute on <code>&lt;pre&gt;</code></dt>
+    <dd>
+      <q
+        >the intent is that replacing every image with
+        <code>alt</code> attribute does not change the meaning of the page</q
+      >.
+      <a href="https://html.spec.whatwg.org/dev/images.html#alt"
+        >Very in-depth list of guidelines for proper use of the
+        <code>alt</code> attribute</a
+      >
+    </dd>
+  </dl>
+
+  <h2>4.8.5 The <code>input</code> element</h2>
+
+  <figure>
+    <figcaption>Input types</figcaption>
+    <ul>
+      <li>hidden</li>
+      <li>text</li>
+      <li>search</li>
+      <li>tel (note: syntax not enforced by default)</li>
+      <li>url</li>
+      <li>
+        email. Regex used by browsers for validation:
+        <code
+          >/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/</code
+        >
+      </li>
+      <li>password</li>
+      <li>date (and has a <code>$0.valueAsDate</code> attribute)</li>
+      <li>month</li>
+      <li>time</li>
+      <li>url</li>
+      <li>datetime-local</li>
+      <li>number (and has a <code>$0.valueAsNumber</code> attribute)</li>
+      <li>range</li>
+      <li>color</li>
+      <li>checkbox</li>
+      <li>radio</li>
+      <li>file</li>
+      <li>submit</li>
+      <li>image (wtf?)</li>
+      <li>reset (deprecate it!)</li>
+      <li>button</li>
+    </ul>
+  </figure>
+
+  <ul>
+    <li>
+      There are lots of
+      <a
+        href="https://html.spec.whatwg.org/dev/form-control-infrastructure.html#autofill"
+        ><code>autocomplete</code> attribute values</a
+      >
+    </li>
+    <li>
+      See also
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode"
+        ><code>inputmode</code> attribute</a
+      >
+      for customizing virtual keyboards
+    </li>
+  </ul>
+
+  <h2>4.12.5 The <code>canvas</code> element</h2>
+
+  <p>
+    There is
+    <a href="https://html.spec.whatwg.org/dev/canvas.html"
+      >a lot of content here</a
+    >. I only skimmed though it as I would forget much of it anyway unless I use
+    it soon
+  </p>
+
+  <h2>5 Microdata</h2>
+
+  <p>Deeper dive:</p>
+
+  <ul>
+    <li>
+      <a
+        href="https://nextjs.org/docs/app/building-your-application/optimizing/metadata#json-ld"
+        >nextjs.org/docs/app/building-your-application/optimizing/metadata</a
+      >
+    </li>
+    <li>
+      <a
+        href="https://developers.google.com/search/docs/appearance/structured-data"
+        >developers.google.com/search/docs/appearance/structured-data</a
+      >
+    </li>
+    <li>
+      <a href="https://schema.org/">schema.org</a>
+    </li>
+  </ul>
+
+  <h2>6 User Interaction</h2>
+
+  <p>Attributes:</p>
+
+  <dl>
+    <dt><code>spellcheck</code></dt>
+    <dd>for disabling spell-checking</dd>
+
+    <dt><code>autocapitalize</code></dt>
+    <dd>for controlling autocapitalization</dd>
+
+    <dt><code>enterkeyhint</code></dt>
+    <dd>for modifying the Enter key label/icon on virtual keyboards</dd>
+
+    <dt><code>popover</code></dt>
+    <dd>for creating popovers</dd>
+  </dl>
+
+  <h2>7.2 APIS related to navigation and session history</h2>
+
+  <dl>
+    <dt><code>window.open()</code></dt>
+    <dd>open new window/tab</dd>
+
+    <dt><code>window.location</code></dt>
+    <dd>get/set current URL</dd>
+
+    <dt><code>window.history</code></dt>
+    <dd>manipulate tab history</dd>
+
+    <dt><code>window.navigation</code></dt>
+    <dd>modern alternative to <code>window.history</code></dd>
+  </dl>
+
+  <h2>8 Web Application APIs</h2>
+
+  <p>Import map:</p>
+
+  <pre><code>
+&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "moment": "/node_modules/moment/src/moment.js",
+    "moment/": "/node_modules/moment/src/"
+  },
+  "scopes": {
+    "/scope2/": {
+      "a": "/a-2.mjs"
+    },
+    "/scope2/scope3/": {
+      "b": "/b-3.mjs"
+    }
+  }
+}
+&lt;/script&gt;
+  </code></pre>
+
+  <p>Only first import map is processed - rest are ignored.</p>
+
+  <p>Allows for <code>import moment from 'moment';</code></p>
+
+  <dl>
+    <dt><code>import.meta.url</code></dt>
+    <dd>URL of the script in which <code>import.meta.url</code> is located</dd>
+
+    <dt><code>import.meta.resolve(specifier)</code></dt>
+    <dd>resolve a specifier relative to current script</dd>
+  </dl>
+
+  <h2>8.4 Dynamic Markup Insertion</h2>
+
+  <p>Parse XML:</p>
+
+  <code
+    >new DOMParser().parseFromString(string, 'text/html' | 'text/xml' |
+    'image/svg+xml')</code
+  >
+
+  <p>Parse HTML:</p>
+
+  <code>Document.parseHTMLUnsafe()</code>
+
+  <h2>8.6 Timers</h2>
+
+  <dl>
+    <dt><code>self.queueMicrotask(callback)</code></dt>
+    <dd>
+      add task to microtask queue (before <code>setTimeout</code>). Main use
+      cases in in functions that can do the work sync or async, but to create
+      consistent API, you want to make the result be always async with low
+      overhead
+    </dd>
+
+    <dt><code>requestAnimationFrame((timestamp)=>{ ... })</code></dt>
+    <dd>
+      schedule a callback as many times per second as the current frame rate
+      (and less when tab is in the background)
+    </dd>
+
+    <dt><code>requestIdleCallback(callback, {timeout?})</code></dt>
+    <dd>
+      schedule a low-priority task, with optional conversion into a regular
+      event loop task past the timeout
+    </dd>
+  </dl>
+
+  <h2>8.9 System state and capabilities</h2>
+
+  <dl>
+    <dt><code>window.navigator.registerProtocolHandler(scheme, url)</code></dt>
+    <dd>
+      ask to register a URL as a handler for a given URL scheme.
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/registerProtocolHandler#permitted_schemes"
+        >Permitted schemes</a
+      >
+    </dd>
+  </dl>
+
+  <h2>9.2 Server-sent events</h2>
+
+  <p>
+    Several approaches described in this
+    <a href="https://github.com/specify/specify7/issues/2606">GitHub issue</a>
+  </p>
+
+  <h2>9.3 Cross-document messaging</h2>
+
+  <p>
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
+      ><code>window.postMessage()</code> for cross-tab or cross-frame
+      cross-origin communication (or can create you own communication channels
+      using <code>new MessageChannel()</code>)</a
+    >
+  </p>
+
+  <h2>10 Web Workers</h2>
+
+  <p>
+    Skipping this chapter for now as I plan to return to it later when doing a
+    deep-dive on web workers
+  </p>
+
+  <h2>Index</h2>
+
+  <a href="https://html.spec.whatwg.org/dev/indices.html"
+    >Lots of useful references and indices</a
+  >
+</html>
