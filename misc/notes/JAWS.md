@@ -1,6 +1,7 @@
 # JAWS Screen Reader
 
 ## TODO
+https://support.freedomscientific.com/Content/Documents/Manuals/JAWS/Keystrokes.pdf
 https://dequeuniversity.com/assets/pdf/screenreaders/jaws.pdf
 
 ## Basics

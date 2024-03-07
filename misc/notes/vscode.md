@@ -7,9 +7,9 @@
 - [x] https://www.cordulack.com/writing/moving-to-vs-code-from-intelliJ
 - [x] Go over default snippets and disable useless ones
 - [x] Go over all IDE settings
-  - [ ] Did I break git diff gutters? -> update the css file
   - [x] Go over welcome page, or reenable workbench.startupEditor
-  - [ ] https://github.com/microsoft/vscode/issues/90130
+  - [x] https://github.com/microsoft/vscode/issues/90130 ❤️
+  - [x] Did I break git diff gutters? -> update the css file
   - [ ] Hide activity bar once I learn it or at least reduce it
     - And likely create a shortcut for toggling it
   - [x] Hide status bar once I learn it or at least reduce it
@@ -46,6 +46,7 @@
         inflate($("textarea").value);
         ```
     - or "Settings Sync: Show Synced Data" is enough?
+    - [x] Integrate cspell config - https://github.com/typescript-eslint/typescript-eslint/blob/main/.cspell.json
 - [ ] Setup test workflow
   - [ ] Try out testing.showAllMessages?
   - [ ] Go over Karma settings, and come up with a workflow
@@ -80,8 +81,11 @@
 - [x] Create a keyboard shortcut for going to nth tab
   - Decided not to implement this - hid tabs instead
 - [ ] https://code.visualstudio.com/docs/nodejs/debugging-recipes
-- [ ] Create profile for Demos based on the main profile (and google/chatgpt
+- [x] https://twitter.com/KyleRayKelley/status/1705000982474793080
+- [x] Create profile for Demos based on the main profile (and google/chatgpt
       nice settings for that - i.e autosave, font size) (or just zen mode?)
+      - Disable relative line numbers
+      - Use light mode to be more readable on the projector
 - Esri
   - [x] Turn sdk and api into single workspace?
     - Nope. My VS Code is terribly slow as is. Explorer takes 4 seconds to open.
@@ -115,7 +119,7 @@ Installed extensions are absent from this list
   - see if can be replaced by an ESLint plugin
 - [ ] Node.JS REPL
   - try out "nodemon"
-- [ ] -- Go over git plugins and see if I need them (I am still a big fun of
+- [x] -- Go over git plugins and see if I need them (I am still a big fun of
       using Git in the CLI, especially due to customization options and many
       aliases I have)
 
@@ -150,23 +154,16 @@ TODO: Review all installed plugins as a reminder. Also:
     - Pros of DevTools' snippets:
       - Always there, easily accessible, and can save snippets for later
       - Access to the DOM
+      - Access to application's state and globals
 - [ ] Search node_modules
 
 ### Maybe later
 
-- [ ] Stencil Tools
-  - Maybe once I will start working with Stencil more
 - [ ] Shell
   - Is it redundant with the terminal?
   - Is it redundant with the vim extension? (which can execute CLI commands
     too?)
 - [ ] Dev Containers
-- [ ] Emmet
-  - Little use for this. Don't write .html at all. Write little .css (especially
-    with Tailwind CSS). Write a lot of .tsx, but there props are often needed,
-    you rarely think 2-3 components ahead, and you never create a lot of similar
-    components at once (in favor of dry code: loops)
-  - [ ] https://docs.emmet.io/cheat-sheet/
 - [ ] Docker
   - Not working with docker much nowadays, despite it being a useful technology
 

@@ -10,13 +10,13 @@ of Lit is customizable/overwrite at runtime, rather than constrained by a static
 compiler - that gives much more freedom in cases when it's necessary.
 
 Lit also chose to provide much more flexibility in all places: lifecycle
-methods, render mechanism, events, props
+methods, render mechanism, events, props.
 
 The no-compiler approach creates some tradeoffs, but these seem like smart
 trade-offs. Though, without playing around with Lit for considerable time, it's
 hard to say what "gotchas" there might be hidden - the official docs don't
 always mention all the limitations and drawbacks of a given framework (just like
-Stencil's docs are conspicuously silent on composition)
+Stencil's docs are conspicuously silent on composition).
 
 ### General
 
@@ -29,6 +29,9 @@ Stencil's docs are conspicuously silent on composition)
     [adding TypeScript typings for your library](https://lit.dev/docs/components/defining/#typescript-typings),
     or
     [creating React wrappers](https://lit.dev/docs/frameworks/react/#createcomponent))
+
+  - Lit has no lazy loading, and does not have separate output
+    targets - you are on your own for that (and for docs too)
 
   - Lit's lifecycle methods are just methods defined on the base class - can be
     extended/have some code executed before or after if needed. Much simpler
@@ -51,7 +54,10 @@ Stencil's docs are conspicuously silent on composition)
 
   And with [lit plugins](https://lit.dev/docs/tools/development/#ide-plugins)
   for VSCode and TypeScript, string templates aren't that bad. In summary, this
-  is not that different from Vue's template
+  is not that different from Vue's template.
+
+  Though, they don't natively support the spread syntax like JSX does
+  (utils for this exist though)
 
 - With a large company like Google behind Lit, and using Lit internally, I won't
   be worried about them disappearing for a few years, or not having basic

@@ -183,3 +183,4 @@ git show hash  # show info about a commit
 
 # TODO:
 review git tools: `git difftool --tool-help` and `mergetool`
+review git commit --fixup
