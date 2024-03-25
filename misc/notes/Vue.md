@@ -1,7 +1,7 @@
 # Vue
 
 My initial impressions of Vue back in 2022 where quite negative, due to it's
-implicit and type-unsafe nature, needlessly custom syntax, and .
+implicit and type-unsafe nature, and needlessly custom syntax.
 
 I talked about this in more depth in my
 [blog post on dev.to](https://dev.to/maxpatiiuk/6-big-issues-with-vuejs-3he5).
