@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+
 const cwd = process.cwd();
 
-const candidates = [];
+const scriptCandidates = [];
 
 let packageManager = undefined;
 
@@ -16,7 +17,7 @@ let packageManager = undefined;
     const contents = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
     if (typeof contents !== 'object' || Array.isArray(contents)) continue;
 
-    candidates.push(...Object.keys(contents?.scripts ?? {}));
+    scriptCandidates.push(...Object.keys(contents?.scripts ?? {}));
 
     if (typeof contents.packageManager === 'string')
       packageManager ??=
@@ -27,30 +28,58 @@ let packageManager = undefined;
 packageManager ??= 'npm';
 
 const commandName = process.argv[2];
-const parts = commandName.split(':').map((part) => part.split('.'));
+const split = (name) =>
+  name.split(':').map((part) => part.split('.').map((part) => part.split('-')));
+const parts = split(commandName);
 
-function resolve(commandName) {
+// s -> s.*
+// s:x -> s.*:x.*
+function resolve(candidates) {
+  for (const candidate of candidates) {
+    const candidateParts = split(candidate);
+    if (
+      parts.every((subParts, index) =>
+        subParts.every((subSubParts, subIndex) =>
+          subSubParts.every(
+            (part, subSubIndex) =>
+              candidateParts[index]?.[subIndex]?.[subSubIndex]?.startsWith(
+                part
+              ) === true
+          )
+        )
+      )
+    )
+      return candidate;
+  }
+  return undefined;
+}
+
+// Resolve npm scripts
+const resolvedScript = resolve(scriptCandidates);
+if (typeof resolvedScript === 'string') {
   console.log(
-    `${packageManager} run ${commandName} ${
-      packageManager === 'npm' && process.argv.length > 2 ? '-- ' : ''
+    `${packageManager} run ${resolvedScript} ${
+      packageManager === 'npm' && process.argv.length > 3 ? '-- ' : ''
     }${process.argv.slice(3).join(' ')}`
   );
   process.exit(0);
 }
 
-// s -> s.*
-// s:x -> s.*:x.*
-for (const candidate of candidates) {
-  const candidateParts = candidate.split(':').map((part) => part.split('.'));
-  if (
-    parts.every((subParts, index) =>
-      subParts.every(
-        (part, subIndex) =>
-          candidateParts[index]?.[subIndex]?.startsWith(part) === true
-      )
-    )
-  )
-    resolve(candidate);
+// Resolve npm binaries
+const binaryCandidates = [];
+{
+  const pathParts = cwd.split(path.sep);
+  while (pathParts.length > 1) {
+    const binaries = path.join(pathParts.join(path.sep), 'node_modules/.bin');
+    pathParts.pop();
+    if (!fs.existsSync(binaries)) continue;
+
+    const files = fs.readdirSync(binaries);
+    binaryCandidates.push(...files);
+  }
 }
 
-console.log(`npx ${commandName} ${process.argv.slice(3).join(' ')}`);
+debugger;
+const resolvedBinary = resolve(binaryCandidates) ?? commandName;
+
+console.log(`npx ${resolvedBinary} ${process.argv.slice(3).join(' ')}`);

@@ -10,25 +10,21 @@ keystrokes.
 x t
 ▶︎ npm run test
 
-# Supports separating using :
-x t:w
-▶︎ npm run test:watch
-
-# Supports separating using -
-x t-w
-▶︎ npm run test-watch
-
 # Can enter more characters if ambiguous
 x wa:bu
 ︎▶︎ npm run watch:build
+
+# Supports . - and : separators
+x g:t.w
+▶︎ npm run global:test.watch
 
 # Passes all arguments to the script
 x wa:bu --serve
 ▶︎ npm run watch:build -- --serve
 
 # Will try to resolve to some script from any of the parent package.json files
-# If fails, will run `npx <command>`
-x tsc -b
+# If fails to match against any script, will try to resolve the executable
+x ts -b
 ▶︎ npx tsc -b
 
 # If "packageManager" in package.json is set to yarn or pnpm,
