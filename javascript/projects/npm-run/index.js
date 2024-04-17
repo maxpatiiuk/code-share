@@ -28,6 +28,10 @@ let packageManager = undefined;
 packageManager ??= 'npm';
 
 const commandName = process.argv[2];
+if (commandName === undefined) {
+  console.log('# Usage: x <short-command> [args...]');
+  process.exit(1);
+}
 const split = (name) =>
   name.split(':').map((part) => part.split('.').map((part) => part.split('-')));
 const parts = split(commandName);
