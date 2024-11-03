@@ -95,6 +95,9 @@ Stencil's docs are conspicuously silent on composition).
   `lowercase` rather than `kebab-case` - closer to the HTML attribute naming
   convention, but less readable
 
+  - 👍  Fortunately, I was able to patch that - everything in Lit is easily
+    patchable compared to Stencil
+
 - 👎 Numbers set as HTML attributes are not automatically converted but remain a
   string, unless `{type: Number}` is set:
 
@@ -135,6 +138,10 @@ Stencil's docs are conspicuously silent on composition).
 
   - 👍 very flexible and composable
   - 👎 can't auto-generate docs for events.
+
+    - edit: that's not true. you can document that using
+      [`Custom Elements Manifest`](https://custom-elements-manifest.open-wc.org/analyzer/getting-started/),
+      which lit supports very well.
 
 - Useful advice:
 

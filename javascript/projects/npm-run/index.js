@@ -83,7 +83,18 @@ const binaryCandidates = [];
   }
 }
 
-debugger;
-const resolvedBinary = resolve(binaryCandidates) ?? commandName;
+/**
+ * Sort so that if command is "vite", it is matched before "vitest".
+ */
+const resolvedBinary = resolve(binaryCandidates.sort()) ?? commandName;
 
-console.log(`npx ${resolvedBinary} ${process.argv.slice(3).join(' ')}`);
+console.log(
+  `npx ${resolvedBinary} ${process.argv
+    .slice(3)
+    .map((part) =>
+      part.includes(' ') || part.includes('"')
+        ? `"${part.replace('"', '\\"')}"`
+        : part
+    )
+    .join(' ')}`
+);
