@@ -1,0 +1,5 @@
+# Build outputs
+target
+
+# Keeping monorepo size in check. Not production code.
+Cargo.lock
