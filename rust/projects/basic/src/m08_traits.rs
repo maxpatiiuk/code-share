@@ -74,7 +74,7 @@ pub fn main() {
             pair.sum()
         }
 
-        // `impl`` de-sugars to:
+        // `impl` de-sugars to:
         fn call_sum_2<T: Sum<T2>, T2: std::ops::Add<Output = T2> + Copy>(pair: &T) -> T2 {
             pair.sum()
         }

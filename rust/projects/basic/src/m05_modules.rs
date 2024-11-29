@@ -53,7 +53,7 @@ fn outer() {
 // Use "pub" to expose code outside the module
 pub fn main() {
     // Absolute path:
-    crate::m5_modules::test::sub_test::sub_test();
+    crate::m05_modules::test::sub_test::sub_test();
     // Relative path:
     test::sub_test::sub_test();
 

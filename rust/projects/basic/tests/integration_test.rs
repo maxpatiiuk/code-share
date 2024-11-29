@@ -1,5 +1,5 @@
 // We can only import what's exposed by src/lib.ts
-use basic::m9_tests;
+use basic::m09_tests;
 
 mod common;
 
@@ -8,7 +8,7 @@ mod common;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(m9_tests::add(2, 4), 6);
+    assert_eq!(m09_tests::add(2, 4), 6);
 }
 
 #[test]

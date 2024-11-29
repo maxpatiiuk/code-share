@@ -77,4 +77,6 @@ pub fn main() {
 
     // main() return type could be Result<(), Box<dyn Error>> to allow for ?
     // operator (Box<dyn Error> ~= "any error")
+
+    // Use process:exit(1); to exit the program
 }
