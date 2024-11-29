@@ -1,0 +1,10 @@
+[package]
+name = "mini_grep"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal grep implementation in Rust"
+license = "MIT"
+
+[dependencies]
+
+# Use `cargo publish` to publish this package to crates.io

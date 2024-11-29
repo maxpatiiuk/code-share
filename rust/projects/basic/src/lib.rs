@@ -1,3 +1,5 @@
+// See also workspaces for alternative organization of code:
+// https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html
 pub mod m01_syntax;
 pub mod m02_ownership;
 pub mod m03_struct;

@@ -1,3 +1,7 @@
+//! # mini-grep
+//!
+//! Minimal grep implementation in Rust
+
 use std::env;
 use std::error::Error;
 use std::fs;
@@ -9,9 +13,38 @@ pub struct Config {
 }
 
 impl Config {
-    // We return constant strings that exists for the whole lifecycle of the
-    // program, thus use 'static
+    /// Parse program configuration from the env variables
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::env;
+    /// use std::error::Error;
+    /// use mini_grep::{Config};
+    ///
+    /// // Can also use env::args() to get the arguments
+    /// let args = vec![
+    ///  String::from("mini-grep"),
+    ///  String::from("query"),
+    ///  String::from("file_path"),
+    /// ].into_iter();
+    /// let config = Config::build(args).unwrap();
+    /// println!("Query: {}", config.query);
+    /// println!("File path: {}", config.file_path);
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// Never
+    ///
+    /// # Errors
+    ///
+    /// - If 1st argument (query) not provided
+    /// - If 2nd argument (file path) not provided
     pub fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
+        // We return constant strings that exists for the whole lifecycle of the
+        // program, thus use 'static
+
         // Skip program name
         args.next();
 

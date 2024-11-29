@@ -50,6 +50,10 @@ pub fn main() {
                 Cell::Text(s) => print!("{s} "),
             }
         }
+
+        // Annotate type as Vec to tell .collect() what to do, and use _ to
+        // let compiler infer the item type
+        let _numbers: Vec<_> = (1..10).collect();
     }
 
     {
