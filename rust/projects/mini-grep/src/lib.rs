@@ -30,7 +30,11 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    let results = search(&contents, &config.query, config.ignore_case);
+    let results = if config.ignore_case {
+        search_insensitive(&contents, &config.query)
+    } else {
+        search(&contents, &config.query)
+    };
 
     // Can use eprintln for printing to stderr
     println!("{}", results.join("\n"));
@@ -38,28 +42,19 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn search<'a>(contents: &'a str, query: &'a str, ignore_case: bool) -> Vec<&'a str> {
-    let lowercase_query: Option<String>;
-    let mut canonical_query = query;
+fn search<'a>(contents: &'a str, query: &'a str) -> Vec<&'a str> {
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
+        .collect()
+}
 
-    // Performance micro-optimization: don't create a lowercase string unless
-    // we need to, while also avoiding copying "query" into "canonical_query".
-    if ignore_case {
-        lowercase_query = Some(query.to_lowercase());
-        // Alternative: Box::leak(query.to_lowercase().into_boxed_str())
-        canonical_query = &lowercase_query.as_ref().map_or(canonical_query, |s| &s);
-    }
+fn search_insensitive<'a>(contents: &'a str, query: &'a str) -> Vec<&'a str> {
+    let lowercase_query = query.to_lowercase();
 
     contents
         .lines()
-        .filter(|line| {
-            // FEATURE: try extracting this condition outside the arrow?
-            if ignore_case {
-                line.to_lowercase().contains(canonical_query)
-            } else {
-                line.contains(canonical_query)
-            }
-        })
+        .filter(|line| line.to_lowercase().contains(&lowercase_query))
         .collect()
 }
 
@@ -86,7 +81,7 @@ mod tests {
         let contents = "Test\ning of\nsearch fun\nct ion ing";
         let query = "ing";
 
-        let results = search(contents, query, false);
+        let results = search(contents, query);
 
         assert_eq!(results, vec!["ing of", "ct ion ing"]);
     }
@@ -96,7 +91,7 @@ mod tests {
         let contents = "Test\nING of\nsearch fun\nct ion iNg";
         let query = "inG";
 
-        let results = search(contents, query, true);
+        let results = search_insensitive(contents, query);
 
         assert_eq!(results, vec!["ING of", "ct ion iNg"]);
     }
