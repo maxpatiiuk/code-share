@@ -10,3 +10,4 @@ pub mod m07_errors;
 pub mod m08_traits;
 pub mod m09_tests;
 pub mod m10_functional;
+pub mod m11_pointers;

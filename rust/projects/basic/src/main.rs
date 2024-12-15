@@ -8,6 +8,7 @@ use basic::m07_errors;
 use basic::m08_traits;
 use basic::m09_tests;
 use basic::m10_functional;
+use basic::m11_pointers;
 
 fn main() {
     struct Module(/* enabled */ bool, /* main */ fn());
@@ -21,7 +22,8 @@ fn main() {
         Module(false, m07_errors::main),
         Module(false, m08_traits::main),
         Module(false, m09_tests::main),
-        Module(true, m10_functional::main),
+        Module(false, m10_functional::main),
+        Module(true, m11_pointers::main),
     ];
 
     for Module(enabled, main) in modules {
