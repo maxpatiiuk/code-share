@@ -100,5 +100,8 @@ pub fn main() {
     {
         // Send trait - allow transferring ownership between threads
         // Sync trait - allow sharing immutable references between threads
+        // Type composed of Send or Sync is also Send or Sync
+
+        // Sync trait = a value that implements a Send reference
     }
 }

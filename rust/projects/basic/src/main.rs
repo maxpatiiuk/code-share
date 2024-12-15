@@ -10,6 +10,7 @@ use basic::m09_tests;
 use basic::m10_functional;
 use basic::m11_pointers;
 use basic::m12_concurrency;
+use basic::m13_oop;
 
 fn main() {
     struct Module(/* enabled */ bool, /* main */ fn());
@@ -25,7 +26,8 @@ fn main() {
         Module(false, m09_tests::main),
         Module(false, m10_functional::main),
         Module(false, m11_pointers::main),
-        Module(true, m12_concurrency::main),
+        Module(false, m12_concurrency::main),
+        Module(true, m13_oop::main),
     ];
 
     for Module(enabled, main) in modules {
