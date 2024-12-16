@@ -82,8 +82,13 @@ pub fn main() {
     // - Trait object implements different logic depending on state
     // - Pros: all logic for "Published" state is in one place
     //
-    // Rusty-equivalent:
+    // Enum equivalent:
     // - Post holds a state enum
     // - Post methods match on the state enum
     // - Pros: less boilerplate, faster performance
+    //
+    // Separate types:
+    // - Have Post, DraftPost, PublishedPost types
+    // - Each type only implements the methods it needs
+    // - Strict type safety for state transitions
 }
