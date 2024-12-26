@@ -58,13 +58,22 @@ function resolve(candidates) {
   return undefined;
 }
 
+const formattedArguments = process.argv
+  .slice(3)
+  .map((part) =>
+    part.includes(' ') || part.includes('"')
+      ? `"${part.replace('"', '\\"')}"`
+      : part
+  )
+  .join(' ');
+
 // Resolve npm scripts
 const resolvedScript = resolve(scriptCandidates);
 if (typeof resolvedScript === 'string') {
   console.log(
     `${packageManager} run ${resolvedScript} ${
       packageManager === 'npm' && process.argv.length > 3 ? '-- ' : ''
-    }${process.argv.slice(3).join(' ')}`
+    }${formattedArguments}`
   );
   process.exit(0);
 }
@@ -88,13 +97,4 @@ const binaryCandidates = [];
  */
 const resolvedBinary = resolve(binaryCandidates.sort()) ?? commandName;
 
-console.log(
-  `npx ${resolvedBinary} ${process.argv
-    .slice(3)
-    .map((part) =>
-      part.includes(' ') || part.includes('"')
-        ? `"${part.replace('"', '\\"')}"`
-        : part
-    )
-    .join(' ')}`
-);
+console.log(`npx ${resolvedBinary} ${formattedArguments}`);
