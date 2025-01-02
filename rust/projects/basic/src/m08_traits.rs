@@ -34,6 +34,8 @@ pub fn main() {
 
         let point = Point { x: 1.0, y: 2.0 };
         println!("{} {} {}", point.x(), point.y, point.distance_from_origin());
+        // Equivalent:
+        println!("{}", Point::distance_from_origin(&point));
     }
 
     {

@@ -29,6 +29,7 @@ pub fn main() {
         // FnOnce is the bottom-closure type, strictest - use that in argument
         // types to provide flexibility and document that closure is called
         // only once
+        // edit: even better is fn() -> T type - function point, not a closure
     }
 
     {
