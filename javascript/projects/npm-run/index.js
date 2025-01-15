@@ -27,7 +27,18 @@ let packageManager = undefined;
 
 packageManager ??= 'npm';
 
-const commandName = process.argv[2];
+const parameters = process.argv.slice(2);
+let commandName = parameters.shift();
+
+let nodeFlags = '';
+if (commandName === '--inspect') {
+  nodeFlags = 'NODE_OPTIONS=--inspect ';
+  commandName = parameters.shift();
+} else if (commandName === '--inspect-brk' || commandName === '--inspectBrk') {
+  nodeFlags = 'NODE_OPTIONS=--inspect-brk ';
+  commandName = parameters.shift();
+}
+
 if (commandName === undefined) {
   console.log('# Usage: x <short-command> [args...]');
   process.exit(1);
@@ -58,8 +69,7 @@ function resolve(candidates) {
   return undefined;
 }
 
-const formattedArguments = process.argv
-  .slice(3)
+const formattedArguments = parameters
   .map((part) =>
     part.includes(' ') || part.includes('"')
       ? `"${part.replace('"', '\\"')}"`
@@ -71,8 +81,8 @@ const formattedArguments = process.argv
 const resolvedScript = resolve(scriptCandidates);
 if (typeof resolvedScript === 'string') {
   console.log(
-    `${packageManager} run ${resolvedScript} ${
-      packageManager === 'npm' && process.argv.length > 3 ? '-- ' : ''
+    `${nodeFlags}${packageManager} run ${resolvedScript} ${
+      packageManager === 'npm' && formattedArguments.length > 0 ? '-- ' : ''
     }${formattedArguments}`
   );
   process.exit(0);
@@ -97,4 +107,4 @@ const binaryCandidates = [];
  */
 const resolvedBinary = resolve(binaryCandidates.sort()) ?? commandName;
 
-console.log(`npx ${resolvedBinary} ${formattedArguments}`);
+console.log(`${nodeFlags}npx ${resolvedBinary} ${formattedArguments}`);
