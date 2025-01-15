@@ -17,7 +17,11 @@ let packageManager = undefined;
     const contents = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
     if (typeof contents !== 'object' || Array.isArray(contents)) continue;
 
-    scriptCandidates.push(...Object.keys(contents?.scripts ?? {}));
+    scriptCandidates.push(
+      ...Object.keys(contents?.scripts ?? {}).sort(
+        (left, right) => left.length - right.length
+      )
+    );
 
     if (typeof contents.packageManager === 'string')
       packageManager ??=
