@@ -35,11 +35,16 @@ const parameters = process.argv.slice(2);
 let commandName = parameters.shift();
 
 let nodeFlags = '';
-if (commandName === '--inspect') {
-  nodeFlags = 'NODE_OPTIONS=--inspect ';
-  commandName = parameters.shift();
-} else if (commandName === '--inspect-brk' || commandName === '--inspectBrk') {
-  nodeFlags = 'NODE_OPTIONS=--inspect-brk ';
+if (
+  commandName?.startsWith('--inspect') ||
+  commandName?.startsWith('--inspect-brk') ||
+  commandName?.startsWith('--inspectBrk') ||
+  commandName?.startsWith('--inspect-wait') ||
+  commandName?.startsWith('--inspectWait')
+) {
+  nodeFlags = `NODE_OPTIONS=${commandName
+    .replace('inspectBrk', 'inspect-brk')
+    .replace('inspectWait', 'inspect-wait')} `;
   commandName = parameters.shift();
 }
 
