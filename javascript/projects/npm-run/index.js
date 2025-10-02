@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const cwd = process.cwd();
 
+let directScriptCandidates = undefined;
 const scriptCandidates = [];
 
 let packageManager = undefined;
@@ -17,11 +18,12 @@ let packageManager = undefined;
     const contents = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
     if (typeof contents !== 'object' || Array.isArray(contents)) continue;
 
-    scriptCandidates.push(
-      ...Object.keys(contents?.scripts ?? {}).sort(
-        (left, right) => left.length - right.length
-      )
+    const newCandidates = Object.keys(contents?.scripts ?? {}).sort(
+      (left, right) => left.length - right.length
     );
+    if (directScriptCandidates === undefined)
+      directScriptCandidates = newCandidates;
+    else scriptCandidates.push(...newCandidates);
 
     if (typeof contents.packageManager === 'string')
       packageManager ??=
@@ -29,6 +31,7 @@ let packageManager = undefined;
   }
 }
 
+directScriptCandidates ??= [];
 packageManager ??= 'npm';
 
 const parameters = process.argv.slice(2);
@@ -87,7 +90,17 @@ const formattedArguments = parameters
   .join(' ');
 
 // Resolve npm scripts
-const resolvedScript = resolve(scriptCandidates);
+let resolvedScript = resolve(directScriptCandidates);
+if (typeof resolvedScript === 'string') {
+  // Use `node --run` for performance for script coming from nearest package.json
+  console.log(
+    `${nodeFlags}node --run ${resolvedScript} ${
+      formattedArguments.length > 0 ? '-- ' + formattedArguments : ''
+    }`
+  );
+  process.exit(0);
+}
+resolvedScript = resolve(scriptCandidates);
 if (typeof resolvedScript === 'string') {
   console.log(
     `${nodeFlags}${packageManager} run ${resolvedScript} ${
