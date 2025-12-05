@@ -3,35 +3,42 @@ import path from 'node:path';
 
 const cwd = process.cwd();
 
-let directScriptCandidates = undefined;
-const scriptCandidates = [];
+let localScripts = undefined;
+const globalScriptsMap = new Map();
 
 let packageManager = undefined;
 
 {
   const pathParts = cwd.split(path.sep);
-  while (pathParts.length > 1) {
-    const packageJson = path.join(pathParts.join(path.sep), 'package.json');
+  while (pathParts.length > 2) {
+    const currentDir = pathParts.join(path.sep);
+    const packageJsonPath = path.join(currentDir, 'package.json');
     pathParts.pop();
-    if (!fs.existsSync(packageJson)) continue;
+    if (!fs.existsSync(packageJsonPath)) continue;
 
-    const contents = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
-    if (typeof contents !== 'object' || Array.isArray(contents)) continue;
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    if (typeof packageJson !== 'object' || Array.isArray(packageJson)) continue;
 
-    const newCandidates = Object.keys(contents?.scripts ?? {}).sort(
-      (left, right) => left.length - right.length
-    );
-    if (directScriptCandidates === undefined)
-      directScriptCandidates = newCandidates;
-    else scriptCandidates.push(...newCandidates);
+    if (packageJson.scripts) {
+      if (localScripts === undefined) {
+        localScripts = Object.keys(packageJson?.scripts ?? {}).sort(
+          (left, right) => left.length - right.length
+        );
+      } else {
+        for (const [name, cmd] of Object.entries(packageJson.scripts)) {
+          if (!globalScriptsMap.has(name)) {
+            globalScriptsMap.set(name, { name, cmd, cwd: currentDir });
+          }
+        }
+      }
+    }
 
-    if (typeof contents.packageManager === 'string')
+    if (typeof packageJson.packageManager === 'string')
       packageManager ??=
-        contents.packageManager.match(/\w+/u)?.[0] ?? packageManager;
+        packageJson.packageManager.match(/\w+/u)?.[0] ?? packageManager;
   }
 }
 
-directScriptCandidates ??= [];
 packageManager ??= 'npm';
 
 const parameters = process.argv.slice(2);
@@ -81,52 +88,85 @@ function resolve(candidates) {
   return undefined;
 }
 
-const formattedArguments = parameters
-  .map((part) =>
-    part.includes(' ') || part.includes('"')
-      ? `"${part.replace('"', '\\"')}"`
-      : part
-  )
-  .join(' ');
+const formattedArguments = parameters.map((part) =>
+  part.includes(' ') || part.includes('"')
+    ? `"${part.replace('"', '\\"')}"`
+    : part
+);
 
 // Resolve npm scripts
-let resolvedScript = resolve(directScriptCandidates);
-if (typeof resolvedScript === 'string') {
-  // Use `node --run` for performance for script coming from nearest package.json
+let resolvedScript = resolve(localScripts ?? []);
+if (resolvedScript) {
   console.log(
-    `${nodeFlags}node --run ${resolvedScript} ${
-      formattedArguments.length > 0 ? '-- ' + formattedArguments : ''
+    `${nodeFlags}node --run ${resolvedScript}${
+      formattedArguments.length > 0 ? ' -- ' + formattedArguments.join(' ') : ''
     }`
   );
   process.exit(0);
-}
-resolvedScript = resolve(scriptCandidates);
-if (typeof resolvedScript === 'string') {
-  console.log(
-    `${nodeFlags}${packageManager} run ${resolvedScript} ${
-      packageManager === 'npm' && formattedArguments.length > 0 ? '-- ' : ''
-    }${formattedArguments}`
-  );
-  process.exit(0);
-}
+} else {
+  resolvedScript = resolve(Array.from(globalScriptsMap.keys()));
+  if (resolvedScript) {
+    const match = globalScriptsMap.get(resolvedScript);
 
-// Resolve npm binaries
-const binaryCandidates = [];
-{
-  const pathParts = cwd.split(path.sep);
-  while (pathParts.length > 1) {
-    const binaries = path.join(pathParts.join(path.sep), 'node_modules/.bin');
-    pathParts.pop();
-    if (!fs.existsSync(binaries)) continue;
+    const targetCwd = match.cwd;
+    const isLocal = targetCwd === process.cwd();
 
-    const files = fs.readdirSync(binaries);
-    binaryCandidates.push(...files);
+    let normalizedArguments = formattedArguments;
+
+    if (!isLocal && normalizedArguments.length > 0) {
+      normalizedArguments = normalizedArguments.map((arg) => {
+        // Rewrite relative paths arguments to absolute
+        if (fs.existsSync(arg)) {
+          return path.resolve(process.cwd(), arg);
+        }
+        return arg;
+      });
+    }
+
+    const argsString =
+      normalizedArguments.length > 0
+        ? ` -- ${normalizedArguments.join(' ')}`
+        : '';
+    const command = `(cd "${targetCwd}" && ${nodeFlags}node --run ${resolvedScript}${argsString})`;
+
+    console.log(command);
+    process.exit(0);
   }
 }
 
+// Resolve npm binaries
+const binaryMap = new Map();
+{
+  const pathParts = cwd.split(path.sep);
+  while (pathParts.length > 2) {
+    const binDir = path.join(pathParts.join(path.sep), 'node_modules/.bin');
+    pathParts.pop();
+
+    if (!fs.existsSync(binDir)) continue;
+
+    const files = fs.readdirSync(binDir);
+
+    for (const file of files) {
+      // Closest binary wins
+      if (!binaryMap.has(file)) {
+        binaryMap.set(file, binDir);
+      }
+    }
+  }
+}
+
+const binaryCandidates = Array.from(binaryMap.keys());
 /**
  * Sort so that if command is "vite", it is matched before "vitest".
  */
-const resolvedBinary = resolve(binaryCandidates.sort()) ?? commandName;
+const resolvedBinary = resolve(binaryCandidates.sort());
+let executablePath = 'npx ' + commandName;
+const binaryLocation = binaryMap.get(resolvedBinary);
+if (binaryLocation !== undefined) {
+  executablePath = path.relative(
+    process.cwd(),
+    path.join(binaryLocation, resolvedBinary)
+  );
+}
 
-console.log(`${nodeFlags}npx ${resolvedBinary} ${formattedArguments}`);
+console.log(`${nodeFlags}${executablePath} ${formattedArguments.join(' ')}`);
