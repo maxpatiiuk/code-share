@@ -52,9 +52,11 @@ if (
   commandName?.startsWith('--inspect-wait') ||
   commandName?.startsWith('--inspectWait')
 ) {
-  nodeFlags = `NODE_OPTIONS=${commandName
+  const hasNodeOptions = process.env.NODE_OPTIONS !== undefined;
+  const prefix = hasNodeOptions ? `"$NODE_OPTIONS ` : '';
+  nodeFlags = `NODE_OPTIONS=${prefix}${commandName
     .replace('inspectBrk', 'inspect-brk')
-    .replace('inspectWait', 'inspect-wait')} `;
+    .replace('inspectWait', 'inspect-wait')}" `;
   commandName = parameters.shift();
 }
 
