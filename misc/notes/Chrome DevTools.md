@@ -2,6 +2,9 @@
 
 Based on https://developer.chrome.com/docs/devtools/
 
+[A nice article with many of these
+tips](https://alan.norbauer.com/articles/browser-debugging-tricks?utm_source=tldrnewsletter)
+
 - `Cmd+Shift+I` toggle
 - `Cmd+Option+C` select element/open "Elements" tab
 - `Cmd+Option+J` open console

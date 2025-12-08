@@ -12,3 +12,6 @@ Example uses:
 - search for occurrences of legacy words across the repositories and allow to
   replace them
 - search for occurrences of legacy words across commit messages
+
+This script was used by me when I changed my GitHub username, and needed to find
+and update all the references to the old username

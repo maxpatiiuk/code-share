@@ -58,7 +58,7 @@ repos:
       - id: tsc
       - id: regex-blacklist
         args:
-          - ~/site/git/dotfiles/git/regex-blacklist.txt
+          - ~/s/git/dotfiles/git/regex-blacklist.txt
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
