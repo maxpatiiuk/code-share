@@ -1,0 +1,29 @@
+{
+  "include": ["**/*.ts", "**/*.tsx"],
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    "types": ["@types/node"],
+    "declaration": true,
+    "noEmitOnError": true,
+    "noEmit": true,
+    "outDir": "${configDir}/dist",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "lib": ["esnext"],
+    "libReplacement": false,
+    "target": "esnext",
+    "skipLibCheck": true
+  }
+}
