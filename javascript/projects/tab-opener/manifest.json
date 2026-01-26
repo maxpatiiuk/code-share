@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Opener",
+  "version": "1.0",
+  "action": {
+    "default_title": "Open Extension"
+  },
+  "permissions": ["tabs", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

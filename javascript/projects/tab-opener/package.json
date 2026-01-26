@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "package": "zip -FSr ../tab-opener.zip . -x .github/\\* .git/\\* node_modules/\\* .idea/\\* .vscode/\\* imgs/\\*"
+  },
+  "dependencies": {
+    "@maxpatiiuk/prettier-config": "latest",
+    "prettier": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "latest"
+  },
+  "prettier": "@maxpatiiuk/prettier-config"
+}
