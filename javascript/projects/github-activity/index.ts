@@ -6,30 +6,35 @@ import * as path from 'node:path';
 const execAsync = promisify(exec);
 
 // --- Configuration ---
-const STATE_FILENAME = './activity-state.json';
-const STATE_FILE_PATH = path.resolve(STATE_FILENAME);
-const SEARCH_LIMIT = 150;
-const GH_HOST_ENV = process.argv[2] || 'github.com';
+const SEARCH_LIMIT = 200;
 const SHOW_DAYS_AGO = true;
 
-await main();
+// Accept one or two hostnames; default to github.com
+const HOSTS = process.argv.slice(2).length
+  ? process.argv.slice(2)
+  : ['github.com'];
 
-async function main(): Promise<void> {
-  console.error(
-    `🔍 Scanning ${GH_HOST_ENV} for activity (Limit: ${SEARCH_LIMIT})...`
-  );
+for (const host of HOSTS) {
+  await runForHost(host);
+}
 
-  const currentUser = await getCurrentUser();
-  const history = await loadHistory();
+async function runForHost(host: string): Promise<void> {
+  console.error(`🔍 Scanning ${host} for activity (Limit: ${SEARCH_LIMIT})...`);
+
+  const stateFilename = `./activity-state.${host}.json`;
+  const stateFilePath = path.resolve(stateFilename);
+
+  const currentUser = await getCurrentUser(host);
+  const history = await loadHistory(stateFilename);
 
   // 1. "Same Day" Logic
   // We reset today's entry so we can re-run the script multiple times a day
   const today = new Date().toISOString().split('T')[0]!;
-  if (history.length > 0 && history[history.length - 1]!.date === today) {
+  if (history.length > 0 && history[0]!.date === today) {
     console.error(
       `   Found existing run for today (${today}). Refreshing data...`
     );
-    history.pop();
+    history.shift();
   }
 
   // 2. Build Set of Known Keys
@@ -41,7 +46,7 @@ async function main(): Promise<void> {
   }
 
   // 3. Fetch Data
-  const items = await fetchSearchResults(currentUser);
+  const items = await fetchSearchResults(currentUser, host);
 
   if (items.length === 0) {
     console.log('No activity found.');
@@ -94,7 +99,7 @@ async function main(): Promise<void> {
   }
 
   // 6. Output
-  printReport(newItems, updatedItems, currentUser);
+  printReport(newItems, updatedItems, currentUser, host);
 
   // 7. Save History (Only new items are added to state)
   const runRecord: RunRecord = {
@@ -105,17 +110,21 @@ async function main(): Promise<void> {
     }),
   };
 
-  history.push(runRecord);
-  await saveHistory(history);
+  // Store most recent first
+  history.unshift(runRecord);
+  await saveHistory(stateFilePath, history);
 }
 
-async function fetchSearchResults(currentUser: string): Promise<GithubItem[]> {
+async function fetchSearchResults(
+  currentUser: string,
+  host: string
+): Promise<GithubItem[]> {
   const fields = 'number,title,url,repository,author,assignees,createdAt,state';
   const cmd = `gh search issues --involves ${currentUser} --sort updated --include-prs --limit  ${SEARCH_LIMIT} --json ${fields}`;
 
   try {
     const { stdout } = await execAsync(cmd, {
-      env: { ...process.env, GH_HOST: GH_HOST_ENV },
+      env: { ...process.env, GH_HOST: host },
     });
     return JSON.parse(stdout) as GithubItem[];
   } catch (err) {
@@ -127,7 +136,8 @@ async function fetchSearchResults(currentUser: string): Promise<GithubItem[]> {
 function printReport(
   newItems: GithubItem[],
   updatedItems: GithubItem[],
-  currentUser: string
+  currentUser: string,
+  host: string
 ): void {
   const repoMap = new Map<string, RepoGroup>();
 
@@ -167,7 +177,9 @@ function printReport(
   updatedItems.forEach((item) => processItem(item, 'updated'));
 
   // Output Loop
-  console.log(`\n# Activity Report (${new Date().toLocaleDateString()})\n`);
+  console.log(
+    `\n# Activity Report (${new Date().toLocaleDateString()}) — Host: ${host}\n`
+  );
 
   for (const group of repoMap.values()) {
     console.log(`**${group.name}**`);
@@ -212,10 +224,10 @@ function printItem(item: GithubItem, currentUser: string): void {
   );
 }
 
-async function getCurrentUser(): Promise<string> {
+async function getCurrentUser(host: string): Promise<string> {
   try {
     const { stdout } = await execAsync(`gh api user --jq ".login"`, {
-      env: { ...process.env, GH_HOST: GH_HOST_ENV },
+      env: { ...process.env, GH_HOST: host },
     });
     return stdout.trim();
   } catch (e) {
@@ -236,10 +248,10 @@ function createKey(org: string, repo: string, number: number): string {
   return `${org}/${repo}#${number}`;
 }
 
-async function loadHistory(): Promise<RunRecord[]> {
+async function loadHistory(stateFilename: string): Promise<RunRecord[]> {
   try {
     // Using import for JSON reading
-    const module = await import(STATE_FILENAME, { with: { type: 'json' } });
+    const module = await import(stateFilename, { with: { type: 'json' } });
     const data = module.default;
     return Array.isArray(data) ? (data as RunRecord[]) : [];
   } catch (e) {
@@ -247,8 +259,11 @@ async function loadHistory(): Promise<RunRecord[]> {
   }
 }
 
-async function saveHistory(history: RunRecord[]): Promise<void> {
-  await writeFile(STATE_FILE_PATH, JSON.stringify(history, null, 2));
+async function saveHistory(
+  stateFilePath: string,
+  history: RunRecord[]
+): Promise<void> {
+  await writeFile(stateFilePath, JSON.stringify(history, null, 2));
 }
 
 // --- Interfaces ---
