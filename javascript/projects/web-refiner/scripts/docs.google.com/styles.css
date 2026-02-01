@@ -1,0 +1,4 @@
+/* Fix auto dark mode */
+canvas.kix-canvas-tile-content {
+  background-color: #7e7e7e;
+}

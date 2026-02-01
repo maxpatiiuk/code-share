@@ -1,0 +1,4 @@
+/* Hide trending unless hovered over */
+[data-testid='sidebarColumn']:not(:hover) > div {
+  visibility: hidden;
+}

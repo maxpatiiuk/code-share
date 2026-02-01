@@ -1,0 +1,4 @@
+/* Accidentally can click it when reaching for the React button - make it less prominent */
+button#raisehands-button {
+  transform: scale(0.5);
+}

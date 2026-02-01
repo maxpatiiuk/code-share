@@ -1,0 +1,4 @@
+/** Auto-dark-mode compatibility */
+body {
+  background: #fff !important;
+}

@@ -1,0 +1,13 @@
+/* Reduce animated ads */
+.app > div:not(:first-child) {
+  display: none !important;
+}
+
+/* Make content full width (though, canvas is still not full width) */
+.app > div:first-child > div:nth-child(3),
+.app > div:first-child,
+.mainblock,
+.mainblock .block,
+.mainblock .body {
+  width: 100% !important;
+}

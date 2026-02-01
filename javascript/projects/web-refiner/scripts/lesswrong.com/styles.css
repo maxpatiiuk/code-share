@@ -1,0 +1,12 @@
+/**
+ * Hide comments from screen readers
+ */
+.LWTooltip-root,
+.SingleLineComment-date,
+.SingleLineComment-karma,
+.SingleLineComment-shortformIcon,
+.SingleLineComment-username,
+.UsersNameDisplay-noColor,
+.comments-item-reply-link {
+  user-select: none;
+}

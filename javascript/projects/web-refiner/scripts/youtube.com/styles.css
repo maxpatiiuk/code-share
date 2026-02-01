@@ -1,0 +1,8 @@
+/* Disable pause gradient bottom */
+.ytp-gradient-bottom {
+  background-image: linear-gradient(0deg, #000f, #0000) !important;
+}
+
+.ytp-gradient-top {
+  background-image: linear-gradient(0deg, #0000, #000f) !important;
+}

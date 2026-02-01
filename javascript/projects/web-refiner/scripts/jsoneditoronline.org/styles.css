@@ -1,0 +1,6 @@
+/** Reduce animated banners */
+header,
+.ad-panel,
+.pw-corner-ad-video {
+  display: none !important;
+}

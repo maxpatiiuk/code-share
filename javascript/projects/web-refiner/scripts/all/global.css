@@ -1,0 +1,52 @@
+/* Make scroll bar more compact and higher contrast */
+:not(select)::-webkit-scrollbar {
+  width: 1px !important;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cdcdcd;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Disable suggest video on iframe pause */
+.ytp-pause-overlay {
+  display: none;
+}
+
+grammarly-desktop-integration {
+  visibility: hidden;
+}
+grammarly-extension {
+  mix-blend-mode: unset;
+}
+
+html {
+  /* Don't allow websites to forbid selecting text */
+  user-select: auto !important;
+}
+
+/* Text-shadow looks horrible with Chrome's automatic dark mode */
+* {
+  text-shadow: none !important;
+}
+
+/* Disable CodeMirror cursor blink (on regex101.com and others) */
+.cm-cursorLayer {
+  animation: none !important;
+}
+div.CodeMirror-cursors {
+  visibility: visible !important;
+}
+
+/* No monaco cursor blink */
+.monaco-editor .cursors-layer .cursor {
+  visibility: inherit !important;
+}

@@ -1,0 +1,20 @@
+/* Hide extras when not hovered */
+:is(bard-sidenav, top-bar-actions):not(:hover) {
+  opacity: 0;
+}
+:is(bard-sidenav, top-bar-actions):hover {
+  transition-delay: 50ms;
+}
+
+/* Hide noise */
+.boqOnegoogleliteOgbOneGoogleBar,
+bard-logo,
+hallucination-disclaimer,
+.avatar-gutter {
+  display: none !important;
+}
+
+/* Remove chat background to make less chatgpt-like */
+chat-window input-area-v2 {
+  background-color: transparent !important;
+}

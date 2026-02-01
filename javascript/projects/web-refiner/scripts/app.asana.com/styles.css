@@ -1,0 +1,28 @@
+/* If item has a comment/description/attachment, make the comment icon more noticeable */
+.SubtaskTaskRow:not(:hover) .SubtaskTaskRow-detailsButton--hasMetadata svg {
+  fill: red;
+}
+
+/* Make less commonly used actions less distracting*/
+.SidebarCollapsibleSection--isFirstSection:not(:hover),
+.SidebarCollapsibleHeaderCleanAndClear:not(:hover),
+.Sidebar-sectionsSortableList
+  > .SortableItem.LinearSortableList-sortableItem:not(:first-child):not(:hover),
+.GlobalTopbar:not(:hover),
+.TopbarPageHeaderStructure-titleRightElement:not(:hover),
+.TopbarPageHeaderStructure-rightChildrenWrapper:not(:hover),
+.TaskPaneFields-assigneeRow:not(:hover),
+.FollowersBar:not(:hover),
+.TabNavigationBar:not(:hover) {
+  opacity: 0.2;
+}
+
+/* Hide needless sidebar footer */
+.SidebarFooter {
+  display: none !important;
+}
+
+/* Make side bar a bit wider */
+.FullWidthPageStructureWithDetailsOverlay-detailsOverlay {
+  max-width: 65rem;
+}

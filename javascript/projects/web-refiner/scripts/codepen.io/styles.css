@@ -1,0 +1,4 @@
+/* No need for auto dark mode, as the editor is already in dark mode */
+.CodeMirror {
+  color-scheme: only light;
+}

@@ -1,0 +1,198 @@
+{
+  "manifest_version": 3,
+  "name": "Web Refiner",
+  "version": "1.0.0",
+  "description": "Minimalist local script orchestrator.",
+  "web_accessible_resources": [
+    {
+      "resources": ["private-scripts/teams.microsoft.com/priorityData.json"],
+      "matches": ["https://teams.microsoft.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "css": ["scripts/all/global.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*"],
+      "js": ["scripts/all/auto-scroll.js", "scripts/all/toggle-dark-mode.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "css": ["scripts/gemini.google.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["scripts/gemini.google.com/no-auto-scroll.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://teams.microsoft.com/*"],
+      "css": ["scripts/teams.microsoft.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://teams.microsoft.com/dl/launcher/launcher.html*"],
+      "js": ["scripts/teams.microsoft.com/open-teams-in-browser.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://teams.microsoft.com/*"],
+      "exclude_matches": [
+        "https://teams.microsoft.com/dl/launcher/launcher.html*"
+      ],
+      "js": [
+        "scripts/teams.microsoft.com/batch-notifications.js",
+        "scripts/outlook.com/skip-safe-link-validation.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://etc.esri.com/*"],
+      "js": ["scripts/etc.esri.com/compute-overtime.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://wikipedia.org/*", "https://*.wikipedia.org/*"],
+      "js": ["scripts/wikipedia.org/hide-references-from-screen-reader.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://outlook.office.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.com/*",
+        "https://mail.office.com/*"
+      ],
+      "css": ["scripts/outlook.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://outlook.office.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.com/*",
+        "https://mail.office.com/*"
+      ],
+      "js": [
+        "scripts/outlook.com/ui-improvements.js",
+        "scripts/outlook.com/skip-safe-link-validation.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "css": ["scripts/github.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://devtopia.esri.com/*"],
+      "css": ["scripts/github.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "css": ["scripts/docs.google.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://youtube.com/*"],
+      "css": ["scripts/youtube.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://codepen.io/*"],
+      "css": ["scripts/codepen.io/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://x.com/*"],
+      "css": ["scripts/x.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://powerpoint.officeapps.live.com/*"],
+      "css": ["scripts/powerpoint.officeapps.live.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://storybook.js.org/*"],
+      "css": ["scripts/storybook.js.org/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.asana.com/*"],
+      "css": ["scripts/app.asana.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://sass-lang.com/*"],
+      "css": ["scripts/sass-lang.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "css": ["scripts/mail.google.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mediaspace.esri.com/*"],
+      "css": ["scripts/mediaspace.esri.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.photopea.com/*"],
+      "css": ["scripts/photopea.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "css": ["scripts/open.spotify.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.goodreads.com/*"],
+      "css": ["scripts/goodreads.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://replit.com/*"],
+      "css": ["scripts/replit.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://linkedin.com/*"],
+      "css": ["scripts/linkedin.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://git-scm.com/*"],
+      "css": ["scripts/git-scm.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://jsoneditoronline.org/*"],
+      "css": ["scripts/jsoneditoronline.org/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://esriis-my.sharepoint.com/*"],
+      "css": ["scripts/esriis-my.sharepoint.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://docs.astro.build/*"],
+      "css": ["scripts/docs.astro.build/styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://quora.com/*"],
+      "css": ["scripts/quora.com/styles.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

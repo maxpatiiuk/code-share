@@ -1,0 +1,7 @@
+/**
+ * Fix auto dark mode for action bar
+ */
+.G-atb,
+[id=':11b'] {
+  color-scheme: light only;
+}

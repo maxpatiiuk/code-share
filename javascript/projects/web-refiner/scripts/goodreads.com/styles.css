@@ -1,0 +1,6 @@
+/** Reduce animated banners */
+.Ad,
+.siteHeader__topFullImageContainer,
+.googleBannerAd {
+  display: none !important;
+}

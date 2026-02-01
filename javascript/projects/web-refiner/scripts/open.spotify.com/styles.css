@@ -1,0 +1,60 @@
+.Root__nav-bar [role='banner'],
+.navBar-header,
+.NavBar__download-item,
+.Rootlist__playlists-header,
+.Rootlist__playlists .GlueDropTarget button:first-child,
+.NavBarFooter > div:first-child,
+[data-testid='create-playlist-button'],
+.main-view-container__mh-footer-container {
+  display: none;
+}
+
+.Root__top-bar header img:not(:hover) {
+  filter: brightness(0.3);
+}
+
+.Root__nav-bar a[href='/download'] {
+  display: none;
+}
+
+[data-testid='rootlist-container'] {
+  margin-top: 0;
+}
+
+.navBar {
+  padding-top: 10px;
+}
+
+.now-playing-bar__center {
+  max-width: unset;
+  width: 60%;
+}
+
+.now-playing-bar__left {
+  max-width: 500px;
+  width: unset;
+}
+
+.now-playing-bar__right {
+  width: unset;
+}
+
+div[data-testid='progress-bar'] {
+  --progress-bar-height: 35px !important;
+}
+
+.epWhU7hHGktzlO_dop6z {
+  background-color: #00b829;
+}
+
+.NoOAOv6U6vtqj_ybS1Cd {
+  background: #484848;
+}
+
+.kJxlhOSA7kjDpaQY {
+  color-scheme: only light;
+}
+
+.tUwyjggD2n5KvEtP5z1B {
+  padding-top: 1rem;
+}

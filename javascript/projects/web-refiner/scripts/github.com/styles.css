@@ -1,0 +1,10 @@
+button.merge-box-button {
+  background: red;
+}
+
+/* Make comment boxes larger - more usable for larger comments */
+textarea.comment-form-textarea,
+textarea.CommentBox-input,
+.previewable-comment-form textarea {
+  min-height: 400px;
+}

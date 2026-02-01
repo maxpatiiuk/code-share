@@ -1,0 +1,4 @@
+/* Prevent custom player controls from obscuring the clickable YouTube video title */
+.playkit-top-bar {
+  top: 53px;
+}

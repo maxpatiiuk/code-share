@@ -1,0 +1,164 @@
+/* Reduce height of events to make view be more compact (1st selector is for events, 2nd is for hours strip) */
+[role=\"main\"] [data-is-scrollable=\"true\"] > div[style*=\"height\"],
+[role=\"main\"]
+  > div
+  > div[tabindex=\"-1\"]
+  > div[aria-hidden=\"true\"]
+  > div:nth-child(2)
+  > div[aria-hidden=\"true\"]
+  > div:first-child
+  > div:first-child
+  > div:first-child {
+  height: 1440px !important;
+  /*height: 110% !important;*/
+}
+
+[draggable] > [data-itemindex] > [role=\"button\"] {
+  /* Make events more rounded */
+  border-radius: 4px !important;
+  /* Reduce padding to fit longer event names */
+  padding: 0 !important;
+}
+
+/* Disable awkawrd border on the right side of events */
+[draggable] > [data-itemindex] > [role=\"button\"] > div:first-child {
+  border: none !important;
+}
+
+/* Reduce margin left on event names */
+[draggable] > [data-itemindex] > [role=\"button\"] > div:not(:first-child) {
+  margin-left: 2px !important;
+  /* Display this event name on top of the calendar color indicator strip on the left */
+  z-index: 1 !important;
+}
+
+/* Disable repeated event indicator */
+i[data-icon-name=\"ArrowRepeatAllRegular\"],
+i[data-icon-name=\"ArrowRepeatAllOffRegular\"] {
+  display: none !important;
+}
+
+/* Don't display resize indicators on hover */
+[draggable] > [data-itemindex] > div:last-child div[draggable=\"true\"] span {
+  display: none !important;
+}
+
+/* Remove the event charms */
+[draggable] > [data-itemindex] > [role=\"button\"] h2 > div {
+  display: none !important;
+}
+
+/* Reduce margin for less tall events to make event name fit */
+[draggable]
+  > [data-itemindex]
+  > [role=\"button\"]
+  > div:last-of-type
+  > div:not([style*=\"grid\"]) {
+  margin-top: -2px !important;
+}
+
+/* The current time indicator should only display for current day, not previous days */
+[data-app-section=\"calendar-view-0\"]
+  > div
+  > div:nth-last-child(2)[style*=\"top\"]
+  > div:first-child {
+  opacity: 0 !important;
+}
+
+/* Make top menu (one that contains \"Home, View, Help\") more space efficient */
+#RibbonRoot {
+  flex-direction: row !important;
+}
+
+/* Don't hardcode top menu height */
+[aria-label=\"Ribbon\"] {
+  height: unset !important;
+}
+
+/* Don't hardcode the size of submenu (the one that contains \"Today\" button and date) */
+div[data-app-section=\"CalendarModuleSurfaceNavigationBar\"] {
+  height: unset !important;
+}
+
+/* Reduce the size of sub-menu */
+div[data-app-section=\"CalendarModuleSurfaceNavigationBar\"] > * {
+  margin: 0 !important;
+}
+
+/* Remove marging arround the main content of the calendar */
+#MainModule[data-app-section='CalendarModule'] > div > div > div {
+  margin: 0 !important;
+}
+
+/* Disable ugly borders in calendar header - make the UI look too noisy */
+div[data-app-section=\"calendar-view-header-0\"]
+  div[data-tabid^=\"surfaceHeader_\"] {
+  border-color: transparent !important;
+}
+
+/* For some reason, calendar column titles look like \"14 (14)\" - not sure why it's duplicated. Here I try to fix that */
+/* Hide default day headers */
+div[data-tabid*=\"surfaceHeader_\"] time {
+  font-size: 0px !important;
+}
+
+/* Use title as day headers */
+div[data-tabid*=\"surfaceHeader_\"] time:after {
+  content: attr(title) !important;
+  font-size: 18px !important;
+}
+
+/* Style current time indicator to look like Google Calendar */
+[data-app-section=\"calendar-view-0\"]
+  > div
+  > div:nth-last-child(2)[style*=\"top\"]
+  > div:last-child {
+  background-color: #ea4335 !important;
+}
+[data-app-section=\"calendar-view-0\"]
+  > div
+  > div:nth-last-child(2)[style*=\"top\"]
+  > div:last-child:before {
+  border-color: #ea4335 !important;
+}
+[data-app-section=\"calendar-view-0\"]
+  > div
+  > div:last-child[style*=\"top\"]
+  > div:last-child {
+  background-color: #ea4335 !important;
+}
+
+/* Make day header occupy full column width */
+div[data-app-section=\"calendar-view-header-0\"]
+  div[data-tabid^=\"surfaceHeader_\"]
+  > div[aria-hidden=\"true\"] {
+  width: 100% !important;
+  flex-direction: row-reverse !important;
+}
+
+/* Create a header layout like \"Week day, Day number, free space\", where first and last column occupy all available space, thus centering the day number  */
+div[data-app-section=\"calendar-view-header-0\"]
+  div[data-tabid^=\"surfaceHeader_\"]
+  > div[aria-hidden=\"true\"]:before,
+div[data-app-section=\"calendar-view-header-0\"]
+  div[data-tabid^=\"surfaceHeader_\"]
+  > div[aria-hidden=\"true\"]
+  > div {
+  content: '' !important;
+  flex: 1 !important;
+}
+
+/* Remove calendar day header strip border top */
+[role=\"main\"]
+  > div
+  > div[tabindex=\"-1\"]
+  > div[aria-hidden]
+  > div[aria-hidden]
+  > div {
+  border: none !important;
+}
+
+/* Remove calendar day header strip border right */
+div[data-app-section=\"calendar-view-header-0\"] {
+  border: none !important;
+}

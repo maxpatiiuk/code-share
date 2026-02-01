@@ -1,0 +1,4 @@
+/* Hide the pattern, which looks badly with automatic dark mode */
+html {
+  background: none;
+}
