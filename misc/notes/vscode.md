@@ -10,52 +10,14 @@
   - [x] Go over welcome page, or reenable workbench.startupEditor
   - [x] https://github.com/microsoft/vscode/issues/90130 ❤️
   - [x] Did I break git diff gutters? -> update the css file
-  - [ ] Hide activity bar once I learn it or at least reduce it
-    - And likely create a shortcut for toggling it
+  - [x] Hide activity bar once I learn it or at least reduce it
   - [x] Hide status bar once I learn it or at least reduce it
-  - [ ] Consider doing setting sync in git (maybe "Settings sync" extension)?
-    - or do regular takeouts (Profiles: Show Contents)
-      - that includes too much data, and may contain sensitive data
-      - if publicizing, only publish settings.json, keystrokes.json, and
-          extension list
-      - Could use this snippet to help inspect the profile contents:
-        ```js
-        function inflateValue(obj) {
-          let value = obj;
-          try {
-            while (typeof value === "string") {
-              value = JSON.parse(value);
-            }
-          } catch {
-            return value;
-          }
-          return value;
-        }
-        function inflate(rawValue) {
-          const obj = inflateValue(rawValue);
-          return Array.isArray(obj)
-            ? obj.map(inflate)
-            : obj == null
-            ? null
-            : typeof obj === "object"
-            ? Object.fromEntries(
-                Object.entries(obj).map(([key, value]) => [key, inflate(value)]),
-              )
-            : obj;
-        }
-        inflate($("textarea").value);
-        ```
     - or "Settings Sync: Show Synced Data" is enough?
-    - [x] Integrate cspell config - https://github.com/typescript-eslint/typescript-eslint/blob/main/.cspell.json
+    - [x] Integrate cspell config -
+          https://github.com/typescript-eslint/typescript-eslint/blob/main/.cspell.json
 - [ ] Setup test workflow
   - [ ] Try out testing.showAllMessages?
-  - [ ] Go over Karma settings, and come up with a workflow
   - [ ] Try out the Test Explorer and it's settings
-  - [ ] Check if "Jest (Extension)" component in Status Bar is needed
-  - [ ] Setup VS Code tasks (i.e, Jest)
-    - https://code.visualstudio.com/docs/editor/tasks
-    - https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-attributes
-    - create a problem matcher if not automatic
 - [x] TabNine vs GitHub Copilot vs GitHub Copilot Chat vs IntelliSence vs
       IntelliCode
   - https://www.youtube.com/watch?v=Fi3AJZZregI
@@ -64,6 +26,10 @@
   - [x] https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf?WT.mc_id=code-online-jopapa
   - [x] https://code.visualstudio.com/docs/getstarted/keybindings#_basic-editing
   - [x] toggle git blame (and maybe change width)
+    - fix git blame not being clickable
+    - or read
+      https://www.bryanbraun.com/2023/08/10/things-i-wish-someone-would-have-told-me-about-configuring-vscode/?utm_source=tldrnewsletter
+      and disable gitlens in favor of native features and lighter plugins
   - [ ] Consider keyboard shortcut for "Open in integrated terminal" "when":
         "filesExplorerFocus"
   - [ ] assign keyboard shortcut for "workbench.action.createTerminalEditor" or
@@ -72,8 +38,8 @@
         (workbench.action.toggleMaximizedPanel)
   - [ ] Go over TODOs in keymap list below
   - [ ] Learn keyboard shortcuts
-  - [ ] Convert all commonly used shortcuts to vim if possible
-  - This is useful - https://marketplace.visualstudio.com/items?itemName=jasonlhy.hungry-delete
+  - This is useful -
+    https://marketplace.visualstudio.com/items?itemName=jasonlhy.hungry-delete
     - But cmd+backspace seems to work natively now
     - Also, check if vim provides a neat solution for this
     - Any way to make "Hungry delete" be the default behaviour?
@@ -83,9 +49,9 @@
 - [ ] https://code.visualstudio.com/docs/nodejs/debugging-recipes
 - [x] https://twitter.com/KyleRayKelley/status/1705000982474793080
 - [x] Create profile for Demos based on the main profile (and google/chatgpt
-      nice settings for that - i.e autosave, font size) (or just zen mode?)
-      - Disable relative line numbers
-      - Use light mode to be more readable on the projector
+      nice settings for that - i.e autosave, font size) (or just zen mode?) -
+      Disable relative line numbers - Use light mode to be more readable on the
+      projector
 - Esri
   - [x] Turn sdk and api into single workspace?
     - Nope. My VS Code is terribly slow as is. Explorer takes 4 seconds to open.
@@ -202,7 +168,6 @@ TODO: Review all installed plugins as a reminder. Also:
 - [x] NPM IntelliSense
   - Seems to work natively
 - [ ] Test Explorer and Test Adapter Converter
-- [ ] Jest Test Explorer
 - [ ] Learn Vim
 - [ ] Live Preview
 - [ ] env/dotenv/native?
@@ -314,3 +279,32 @@ TODO: review the custom Vim plugin shortcuts
 ### NOTE
 
 Settings can be language-specific or project-specific
+
+Could use this snippet to help inspect the profile contents:
+
+```js
+function inflateValue(obj) {
+  let value = obj;
+  try {
+    while (typeof value === 'string') {
+      value = JSON.parse(value);
+    }
+  } catch {
+    return value;
+  }
+  return value;
+}
+function inflate(rawValue) {
+  const obj = inflateValue(rawValue);
+  return Array.isArray(obj)
+    ? obj.map(inflate)
+    : obj == null
+    ? null
+    : typeof obj === 'object'
+    ? Object.fromEntries(
+        Object.entries(obj).map(([key, value]) => [key, inflate(value)])
+      )
+    : obj;
+}
+inflate($('textarea').value);
+```
