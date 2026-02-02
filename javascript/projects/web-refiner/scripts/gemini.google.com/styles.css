@@ -10,6 +10,8 @@
 .boqOnegoogleliteOgbOneGoogleBar,
 bard-logo,
 hallucination-disclaimer,
+/* Takes up space and is distracting */
+my-stuff-recents-preview,
 .avatar-gutter {
   display: none !important;
 }
@@ -17,4 +19,21 @@ hallucination-disclaimer,
 /* Remove chat background to make less chatgpt-like */
 chat-window input-area-v2 {
   background-color: transparent !important;
+}
+
+/** Free up vertical side bar space */
+mat-action-list,
+bot-list,
+conversations-list {
+  margin: 0 !important;
+}
+.sidenav-with-history-container .overflow-container {
+  padding-top: 50px !important;
+}
+conversations-list h1 {
+  display: none !important;
+}
+.conversations-container a {
+  padding: 2.7px !important;
+  height: unset !important;
 }
