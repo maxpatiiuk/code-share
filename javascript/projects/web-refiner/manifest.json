@@ -18,6 +18,7 @@
     {
       "matches": ["https://*/*"],
       "js": ["scripts/all/auto-scroll.js", "scripts/all/toggle-dark-mode.js"],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {
@@ -28,7 +29,9 @@
     {
       "matches": ["https://gemini.google.com/*"],
       "js": ["scripts/gemini.google.com/no-auto-scroll.js"],
-      "run_at": "document_idle"
+      "world": "MAIN",
+      "run_at": "document_idle",
+      "world": "MAIN"
     },
     {
       "matches": ["https://teams.microsoft.com/*"],
@@ -38,6 +41,7 @@
     {
       "matches": ["https://teams.microsoft.com/dl/launcher/launcher.html*"],
       "js": ["scripts/teams.microsoft.com/open-teams-in-browser.js"],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {
@@ -49,16 +53,19 @@
         "scripts/teams.microsoft.com/batch-notifications.js",
         "scripts/outlook.com/skip-safe-link-validation.js"
       ],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {
       "matches": ["https://etc.esri.com/*"],
       "js": ["scripts/etc.esri.com/compute-overtime.js"],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {
       "matches": ["https://wikipedia.org/*", "https://*.wikipedia.org/*"],
       "js": ["scripts/wikipedia.org/hide-references-from-screen-reader.js"],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {
@@ -82,6 +89,7 @@
         "scripts/outlook.com/ui-improvements.js",
         "scripts/outlook.com/skip-safe-link-validation.js"
       ],
+      "world": "MAIN",
       "run_at": "document_idle"
     },
     {

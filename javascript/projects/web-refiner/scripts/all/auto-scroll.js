@@ -356,7 +356,7 @@
       '[contenteditable=true]',
     ].join(',');
 
-    return !!event.target.closest(interactiveSelectors);
+    return !!event.target?.closest(interactiveSelectors);
   }
 
   // Attach our handler in the bubbling phase so that defaultPrevented reflects other listeners.
