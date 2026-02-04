@@ -6,7 +6,10 @@ import * as path from 'node:path';
 const execAsync = promisify(exec);
 
 // --- Configuration ---
-const SEARCH_LIMIT = 200;
+// Less activity, and smaller API limit
+const githubSearchLimit = 100;
+// GitHub Enterprise has no API limit
+const fallbackSearchLimit = 300;
 const SHOW_DAYS_AGO = true;
 
 // Accept one or two hostnames; default to github.com
@@ -19,6 +22,8 @@ for (const host of HOSTS) {
 }
 
 async function runForHost(host: string): Promise<void> {
+  const SEARCH_LIMIT =
+    host === 'github.com' ? githubSearchLimit : fallbackSearchLimit;
   console.error(`🔍 Scanning ${host} for activity (Limit: ${SEARCH_LIMIT})...`);
 
   const stateFilename = `./activity-state.${host}.json`;
@@ -46,7 +51,7 @@ async function runForHost(host: string): Promise<void> {
   }
 
   // 3. Fetch Data
-  const items = await fetchSearchResults(currentUser, host);
+  const items = await fetchSearchResults(currentUser, host, SEARCH_LIMIT);
 
   if (items.length === 0) {
     console.log('No activity found.');
@@ -117,7 +122,8 @@ async function runForHost(host: string): Promise<void> {
 
 async function fetchSearchResults(
   currentUser: string,
-  host: string
+  host: string,
+  SEARCH_LIMIT: number
 ): Promise<GithubItem[]> {
   const fields = 'number,title,url,repository,author,assignees,createdAt,state';
   const cmd = `gh search issues --involves ${currentUser} --sort updated --include-prs --limit  ${SEARCH_LIMIT} --json ${fields}`;
@@ -204,6 +210,13 @@ function printReport(
 
 function printItem(item: GithubItem, currentUser: string): void {
   const type = item.url.includes('/pull/') ? 'PR' : 'Issue';
+
+  if (
+    type === 'PR' &&
+    item.title.includes('- backport (by @webgis-sdk-bot[bot])')
+  ) {
+    return;
+  }
 
   let daysSuffix = '';
   if (SHOW_DAYS_AGO) {
