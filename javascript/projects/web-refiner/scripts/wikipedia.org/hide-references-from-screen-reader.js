@@ -4,14 +4,10 @@
  */
 
 'use strict';
-(function () {
-  function hideReferences() {
-    const refElement = document.querySelector('.reflist .references');
-    if (refElement) {
-      refElement.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  // Run once after the page loads
-  window.addEventListener('load', hideReferences);
+(() => {
+  Array.from(
+    document.querySelectorAll('.mw-references-wrap .references,  sup.reference')
+  ).forEach((refElement) => {
+    refElement.setAttribute('aria-hidden', 'true');
+  });
 })();
