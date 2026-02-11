@@ -30,8 +30,7 @@
       "matches": ["https://gemini.google.com/*"],
       "js": ["scripts/gemini.google.com/no-auto-scroll.js"],
       "world": "MAIN",
-      "run_at": "document_idle",
-      "world": "MAIN"
+      "run_at": "document_idle"
     },
     {
       "matches": ["https://teams.microsoft.com/*"],
@@ -73,6 +72,7 @@
         "https://outlook.office.com/*",
         "https://outlook.live.com/*",
         "https://outlook.com/*",
+        "https://outlook.cloud.microsoft/*",
         "https://mail.office.com/*"
       ],
       "css": ["scripts/outlook.com/styles.css"],
@@ -83,6 +83,7 @@
         "https://outlook.office.com/*",
         "https://outlook.live.com/*",
         "https://outlook.com/*",
+        "https://outlook.cloud.microsoft/*",
         "https://mail.office.com/*"
       ],
       "js": [
@@ -125,7 +126,8 @@
     {
       "matches": ["https://powerpoint.officeapps.live.com/*"],
       "css": ["scripts/powerpoint.officeapps.live.com/styles.css"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true
     },
     {
       "matches": ["https://storybook.js.org/*"],

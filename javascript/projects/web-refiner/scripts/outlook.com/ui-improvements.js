@@ -18,7 +18,7 @@
     get: hrefDesc.get,
     set(val) {
       if (val.includes('unseen')) return;
-      hrefDesc.call(this, val);
+      hrefDesc.set.call(this, val);
     },
   });
 })();
