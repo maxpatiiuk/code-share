@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Web Commander",
+  "version": "1.0.0",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "toggle-nav": {
+      "suggested_key": {
+        "default": "Alt+K",
+        "mac": "Command+D"
+      },
+      "description": "Activate"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["rules.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

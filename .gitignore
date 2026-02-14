@@ -3,3 +3,4 @@ node_modules/
 /javascript/projects/github-activity/activity-state.json
 /javascript/projects/web-refiner/private-scripts
 /javascript/projects/github-activity/activity-state.*.json
+/javascript/projects/web-commander/rules.js

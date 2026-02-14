@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@types/chrome": "^0.1.36"
+  }
+}
