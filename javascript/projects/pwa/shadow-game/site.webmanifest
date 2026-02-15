@@ -1,0 +1,17 @@
+{
+  "name": "Shadow Game",
+  "short_name": "Shadow Game",
+  "description": "A minimalistic game that doesn't use the screen, and instead relies on vibration",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen"
+}
