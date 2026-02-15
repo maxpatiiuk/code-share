@@ -1,0 +1,17 @@
+{
+  "name": "Stopwatch",
+  "short_name": "Stopwatch",
+  "description": "A minimalistic stopwatch for AMOLED screens",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen"
+}
