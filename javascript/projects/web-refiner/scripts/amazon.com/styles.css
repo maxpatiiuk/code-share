@@ -1,0 +1,4 @@
+.sns-product-image-container .sns-product-image {
+  /* Interferes with auto dark mode */
+  mix-blend-mode: initial !important;
+}

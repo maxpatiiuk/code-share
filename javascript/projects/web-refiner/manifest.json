@@ -203,6 +203,11 @@
       "matches": ["https://quora.com/*"],
       "css": ["scripts/quora.com/styles.css"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.amazon.com/*"],
+      "css": ["scripts/amazon.com/styles.css"],
+      "run_at": "document_start"
     }
   ]
 }

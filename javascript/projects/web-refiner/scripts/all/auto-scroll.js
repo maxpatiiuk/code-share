@@ -351,7 +351,9 @@
       'textarea',
       'select',
       '[role="button"]',
-      "[tabindex='0']",
+      // Removed tabindex=0 check as github's README md viewer (if side bar is
+      // visible) uses tabindex0 on non interactive
+      // div.data-selector="repos-split-pane-content" container
       '[contenteditable=plaintext-only]',
       '[contenteditable=true]',
     ].join(',');
