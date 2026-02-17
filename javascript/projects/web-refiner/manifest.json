@@ -11,12 +11,12 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
+      "matches": ["https://*/*", "http://*/*"],
       "css": ["scripts/all/global.css"],
       "run_at": "document_start"
     },
     {
-      "matches": ["https://*/*"],
+      "matches": ["https://*/*", "http://*/*"],
       "js": ["scripts/all/auto-scroll.js", "scripts/all/toggle-dark-mode.js"],
       "world": "MAIN",
       "run_at": "document_idle"

@@ -213,7 +213,8 @@ function printItem(item: GithubItem, currentUser: string): void {
 
   if (
     type === 'PR' &&
-    item.title.includes('- backport (by @webgis-sdk-bot[bot])')
+    item.title.endsWith('- backport') &&
+    item.author.login === 'webgis-sdk-bot[bot]'
   ) {
     return;
   }
