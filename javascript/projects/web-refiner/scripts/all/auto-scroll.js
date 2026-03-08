@@ -358,7 +358,13 @@
       '[contenteditable=true]',
     ].join(',');
 
-    return !!event.target?.closest(interactiveSelectors);
+    const targets = event.composedPath?.() ?? [event.target];
+    return targets.some(
+      (node) =>
+        node instanceof Element &&
+        (node.matches(interactiveSelectors) ||
+          !!node.closest(interactiveSelectors))
+    );
   }
 
   // Attach our handler in the bubbling phase so that defaultPrevented reflects other listeners.
