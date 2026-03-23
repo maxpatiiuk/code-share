@@ -1,0 +1,4 @@
+:root {
+  /** Make low-value staleness indicator less invasive */
+  --zh-stale-color: transparent !important;
+}
