@@ -90,11 +90,13 @@ function resolve(candidates) {
   return undefined;
 }
 
-const formattedArguments = parameters.map((part) =>
-  part.includes(' ') || part.includes('"')
-    ? `"${part.replace('"', '\\"')}"`
-    : part
-);
+/** @param {string} part */
+const shellQuote = (part) =>
+  /^[A-Za-z0-9_./:=-]+$/u.test(part)
+    ? part
+    : `'${part.replace(/'/gu, `'"'"'`)}'`;
+
+const formattedArguments = parameters.map(shellQuote);
 
 // Resolve npm scripts
 let resolvedScript = resolve(localScripts ?? []);
@@ -113,7 +115,7 @@ if (resolvedScript) {
     const targetCwd = match.cwd;
     const isLocal = targetCwd === process.cwd();
 
-    let normalizedArguments = formattedArguments;
+    let normalizedArguments = parameters;
 
     if (!isLocal && normalizedArguments.length > 0) {
       normalizedArguments = normalizedArguments.map((arg) => {
@@ -125,9 +127,11 @@ if (resolvedScript) {
       });
     }
 
+    const normalizedFormattedArguments = normalizedArguments.map(shellQuote);
+
     const argsString =
-      normalizedArguments.length > 0
-        ? ` -- ${normalizedArguments.join(' ')}`
+      normalizedFormattedArguments.length > 0
+        ? ` -- ${normalizedFormattedArguments.join(' ')}`
         : '';
     const command = `(cd "${targetCwd}" && ${nodeFlags}node --run ${resolvedScript}${argsString})`;
 

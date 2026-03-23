@@ -1,4 +1,4 @@
-:root {
+span:is([title='Stale'], [title='Time in Pipeline']) {
   /** Make low-value staleness indicator less invasive */
-  --zh-stale-color: transparent !important;
+  display: none;
 }
