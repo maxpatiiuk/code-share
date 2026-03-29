@@ -1,167 +1,148 @@
 # config
 git config --global user.name "Max Patiiuk"
 git config --show-origin --list
-git config --global alias.last 'log -1'  # alias `git last` to git log
-git config --global alias.check '!npx tsc'  # alias `git check` to tsc
-git config --local remote.pushDefault origin  # default remote
-
+git config --global alias.last 'log -1'      # alias `git last` to git log
+git config --global alias.check '!npx tsc'   # alias `git check` to tsc
+git config --local remote.pushDefault origin # default remote
 
 # help
-man git-config  # colored full doc page
+man git-config # colored full doc page
 git config -h  # short help
 
-
 # status
-git status -s  # short summary
-
+git status -s # short summary
 
 # .gitignore
 # starting with / means non recursive
 # ending with / means a directory
 # negation by starting with !
-[abc].*  # a.qw b.a c.ts
-[0-9]  # 1 2 3 4
+[abc].* # a.qw b.a c.ts
+[0-9]   # 1 2 3 4
 a/**/z  # a/z a/b/z a/b/c/z
-
 
 # diff
 git diff --cached
-git difftool  # vim
-git diff master...origin/master  # show xor'ed commits
-git diff HEAD tag | git apply  # un-apply all changes since tag
-
+git difftool                    # vim
+git diff master...origin/master # show xor'ed commits
+git diff HEAD tag | git apply   # un-apply all changes since tag
 
 # rm
-git rm --cached README.md  # untrack a file
-git rm \*.log  # need backslash so that zsh doesn't expand the arg
-
+git rm --cached README.md # untrack a file
+git rm \*.log             # need backslash so that zsh doesn't expand the arg
 
 # git mv is the same as:
 mv file1 file2
 git rm file1
 git add file2
 
-
 # log
-git log --stat  # show changed file
-git log -p  # show edits
-git log -2  # show the last 2 commits only
+git log --stat # show changed file
+git log -p     # show edits
+git log -2     # show the last 2 commits only
 git log --pretty=oneline/short/full/fuller
 # Can filter log by date, author, grep commit message or edited content
-git log -- /path/to/file.ts  # show commits that changed that file
-git log main  # show log for the `main` branch
-git log --all  # show log from all brances
-git log remote/branch --not branch  # show commits that aren't on local
-git log a...b  # a XOR b
-git log -S mappings_path  # 'Pickaxe' # show commits that change the #
+git log -- /path/to/file.ts        # show commits that changed that file
+git log main                       # show log for the `main` branch
+git log --all                      # show log from all brances
+git log remote/branch --not branch # show commits that aren't on local
+git log a..b                       # on b but not on a
+git log a^..b                      # on b but not on a inclusive
+git log a...b                      # a XOR b
+git log -S mappings_path           # 'Pickaxe' # show commits that change the #
 #                           of occurrences of that string
-git log -L :functionName:file.name  # show changes to a function
-git log -g  # shows HEAD's history
-
+git log -L :functionName:file.name # show changes to a function
+git log -g                         # shows HEAD's history
 
 # commit
-git commit --amend  # commit to previous commit (and change message)
-
+git commit --amend # commit to previous commit (and change message)
 
 # restore
-git restore --staged file.txt  # unstage a file
-git restore file.txt  # undo changes to a file
-
+git restore --staged file.txt # unstage a file
+git restore file.txt          # undo changes to a file
 
 # remote
-git remote -v  # list remote origins
-git remote add origin link  # add link as origin
-git remote show origin  # show detailed into about a remote
-
+git remote -v              # list remote origins
+git remote add origin link # add link as origin
+git remote show origin     # show detailed into about a remote
 
 # tag
-git tag  # list tags
+git tag # list tags
 git tag -a v1.4 -m "my version 1.4"
-git tag -a v1.2 4abc834  # tag a specific commit
-git tag -d v1.2  # delete a tag
-
+git tag -a v1.2 4abc834 # tag a specific commit
+git tag -d v1.2         # delete a tag
 
 # push
-git push --tags  # push tags to the remote
-git push origin --delete v1.2  # delete v1.2 tag from the remote
-git push origin --delete issue-53  # delete remote branch
-git push dev:development  # push local `dev` to remote `development`
-git push -u origin/dev  # set dev as the new remote upstream
-
+git push --tags                   # push tags to the remote
+git push origin --delete v1.2     # delete v1.2 tag from the remote
+git push origin --delete issue-53 # delete remote branch
+git push dev:development          # push local `dev` to remote `development`
+git push -u origin/dev            # set dev as the new remote upstream
 
 # branch
-git branch dev  # create a `dev` branch
-git branch -d dev  # delete `dev` branch
-git branch -vv  # list branches
-git branch --merged  # list merged branches that can be deleted
-git branch --all  # also list remote branches
-git branch -u origin/dev  # change remote tracking branch
-
+git branch dev           # create a `dev` branch
+git branch -d dev        # delete `dev` branch
+git branch -vv           # list branches
+git branch --merged      # list merged branches that can be deleted
+git branch --all         # also list remote branches
+git branch -u origin/dev # change remote tracking branch
 
 # renaming a branch
 git branch --move old new
 git push -u origin new
 git push origin --delete old
 
-
 # switch
-git switch main  # switch to main
-git switch -  # switch to previous branch
-git switch -c dev  # create and checkout `dev`
+git switch main   # switch to main
+git switch -      # switch to previous branch
+git switch @{-n}  # switch to nth previous branch
+git switch -c dev # create and checkout `dev`
 git switch -c dev --track origin/dev
-git switch -C dev  # force recreate `dev`
-
+git switch -C dev # force recreate `dev`
 
 # checkout
-git checkout HEAD~2 README.md  # revert README.md to the older one
-git checkout README.md  # revert README.md from the index
-git checkout --conflict=diff3 file.ts  # show 3 way conflict diff
-git checkout --theirs file.ts  # --ours  # checkout one side of a merge
+git checkout @~2 README.md # revert README.md to the older one
+# @ is a shortcut for HEAD
+git checkout README.md                # revert README.md from the index
+git checkout --conflict=diff3 file.ts # show 3 way conflict diff
+git checkout --theirs file.ts         # --ours  # checkout one side of a merge
 # conflict
 
-
 # merge
-git merge dev  # merge dev into current branch
+git merge dev # merge dev into current branch
 # use merging only for fast-forwarding
-git mergetool  # open a conflict resolution tool
-
+git mergetool # open a conflict resolution tool
 
 # rebase
-git rebase issue-53  # apply issue-53 onto current branch
-git rebase main issue-53  # apply issue-53 onto main
-git rebase -i HEAD~3  # launch interactive history rewriter
+git rebase issue-53      # apply issue-53 onto current branch
+git rebase main issue-53 # apply issue-53 onto main
+git rebase -i HEAD~3     # launch interactive history rewriter
 # rebase every commit:
-git rebase -i --root `git rev-list --max-parents=0 HEAD`
-
+git rebase -i --root $(git rev-list --max-parents=0 HEAD)
 
 # reset
 git reset --soft HEAD~1  # uncommit
-git reset HEAD~1 file.md  # unstage  # defaults to --mixed
+git reset HEAD~1 file.md # unstage  # defaults to --mixed
 git reset --hard HEAD~1  # delete
+# HEAD^ - also prior commit. HEAD^2 - other side of merge commit
 
 # describe
-git describe --all  # creata a desciption for the current git's state
-
+git describe --all # creata a desciption for the current git's state
 
 # interactive add
 git add -i
 # add a patch
 git add -p
 
-
 # stash
 git stash apply stash@{2}
 git stash drop
 git stash branch new-branch
 
-
 # revert
-git revert -m 1 HEAD  # create a revert commit for last commit
-
+git revert -m 1 HEAD # create a revert commit for last commit
 
 # blame
 git blame -L 69,82 file.ts
-
 
 # bisect
 git bisect start
@@ -169,18 +150,30 @@ git bisect bad
 git bisect good v1.0
 
 git bisect start HEAD v.10
-git bisect run test-error.sh  # the coolest feature ever!
+git bisect run test-error.sh # the coolest feature ever!
 # can bisect by regex and function names too
 
 # show file from a different branch
 git show branch:file
-git show hash  # show info about a commit
-
+git show hash # show info about a commit
 
 # submodule
 # allows to nest git repositories and merge upstream
 
+# worktree
+# multiple "clones" with shared .git folder (shared fetch, stash)
+# pros:
+# - less disk usage - more ssd cache hits
+# - git fetch once fetched for all
+# - shared git lfs storage
+# - reused rerere
+# - faster to add new worktree
+# cons:
+# - shared stash not always desirable
+# - can't checkout same branch in multiple worktrees by default. very annoying
+#   bypassable with --ignore-other-worktrees but causes git status noise when
+#   doing `git pull` in another worktree
 
 # TODO:
-review git tools: `git difftool --tool-help` and `mergetool`
-review git commit --fixup
+# review git tools: `git difftool --tool-help` and `git mergetool`
+# review git commit --fixup
