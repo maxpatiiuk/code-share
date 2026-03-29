@@ -173,6 +173,23 @@ git show hash # show info about a commit
 # - can't checkout same branch in multiple worktrees by default. very annoying
 #   bypassable with --ignore-other-worktrees but causes git status noise when
 #   doing `git pull` in another worktree
+# Current worktree id
+basename $(git rev-parse --git-dir)
+
+# git maintenance
+# 1. Manually resolve the ahead branches - must run before prune
+git branch -vv | grep ': ahead'
+# 2. Manually resolve unpushed branches
+git log --branches --not --remotes --oneline
+# 3. Clean references to remote deleted branches:
+git remote prune origin
+# 4. Delete branches that were deleted on the remote:
+git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D
+# Then need to manually delete the [branch] blocks in .git/config
+# Deleted branches merged into main
+# Pack and prune:
+git gc --prune=now --aggressive
+git lfs prune
 
 # TODO:
 # review git tools: `git difftool --tool-help` and `git mergetool`
