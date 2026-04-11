@@ -165,9 +165,11 @@ git show hash # show info about a commit
 # pros:
 # - less disk usage - more ssd cache hits
 # - git fetch once fetched for all
-# - shared git lfs storage
+# - shared git lfs storage out of the box - no need for bug-prone lfs.storage setting
 # - reused rerere
 # - faster to add new worktree
+# - turbo build shares the build cache automatically between worktrees
+# - other tools may also share their cache, assuming they support worktrees,
 # cons:
 # - shared stash not always desirable
 # - can't checkout same branch in multiple worktrees by default. very annoying
@@ -190,6 +192,29 @@ git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D
 # Pack and prune:
 git gc --prune=now --aggressive
 git lfs prune
+# Delete all .stencil folders in all sub-folders (can be run from ~/s/)
+find . \( -name "node_modules" -o -name "dist" \) -prune -o -type d -name ".stencil" -prune -exec rm -rf {} +
+
+# git history rewriting
+# export a range of commits to a patch file - could also scope to a file path
+git log \
+  --pretty=email \
+  --patch \
+  --reverse \
+  --full-index \
+  --binary \
+  -m \
+  --first-parent \
+  --default-prefix \
+  977cda77b5^..f73bbf43b9 \
+  > commits.patch
+# manually edit the patch file
+# apply the commits
+git am \
+  --committer-date-is-author-date \
+  --whitespace=nowarn \
+  --empty=keep \
+  < commits.patch
 
 # TODO:
 # review git tools: `git difftool --tool-help` and `git mergetool`
