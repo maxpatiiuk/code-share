@@ -1,3 +1,4 @@
+/.vscode/
 package-lock.json
 node_modules/
 /javascript/projects/github-activity/activity-state.json
