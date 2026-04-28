@@ -1,15 +1,17 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const execAsync = promisify(exec);
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 
 // --- Configuration ---
 // Less activity, and smaller API limit
 const githubSearchLimit = 100;
-// GitHub Enterprise has no API limit
-const fallbackSearchLimit = 300;
+// GitHub Enterprise has no API limit. 300 wasn't enough some weeks
+const fallbackSearchLimit = 400;
 const SHOW_DAYS_AGO = true;
 
 // Accept one or two hostnames; default to github.com
@@ -26,11 +28,10 @@ async function runForHost(host: string): Promise<void> {
     host === 'github.com' ? githubSearchLimit : fallbackSearchLimit;
   console.error(`🔍 Scanning ${host} for activity (Limit: ${SEARCH_LIMIT})...`);
 
-  const stateFilename = `./activity-state.${host}.json`;
-  const stateFilePath = path.resolve(stateFilename);
+  const stateFilePath = path.join(scriptDir, `activity-state.${host}.json`);
 
   const currentUser = await getCurrentUser(host);
-  const history = await loadHistory(stateFilename);
+  const history = await loadHistory(stateFilePath);
 
   // 1. "Same Day" Logic
   // We reset today's entry so we can re-run the script multiple times a day
@@ -262,11 +263,9 @@ function createKey(org: string, repo: string, number: number): string {
   return `${org}/${repo}#${number}`;
 }
 
-async function loadHistory(stateFilename: string): Promise<RunRecord[]> {
+async function loadHistory(stateFilePath: string): Promise<RunRecord[]> {
   try {
-    // Using import for JSON reading
-    const module = await import(stateFilename, { with: { type: 'json' } });
-    const data = module.default;
+    const data = JSON.parse(await readFile(stateFilePath, 'utf8'));
     return Array.isArray(data) ? (data as RunRecord[]) : [];
   } catch (e) {
     return [];
