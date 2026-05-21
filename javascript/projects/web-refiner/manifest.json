@@ -27,6 +27,11 @@
       "run_at": "document_start"
     },
     {
+      "matches": ["https://calendar.google.com/*"],
+      "css": ["scripts/calendar.google.com/styles.css"],
+      "run_at": "document_start"
+    },
+    {
       "matches": ["https://gemini.google.com/*"],
       "js": ["scripts/gemini.google.com/no-auto-scroll.js"],
       "world": "MAIN",

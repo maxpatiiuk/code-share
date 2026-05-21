@@ -1,0 +1,30 @@
+{
+  "include": ["**/*.ts", "**/*.js"],
+  "compilerOptions": {
+    "checkJs": true,
+    "allowUnreachableCode": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+    "types": ["chrome"],
+    "declaration": false,
+    "noEmitOnError": true,
+    "noEmit": true,
+    "outDir": "${configDir}/dist",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "lib": ["esnext", "dom"],
+    "libReplacement": false,
+    "target": "esnext",
+    "skipLibCheck": true
+  }
+}

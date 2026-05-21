@@ -78,6 +78,7 @@
     allowNativeMenu = false;
 
     // Define the button actions.
+    /** @type {Record<string, (() => void) | undefined>} */
     const actions = {
       X: () => window.close(),
       ' ': undefined,
@@ -126,43 +127,62 @@
       },*/
     };
 
+    const navigationApi = /** @type {{ canGoBack?: boolean } | undefined} */ (
+      /** @type {any} */ (globalThis).navigation
+    );
+    /** @type {Record<string, boolean>} */
+    const disabledButtons = {
+      '<': navigationApi?.canGoBack === false && window.history.length === 1,
+    };
+
     Object.keys(actions).forEach((letter) => {
       const isEmpty = letter.trim().length === 0;
       const btn = document.createElement(isEmpty ? 'div' : 'button');
+      const isDisabled = !isEmpty && disabledButtons[letter] === true;
       btn.style.width = '100%';
       btn.style.height = '100%';
 
       if (isEmpty) {
         btn.style.background = 'transparent';
       } else {
-        btn.style.background = '#0006';
-        btn.textContent = letter;
-        btn.style.fontSize = '14px';
-        btn.style.boxSizing = 'border-box';
-        btn.style.cursor = 'pointer';
-        btn.style.border = '1px solid #fff';
+        const actionButton = /** @type {HTMLButtonElement} */ (btn);
+        actionButton.style.background = '#0006';
+        actionButton.textContent = letter;
+        actionButton.style.fontSize = '14px';
+        actionButton.style.boxSizing = 'border-box';
+        actionButton.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
+        actionButton.style.border = '1px solid #fff';
+        if (isDisabled) {
+          actionButton.disabled = true;
+          actionButton.style.background = '#0003';
+          actionButton.style.color = '#bbb';
+          actionButton.style.border = '1px solid #888';
+        }
         // When a button is clicked (via left-click)...
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          actions[letter] && actions[letter]();
-          endAutoScrollMode();
-        });
-        btn.addEventListener(
-          'mouseup',
-          function (e) {
-            if (e.button !== 2) return;
-            if (
-              Math.abs(e.clientX - startX) >= 5 ||
-              Math.abs(e.clientY - startY) >= 5
-            ) {
-              e.preventDefault();
-              e.stopPropagation();
-              btn.click();
-            }
-          },
-          { once: true }
-        );
+        if (!isDisabled) {
+          actionButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            actions[letter] && actions[letter]();
+            endAutoScrollMode();
+          });
+          actionButton.addEventListener(
+            'mouseup',
+            /** @param {MouseEvent} e */
+            function (e) {
+              if (e.button !== 2) return;
+              if (
+                Math.abs(e.clientX - startX) >= 5 ||
+                Math.abs(e.clientY - startY) >= 5
+              ) {
+                e.preventDefault();
+                e.stopPropagation();
+                actionButton.click();
+              }
+            },
+            { once: true }
+          );
+        }
       }
 
       shadowRoot.append(btn);

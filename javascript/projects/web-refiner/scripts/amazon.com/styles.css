@@ -2,3 +2,8 @@
   /* Interferes with auto dark mode */
   mix-blend-mode: initial !important;
 }
+
+[id="desktop-banner"] {
+  /* Hide animated carousel */
+  display: none;
+}

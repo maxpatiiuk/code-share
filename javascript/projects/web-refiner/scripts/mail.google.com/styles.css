@@ -5,3 +5,8 @@
 [id=':11b'] {
   color-scheme: light only;
 }
+
+/* Disable delivery updates. They appear even if disabled in settings. */
+div[data-elevated-container-view-type='timely_bump'][tabindex='0'] {
+  display: none;
+}

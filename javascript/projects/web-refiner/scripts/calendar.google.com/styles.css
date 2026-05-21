@@ -1,0 +1,8 @@
+/*
+ * Reduce clutter from event editing screen:
+ * Hide "Add guests", "Add Google Meet", "Add Google Drive",
+ * "Busy status", "Default visibility", "Notifications only apply to you"
+ */
+[aria-labelledby="tabEvent"] :is([jsname="rrgSHf"],[jsname="uOficc"],[jsname="T8HIye"],[jsname="C2Qrw"],[jsname="Zn7Xbb"]), [jsname="I0Fcpe"], .X6nawe {
+  display: none;
+}
