@@ -38,7 +38,24 @@ x wa:bu --serve
 # If fails to match against any script, will try to resolve the executable
 x ts -b
 ▶︎ npx tsc -b
+
+# Can invoke a .js file from the current directory or a parent directory
+x cli --help
+▶︎ node cli.js --help
 ```
+
+Targets are resolved in this order:
+
+1. Scripts from the nearest `package.json` and `.js` files from the current
+  directory upward, ranked by match specificity
+2. Scripts from additional ancestor `package.json` files
+3. Executables from `node_modules/.bin` (nearest first)
+4. An `npx` fallback
+
+Specificity favors exact matches, fewer unmatched name segments, and shorter
+names, in that order. A script wins when its specificity ties a `.js` file.
+For example, `x c` prefers `cli.js` over `core:docs`, while `x c:d` resolves to
+`core:docs`.
 
 ## Setup & Installation
 
