@@ -6,7 +6,40 @@ use std::path::{Path, PathBuf};
 
 #[derive(Deserialize)]
 struct PackageJson {
+    name: Option<String>,
+    #[serde(rename = "packageManager")]
+    package_manager: Option<String>,
     scripts: Option<HashMap<String, String>>,
+    workspaces: Option<Workspaces>,
+}
+
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum Workspaces {
+    Patterns(Vec<String>),
+    Config { packages: Vec<String> },
+}
+
+impl Workspaces {
+    fn patterns(&self) -> &[String] {
+        match self {
+            Self::Patterns(patterns) => patterns,
+            Self::Config { packages } => packages,
+        }
+    }
+}
+
+#[derive(Default, Deserialize)]
+struct PnpmWorkspace {
+    #[serde(default)]
+    packages: Vec<String>,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum PackageManager {
+    Npm,
+    Pnpm,
+    Yarn,
 }
 
 #[derive(Debug)]
@@ -158,7 +191,16 @@ fn shell_quote(arg: &str) -> String {
     let is_safe = arg.bytes().all(|b| {
         matches!(
             b,
-            b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'_' | b'-' | b'.' | b'/' | b':' | b'='
+            b'a'..=b'z'
+                | b'A'..=b'Z'
+                | b'0'..=b'9'
+                | b'_'
+                | b'-'
+                | b'.'
+                | b'/'
+                | b':'
+                | b'='
+                | b'@'
         )
     });
 
@@ -171,6 +213,245 @@ fn shell_quote(arg: &str) -> String {
 
 fn format_shell_arguments(args: &[String]) -> Vec<String> {
     args.iter().map(|arg| shell_quote(arg)).collect()
+}
+
+fn parse_filter(args: &mut Vec<String>) -> Result<Option<String>, String> {
+    let Some(first) = args.first() else {
+        return Ok(None);
+    };
+    let inline_filter = ["--filter=", "-f=", "-F="]
+        .iter()
+        .find_map(|prefix| first.strip_prefix(prefix));
+    if let Some(filter) = inline_filter {
+        if filter.is_empty() {
+            return Err("# Filter requires a package name".to_string());
+        }
+        let filter = filter.to_string();
+        args.remove(0);
+        return Ok(Some(filter));
+    }
+    if !matches!(first.as_str(), "-f" | "-F" | "--filter") {
+        return Ok(None);
+    }
+    if args.len() < 2 || args[1].is_empty() {
+        return Err("# Filter requires a package name".to_string());
+    }
+
+    args.remove(0);
+    Ok(Some(args.remove(0)))
+}
+
+fn read_package_json(path: &Path) -> Option<PackageJson> {
+    fs::read_to_string(path)
+        .ok()
+        .and_then(|contents| serde_json::from_str(&contents).ok())
+}
+
+fn find_workspace_root(cwd: &Path) -> Option<PathBuf> {
+    let mut directory = cwd.to_path_buf();
+    let mut turbo_root = None;
+    let mut package_root = None;
+    loop {
+        let package_json_path = directory.join("package.json");
+        if package_json_path.exists() {
+            package_root.get_or_insert_with(|| directory.clone());
+            if read_package_json(&package_json_path)
+                .and_then(|package_json| package_json.workspaces)
+                .is_some()
+                || directory.join("pnpm-workspace.yaml").exists()
+            {
+                return Some(directory);
+            }
+        }
+        if directory.join("turbo.json").exists() {
+            turbo_root = Some(directory.clone());
+        }
+        if !directory.pop() {
+            break;
+        }
+    }
+    turbo_root.or(package_root)
+}
+
+fn workspace_patterns(root: &Path) -> Vec<String> {
+    let pnpm_workspace_path = root.join("pnpm-workspace.yaml");
+    if let Ok(contents) = fs::read_to_string(pnpm_workspace_path) {
+        if let Ok(workspace) = serde_yaml::from_str::<PnpmWorkspace>(&contents) {
+            if !workspace.packages.is_empty() {
+                return workspace.packages;
+            }
+        }
+    }
+    read_package_json(&root.join("package.json"))
+        .and_then(|package_json| package_json.workspaces)
+        .map(|workspaces| workspaces.patterns().to_vec())
+        .unwrap_or_default()
+}
+
+fn collect_workspace_packages(root: &Path) -> Vec<String> {
+    let patterns = workspace_patterns(root);
+    let exclusions: Vec<glob::Pattern> = patterns
+        .iter()
+        .filter_map(|pattern| pattern.strip_prefix('!'))
+        .filter_map(|pattern| glob::Pattern::new(pattern).ok())
+        .collect();
+    let mut names = HashSet::new();
+
+    if let Some(name) =
+        read_package_json(&root.join("package.json")).and_then(|package_json| package_json.name)
+    {
+        names.insert(name);
+    }
+    for pattern in patterns.iter().filter(|pattern| !pattern.starts_with('!')) {
+        let manifest_pattern = root.join(pattern).join("package.json");
+        let Some(manifest_pattern) = manifest_pattern.to_str() else {
+            continue;
+        };
+        let Ok(manifests) = glob::glob(manifest_pattern) else {
+            continue;
+        };
+        for manifest in manifests.flatten() {
+            let relative_directory = manifest
+                .parent()
+                .and_then(|directory| directory.strip_prefix(root).ok());
+            if relative_directory.is_some_and(|directory| {
+                exclusions
+                    .iter()
+                    .any(|pattern| pattern.matches_path(directory))
+            }) {
+                continue;
+            }
+            if let Some(name) =
+                read_package_json(&manifest).and_then(|package_json| package_json.name)
+            {
+                names.insert(name);
+            }
+        }
+    }
+
+    let mut names: Vec<String> = names.into_iter().collect();
+    names.sort();
+    names
+}
+
+fn unscoped_package_name(name: &str) -> &str {
+    name.rsplit_once('/').map_or(name, |(_, name)| name)
+}
+
+fn scoped_package_match_score(package: &str, query: &str) -> Option<MatchScore> {
+    let (package_scope, package_name) = package.split_once('/')?;
+    let (query_scope, query_name) = query.split_once('/')?;
+    let scope_score = match_score(
+        package_scope,
+        package_scope,
+        query_scope,
+        &split(query_scope),
+    )?;
+    let name_score = match_score(package_name, package_name, query_name, &split(query_name))?;
+
+    Some(MatchScore {
+        exact_penalty: scope_score.exact_penalty || name_score.exact_penalty,
+        unmatched_parts: scope_score.unmatched_parts + name_score.unmatched_parts,
+        unmatched_characters: scope_score.unmatched_characters + name_score.unmatched_characters,
+    })
+}
+
+fn resolve_package_filter(packages: &[String], query: &str) -> String {
+    let query_parts = split(query);
+    packages
+        .iter()
+        .filter_map(|package| {
+            let unscoped = unscoped_package_name(package);
+            let (match_kind, score) = if package == query {
+                (0, None)
+            } else if unscoped == query {
+                (1, None)
+            } else if let Some(score) = scoped_package_match_score(package, query) {
+                (2, Some(score))
+            } else {
+                (3, match_score(unscoped, unscoped, query, &query_parts))
+            };
+            (match_kind < 3 || score.is_some()).then_some((
+                match_kind,
+                score,
+                unscoped.len(),
+                package,
+            ))
+        })
+        .min_by_key(|(match_kind, score, length, package)| {
+            (*match_kind, *score, *length, package.as_str())
+        })
+        .map_or_else(|| query.to_string(), |(_, _, _, package)| package.clone())
+}
+
+fn package_manager(root: &Path) -> PackageManager {
+    let declared = read_package_json(&root.join("package.json"))
+        .and_then(|package_json| package_json.package_manager)
+        .unwrap_or_default();
+    if declared.starts_with("pnpm@") || root.join("pnpm-lock.yaml").exists() {
+        PackageManager::Pnpm
+    } else if declared.starts_with("yarn@") || root.join("yarn.lock").exists() {
+        PackageManager::Yarn
+    } else {
+        PackageManager::Npm
+    }
+}
+
+fn insert_turbo_filter(args: &[String], package: &str) -> Vec<String> {
+    let mut args = args.to_vec();
+    let insertion_index = args
+        .iter()
+        .position(|arg| arg == "--")
+        .unwrap_or(args.len());
+    args.insert(insertion_index, format!("--filter={package}"));
+    args
+}
+
+fn format_filtered_binary(
+    root: &Path,
+    manager: PackageManager,
+    package: &str,
+    binary: &str,
+    args: &[String],
+    node_flags: &str,
+) -> String {
+    let mut command = match manager {
+        PackageManager::Pnpm if binary == "pnpm" => {
+            format!("pnpm --filter={}", shell_quote(package))
+        }
+        PackageManager::Pnpm => format!(
+            "pnpm --filter={} exec {}",
+            shell_quote(package),
+            shell_quote(binary)
+        ),
+        PackageManager::Yarn if binary == "yarn" => {
+            format!("yarn workspace {}", shell_quote(package))
+        }
+        PackageManager::Yarn => format!(
+            "yarn workspace {} {}",
+            shell_quote(package),
+            shell_quote(binary)
+        ),
+        PackageManager::Npm if binary == "npm" => {
+            format!("npm --workspace={}", shell_quote(package))
+        }
+        PackageManager::Npm => format!(
+            "npm exec --workspace={} -- {}",
+            shell_quote(package),
+            shell_quote(binary)
+        ),
+    };
+    let formatted_args = format_shell_arguments(args);
+    if !formatted_args.is_empty() {
+        command.push(' ');
+        command.push_str(&formatted_args.join(" "));
+    }
+    format!(
+        "(cd {} && {}{})",
+        shell_quote(&root.to_string_lossy()),
+        node_flags,
+        command
+    )
 }
 
 fn collect_javascript_targets(
@@ -211,8 +492,16 @@ fn main() {
     let cwd = env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
     let mut args: Vec<String> = env::args().skip(1).collect();
 
+    let filter_query = match parse_filter(&mut args) {
+        Ok(filter) => filter,
+        Err(message) => {
+            println!("{message}");
+            std::process::exit(1);
+        }
+    };
+
     if args.is_empty() {
-        println!("# Usage: x <short-command> [args...]");
+        println!("# Usage: x [-f <package>] <short-command> [args...]");
         std::process::exit(1);
     }
 
@@ -239,13 +528,20 @@ fn main() {
                 .replace("inspectWait", "inspect-wait")
         );
         if args.is_empty() {
-            println!("# Usage: x <short-command> [args...]");
+            println!("# Usage: x [-f <package>] <short-command> [args...]");
             std::process::exit(1);
         }
         command_name = args.remove(0);
     }
 
     let query_parts = split(&command_name);
+    let workspace_root = find_workspace_root(&cwd);
+    let resolved_filter = filter_query.as_deref().map(|query| {
+        workspace_root.as_ref().map_or_else(
+            || query.to_string(),
+            |root| resolve_package_filter(&collect_workspace_packages(root), query),
+        )
+    });
 
     let mut local_scripts: Option<Vec<String>> = None;
     let mut global_scripts_map: HashMap<String, GlobalScript> = HashMap::new();
@@ -312,76 +608,80 @@ fn main() {
 
     let formatted_arguments = format_shell_arguments(&args);
 
-    match resolve_primary_target(
-        local_scripts.as_deref(),
-        &javascript_targets,
-        &command_name,
-        &query_parts,
-    ) {
-        Some(PrimaryTarget::Script(resolved)) => {
-            let args_str = if !formatted_arguments.is_empty() {
-                format!(" -- {}", formatted_arguments.join(" "))
-            } else {
-                String::new()
-            };
-            println!("{}node --run {}{}", node_flags, resolved, args_str);
-            std::process::exit(0);
+    if resolved_filter.is_none() {
+        match resolve_primary_target(
+            local_scripts.as_deref(),
+            &javascript_targets,
+            &command_name,
+            &query_parts,
+        ) {
+            Some(PrimaryTarget::Script(resolved)) => {
+                let args_str = if !formatted_arguments.is_empty() {
+                    format!(" -- {}", formatted_arguments.join(" "))
+                } else {
+                    String::new()
+                };
+                println!("{}node --run {}{}", node_flags, resolved, args_str);
+                std::process::exit(0);
+            }
+            Some(PrimaryTarget::JavaScript(target)) => {
+                let args_str = if !formatted_arguments.is_empty() {
+                    format!(" {}", formatted_arguments.join(" "))
+                } else {
+                    String::new()
+                };
+                println!(
+                    "{}node {}{}",
+                    node_flags,
+                    shell_quote(&target.path.to_string_lossy()),
+                    args_str
+                );
+                std::process::exit(0);
+            }
+            None => {}
         }
-        Some(PrimaryTarget::JavaScript(target)) => {
-            let args_str = if !formatted_arguments.is_empty() {
-                format!(" {}", formatted_arguments.join(" "))
-            } else {
-                String::new()
-            };
-            println!(
-                "{}node {}{}",
-                node_flags,
-                shell_quote(&target.path.to_string_lossy()),
-                args_str
-            );
-            std::process::exit(0);
-        }
-        None => {}
     }
 
-    let mut global_candidates: Vec<String> = global_scripts_map.keys().cloned().collect();
-    global_candidates.sort_by(|a, b| a.len().cmp(&b.len()).then_with(|| a.cmp(b)));
-    if let Some(resolved) = resolve(&global_candidates, &query_parts) {
-        if let Some(match_script) = global_scripts_map.get(&resolved) {
-            let target_cwd = &match_script.cwd;
-            let is_local = target_cwd == &cwd;
+    if resolved_filter.is_none() {
+        let mut global_candidates: Vec<String> = global_scripts_map.keys().cloned().collect();
+        global_candidates.sort_by(|a, b| a.len().cmp(&b.len()).then_with(|| a.cmp(b)));
+        if let Some(resolved) = resolve(&global_candidates, &query_parts) {
+            if let Some(match_script) = global_scripts_map.get(&resolved) {
+                let target_cwd = &match_script.cwd;
+                let is_local = target_cwd == &cwd;
 
-            let mut normalized_arguments = args.clone();
-            if !is_local && !normalized_arguments.is_empty() {
-                normalized_arguments = normalized_arguments
-                    .into_iter()
-                    .map(|arg| {
-                        let p = Path::new(&arg);
-                        if p.exists() {
-                            if let Ok(abs) = cwd.join(p).canonicalize() {
-                                return abs.to_string_lossy().into_owned();
+                let mut normalized_arguments = args.clone();
+                if !is_local && !normalized_arguments.is_empty() {
+                    normalized_arguments = normalized_arguments
+                        .into_iter()
+                        .map(|arg| {
+                            let p = Path::new(&arg);
+                            if p.exists() {
+                                if let Ok(abs) = cwd.join(p).canonicalize() {
+                                    return abs.to_string_lossy().into_owned();
+                                }
                             }
-                        }
-                        arg
-                    })
-                    .collect();
+                            arg
+                        })
+                        .collect();
+                }
+
+                let normalized_formatted_arguments = format_shell_arguments(&normalized_arguments);
+                let args_str = if !normalized_formatted_arguments.is_empty() {
+                    format!(" -- {}", normalized_formatted_arguments.join(" "))
+                } else {
+                    String::new()
+                };
+
+                println!(
+                    "(cd \"{}\" && {}node --run {}{})",
+                    target_cwd.display(),
+                    node_flags,
+                    resolved,
+                    args_str
+                );
+                std::process::exit(0);
             }
-
-            let normalized_formatted_arguments = format_shell_arguments(&normalized_arguments);
-            let args_str = if !normalized_formatted_arguments.is_empty() {
-                format!(" -- {}", normalized_formatted_arguments.join(" "))
-            } else {
-                String::new()
-            };
-
-            println!(
-                "(cd \"{}\" && {}node --run {}{})",
-                target_cwd.display(),
-                node_flags,
-                resolved,
-                args_str
-            );
-            std::process::exit(0);
         }
     }
 
@@ -389,6 +689,46 @@ fn main() {
     binary_candidates.sort();
 
     if let Some(resolved_binary) = resolve(&binary_candidates, &query_parts) {
+        if resolved_binary == "turbo" {
+            let target_root = workspace_root.as_deref().unwrap_or(&cwd);
+            let turbo_args = resolved_filter.as_deref().map_or_else(
+                || args.clone(),
+                |package| insert_turbo_filter(&args, package),
+            );
+            let formatted_turbo_args = format_shell_arguments(&turbo_args);
+            let args_str = if formatted_turbo_args.is_empty() {
+                String::new()
+            } else {
+                format!(" {}", formatted_turbo_args.join(" "))
+            };
+            let binary_path = binary_map
+                .get(&resolved_binary)
+                .map(|location| location.join(&resolved_binary))
+                .unwrap_or_else(|| PathBuf::from(&resolved_binary));
+            println!(
+                "(cd {} && {}{}{})",
+                shell_quote(&target_root.to_string_lossy()),
+                node_flags,
+                shell_quote(&binary_path.to_string_lossy()),
+                args_str
+            );
+            std::process::exit(0);
+        }
+        if let Some(package) = resolved_filter.as_deref() {
+            let target_root = workspace_root.as_deref().unwrap_or(&cwd);
+            println!(
+                "{}",
+                format_filtered_binary(
+                    target_root,
+                    package_manager(target_root),
+                    package,
+                    &resolved_binary,
+                    &args,
+                    &node_flags,
+                )
+            );
+            std::process::exit(0);
+        }
         let mut executable_path = format!("npx {}", command_name);
         if let Some(location) = binary_map.get(&resolved_binary) {
             let full_path = location.join(&resolved_binary);
@@ -404,6 +744,22 @@ fn main() {
         std::process::exit(0);
     }
 
+    if let Some(package) = resolved_filter.as_deref() {
+        let target_root = workspace_root.as_deref().unwrap_or(&cwd);
+        println!(
+            "{}",
+            format_filtered_binary(
+                target_root,
+                package_manager(target_root),
+                package,
+                &command_name,
+                &args,
+                &node_flags,
+            )
+        );
+        std::process::exit(0);
+    }
+
     let args_str = if !formatted_arguments.is_empty() {
         format!(" {}", formatted_arguments.join(" "))
     } else {
@@ -415,14 +771,18 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::atomic::{AtomicU64, Ordering};
     use std::time::{SystemTime, UNIX_EPOCH};
+
+    static TEMPORARY_DIRECTORY_COUNTER: AtomicU64 = AtomicU64::new(0);
 
     fn temporary_directory() -> PathBuf {
         let unique = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_nanos();
-        let directory = env::temp_dir().join(format!("npm-run-{unique}"));
+        let counter = TEMPORARY_DIRECTORY_COUNTER.fetch_add(1, Ordering::Relaxed);
+        let directory = env::temp_dir().join(format!("npm-run-{unique}-{counter}"));
         fs::create_dir(&directory).unwrap();
         directory
     }
@@ -521,6 +881,131 @@ mod tests {
         assert_eq!(
             resolve_primary_target(Some(&scripts), &javascript_targets, "cli", &split("cli")),
             Some(PrimaryTarget::Script("cli"))
+        );
+    }
+
+    #[test]
+    fn parses_filter_aliases_only_at_the_start() {
+        for input in [
+            vec!["-f", "m-c", "vite"],
+            vec!["-F", "m-c", "vite"],
+            vec!["--filter", "m-c", "vite"],
+            vec!["--filter=m-c", "vite"],
+        ] {
+            let mut args: Vec<String> = input.into_iter().map(String::from).collect();
+            assert_eq!(parse_filter(&mut args), Ok(Some("m-c".to_string())));
+            assert_eq!(args, vec!["vite"]);
+        }
+
+        let mut args = vec!["vite".to_string(), "-f".to_string(), "m-c".to_string()];
+        assert_eq!(parse_filter(&mut args), Ok(None));
+        assert_eq!(args, vec!["vite", "-f", "m-c"]);
+    }
+
+    #[test]
+    fn resolves_package_filters_deterministically() {
+        let packages = vec![
+            "@arcgis/map-components".to_string(),
+            "@arcgis/map-core".to_string(),
+            "@other/map-components".to_string(),
+        ];
+
+        assert_eq!(
+            resolve_package_filter(&packages, "@other/map-components"),
+            "@other/map-components"
+        );
+        assert_eq!(
+            resolve_package_filter(&packages, "map-components"),
+            "@arcgis/map-components"
+        );
+        assert_eq!(
+            resolve_package_filter(&packages, "@a/m-c"),
+            "@arcgis/map-core"
+        );
+        assert_eq!(
+            resolve_package_filter(&packages, "@o/m-c"),
+            "@other/map-components"
+        );
+        assert_eq!(resolve_package_filter(&packages, "m-c"), "@arcgis/map-core");
+        assert_eq!(resolve_package_filter(&packages, "missing"), "missing");
+    }
+
+    #[test]
+    fn discovers_packages_from_workspace_patterns() {
+        let root = temporary_directory();
+        fs::create_dir(root.join("packages")).unwrap();
+        fs::create_dir(root.join("packages/map-components")).unwrap();
+        fs::create_dir(root.join("packages/private")).unwrap();
+        fs::write(
+            root.join("package.json"),
+            r#"{"name":"root","workspaces":["packages/*","!packages/private"]}"#,
+        )
+        .unwrap();
+        fs::write(
+            root.join("packages/map-components/package.json"),
+            r#"{"name":"@arcgis/map-components"}"#,
+        )
+        .unwrap();
+        fs::write(
+            root.join("packages/private/package.json"),
+            r#"{"name":"@arcgis/private"}"#,
+        )
+        .unwrap();
+
+        assert_eq!(
+            collect_workspace_packages(&root),
+            vec!["@arcgis/map-components", "root"]
+        );
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn inserts_turbo_filter_before_passthrough_arguments() {
+        let args = vec!["build".to_string(), "--".to_string(), "--watch".to_string()];
+
+        assert_eq!(
+            insert_turbo_filter(&args, "@arcgis/map-components"),
+            vec!["build", "--filter=@arcgis/map-components", "--", "--watch"]
+        );
+    }
+
+    #[test]
+    fn formats_filtered_binary_for_each_package_manager() {
+        let root = Path::new("/repo");
+        let args = vec!["--host".to_string()];
+
+        assert_eq!(
+            format_filtered_binary(
+                root,
+                PackageManager::Pnpm,
+                "@arcgis/map-components",
+                "vite",
+                &args,
+                ""
+            ),
+            "(cd /repo && pnpm --filter=@arcgis/map-components exec vite --host)"
+        );
+        assert_eq!(
+            format_filtered_binary(
+                root,
+                PackageManager::Yarn,
+                "@arcgis/map-components",
+                "vite",
+                &args,
+                ""
+            ),
+            "(cd /repo && yarn workspace @arcgis/map-components vite --host)"
+        );
+        assert_eq!(
+            format_filtered_binary(
+                root,
+                PackageManager::Npm,
+                "@arcgis/map-components",
+                "vite",
+                &args,
+                ""
+            ),
+            "(cd /repo && npm exec --workspace=@arcgis/map-components -- vite --host)"
         );
     }
 }

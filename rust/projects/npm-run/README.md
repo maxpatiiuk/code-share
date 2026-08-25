@@ -42,7 +42,27 @@ x ts -b
 # Can invoke a .js file from the current directory or a parent directory
 x cli --help
 ▶︎ node cli.js --help
+
+# Filter Turbo tasks to a workspace package using an abbreviated package name
+x -f m-c tu build
+▶︎ turbo build --filter=@arcgis/map-components
+
+# Run a binary in a workspace package
+x --filter m-c vite --host
+▶︎ pnpm --filter=@arcgis/map-components exec vite --host
 ```
+
+`-f`, `-F`, and `--filter` are equivalent when placed immediately after `x`.
+`--filter=<package>` is also supported. Package abbreviations use the same
+separator-aware matching as commands, so `m-c` can match
+`@arcgis/map-components`. Scopes can also be abbreviated, so `@a/m-c` matches
+the same package. Ambiguous matches resolve deterministically by exact full
+name, exact unscoped name, match specificity, shortest unscoped name, and
+finally lexical full name.
+
+Filtered Turbo commands run from the workspace root and receive Turbo's
+`--filter` option. Other filtered binaries run through the detected package
+manager (`pnpm`, Yarn, or npm) in the selected workspace package.
 
 Targets are resolved in this order:
 
