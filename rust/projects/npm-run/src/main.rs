@@ -64,6 +64,7 @@ struct MatchScore {
 enum PrimaryTarget<'a> {
     Script(&'a str),
     JavaScript(&'a JavaScriptTarget),
+    Binary(&'a str),
 }
 
 fn split(name: &str) -> Vec<Vec<Vec<String>>> {
@@ -149,6 +150,7 @@ fn match_score(
 fn resolve_primary_target<'a>(
     scripts: Option<&'a [String]>,
     javascript_targets: &'a [JavaScriptTarget],
+    binaries: &'a [String],
     query: &str,
     query_parts: &[Vec<Vec<String>>],
 ) -> Option<PrimaryTarget<'a>> {
@@ -172,18 +174,38 @@ fn resolve_primary_target<'a>(
 
     let best_script = script_match.min_by_key(|(score, index, _)| (*score, *index));
     let best_javascript = javascript_match.min_by_key(|(score, index, _)| (*score, *index));
+    let best_binary = binaries
+        .iter()
+        .enumerate()
+        .filter_map(|(index, binary)| {
+            match_score(binary, binary, query, query_parts)
+                .map(|score| (score, index, binary.as_str()))
+        })
+        .min_by_key(|(score, index, _)| (*score, *index));
 
-    match (best_script, best_javascript) {
+    let primary = match (best_script, best_javascript) {
         (Some((script_score, _, script)), Some((javascript_score, _, javascript))) => {
             if script_score <= javascript_score {
-                Some(PrimaryTarget::Script(script))
+                Some((script_score, PrimaryTarget::Script(script)))
             } else {
-                Some(PrimaryTarget::JavaScript(javascript))
+                Some((javascript_score, PrimaryTarget::JavaScript(javascript)))
             }
         }
-        (Some((_, _, script)), None) => Some(PrimaryTarget::Script(script)),
-        (None, Some((_, _, javascript))) => Some(PrimaryTarget::JavaScript(javascript)),
+        (Some((score, _, script)), None) => Some((score, PrimaryTarget::Script(script))),
+        (None, Some((score, _, javascript))) => {
+            Some((score, PrimaryTarget::JavaScript(javascript)))
+        }
         (None, None) => None,
+    };
+
+    match (primary, best_binary) {
+        (Some((_, PrimaryTarget::Script(script))), _) => Some(PrimaryTarget::Script(script)),
+        (
+            Some((javascript_score, PrimaryTarget::JavaScript(_))),
+            Some((binary_score, _, binary)),
+        ) if binary_score < javascript_score => Some(PrimaryTarget::Binary(binary)),
+        (Some((_, target)), _) => Some(target),
+        (None, _) => None,
     }
 }
 
@@ -591,6 +613,94 @@ fn collect_javascript_targets(
     }
 }
 
+fn monorepo_cli_directory(cwd: &Path, target: &JavaScriptTarget) -> Option<PathBuf> {
+    if target.name != "cli.js" {
+        return None;
+    }
+    let cli_path = cwd.join(&target.path);
+    let is_monorepo_cli =
+        fs::read_to_string(&cli_path).is_ok_and(|contents| contents.contains("monorepo-cli"));
+    if !is_monorepo_cli {
+        return None;
+    }
+    fs::canonicalize(&cli_path)
+        .unwrap_or(cli_path)
+        .parent()
+        .map(Path::to_path_buf)
+}
+
+fn resolve_monorepo_cli_arguments(root: &Path, args: &[String]) -> Vec<String> {
+    let Some(first_argument) = args.first() else {
+        return args.to_vec();
+    };
+    if first_argument.starts_with('-') {
+        return args.to_vec();
+    }
+
+    let commands_directory = root.join("packages/support-packages/monorepo-cli/src");
+    let Ok(entries) = fs::read_dir(commands_directory) else {
+        return args.to_vec();
+    };
+    let mut commands: Vec<String> = entries
+        .flatten()
+        .filter_map(|entry| {
+            let path = entry.path();
+            let file_name = entry.file_name().into_string().ok()?;
+            if !path.is_file() || file_name.ends_with(".test.ts") {
+                return None;
+            }
+            file_name.strip_suffix(".ts").map(str::to_string)
+        })
+        .collect();
+    commands.sort_by(|left, right| left.len().cmp(&right.len()).then_with(|| left.cmp(right)));
+
+    let Some(resolved) = resolve(&commands, &split(first_argument)) else {
+        return args.to_vec();
+    };
+    let mut resolved_args = args.to_vec();
+    resolved_args[0] = resolved;
+    resolved_args
+}
+
+fn format_javascript_command(
+    cwd: &Path,
+    target: &JavaScriptTarget,
+    args: &[String],
+    node_flags: &str,
+) -> String {
+    let monorepo_cli_directory = monorepo_cli_directory(cwd, target);
+    let resolved_args = monorepo_cli_directory.as_ref().map_or_else(
+        || args.to_vec(),
+        |root| resolve_monorepo_cli_arguments(root, args),
+    );
+    let formatted_args = format_shell_arguments(&resolved_args);
+    let args_string = if formatted_args.is_empty() {
+        String::new()
+    } else {
+        format!(" {}", formatted_args.join(" "))
+    };
+
+    monorepo_cli_directory.map_or_else(
+        || {
+            format!(
+                "{}node {}{}",
+                node_flags,
+                shell_quote(&target.path.to_string_lossy()),
+                args_string
+            )
+        },
+        |root| {
+            format!(
+                "(cd {} && {}node {}{})",
+                shell_quote(&root.to_string_lossy()),
+                node_flags,
+                shell_quote(&target.name),
+                args_string
+            )
+        },
+    )
+}
+
 fn main() {
     let cwd = env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
     let mut args: Vec<String> = env::args().skip(1).collect();
@@ -710,11 +820,14 @@ fn main() {
     }
 
     let formatted_arguments = format_shell_arguments(&args);
+    let mut binary_candidates: Vec<String> = binary_map.keys().cloned().collect();
+    binary_candidates.sort();
 
     if resolved_filter.is_none() {
         match resolve_primary_target(
             local_scripts.as_deref(),
             &javascript_targets,
+            &binary_candidates,
             &command_name,
             &query_parts,
         ) {
@@ -728,15 +841,26 @@ fn main() {
                 std::process::exit(0);
             }
             Some(PrimaryTarget::JavaScript(target)) => {
-                let args_str = if !formatted_arguments.is_empty() {
-                    format!(" {}", formatted_arguments.join(" "))
-                } else {
+                println!(
+                    "{}",
+                    format_javascript_command(&cwd, target, &args, &node_flags)
+                );
+                std::process::exit(0);
+            }
+            Some(PrimaryTarget::Binary(binary)) => {
+                let executable_path = binary_map
+                    .get(binary)
+                    .map(|location| location.join(binary))
+                    .unwrap_or_else(|| PathBuf::from(binary));
+                let args_str = if formatted_arguments.is_empty() {
                     String::new()
+                } else {
+                    format!(" {}", formatted_arguments.join(" "))
                 };
                 println!(
-                    "{}node {}{}",
+                    "{}{}{}",
                     node_flags,
-                    shell_quote(&target.path.to_string_lossy()),
+                    shell_quote(&executable_path.to_string_lossy()),
                     args_str
                 );
                 std::process::exit(0);
@@ -806,9 +930,6 @@ fn main() {
             std::process::exit(0);
         }
     }
-
-    let mut binary_candidates: Vec<String> = binary_map.keys().cloned().collect();
-    binary_candidates.sort();
 
     if let Some(resolved_binary) = resolve(&binary_candidates, &query_parts) {
         if resolved_binary == "turbo" {
@@ -964,6 +1085,76 @@ mod tests {
     }
 
     #[test]
+    fn resolves_monorepo_cli_first_argument_from_source_files() {
+        let root = temporary_directory();
+        let cwd = root.join("packages/example");
+        let commands = root.join("packages/support-packages/monorepo-cli/src");
+        fs::create_dir_all(&cwd).unwrap();
+        fs::create_dir_all(commands.join("nested-command")).unwrap();
+        fs::write(
+            root.join("cli.js"),
+            "import './packages/support-packages/monorepo-cli/src/run.ts';",
+        )
+        .unwrap();
+        fs::write(commands.join("detect-broken-links.ts"), "").unwrap();
+        fs::write(commands.join("deploy.ts"), "").unwrap();
+        fs::write(commands.join("local-env.test.ts"), "").unwrap();
+        fs::write(commands.join("nested-command/ignored.ts"), "").unwrap();
+        let target = JavaScriptTarget {
+            name: "cli.js".to_string(),
+            path: PathBuf::from("../../cli.js"),
+        };
+
+        assert_eq!(
+            resolve_monorepo_cli_arguments(&root, &["d-b".to_string(), "--fix".to_string()]),
+            vec!["detect-broken-links", "--fix"]
+        );
+        assert_eq!(
+            resolve_monorepo_cli_arguments(&root, &["--help".to_string()]),
+            vec!["--help"]
+        );
+        assert_eq!(
+            resolve_monorepo_cli_arguments(&root, &["local-env.test".to_string()]),
+            vec!["local-env.test"]
+        );
+        assert_eq!(
+            resolve_monorepo_cli_arguments(&root, &["nested-c".to_string()]),
+            vec!["nested-c"]
+        );
+        assert_eq!(
+            format_javascript_command(&cwd, &target, &["d-b".to_string()], ""),
+            format!(
+                "(cd {} && node cli.js detect-broken-links)",
+                shell_quote(&root.canonicalize().unwrap().to_string_lossy())
+            )
+        );
+        assert_eq!(
+            format_javascript_command(&cwd, &target, &["--help".to_string()], ""),
+            format!(
+                "(cd {} && node cli.js --help)",
+                shell_quote(&root.canonicalize().unwrap().to_string_lossy())
+            )
+        );
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn does_not_expand_an_unrelated_cli_file() {
+        let root = temporary_directory();
+        fs::write(root.join("cli.js"), "console.log('unrelated');").unwrap();
+        let target = JavaScriptTarget {
+            name: "cli.js".to_string(),
+            path: PathBuf::from("cli.js"),
+        };
+
+        assert_eq!(
+            format_javascript_command(&root, &target, &["d-b".to_string()], ""),
+            "node cli.js d-b"
+        );
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
     fn resolves_javascript_files_without_the_extension() {
         let candidates = vec!["cli.js".to_string(), "cli.test.js".to_string()];
 
@@ -986,11 +1177,17 @@ mod tests {
         }];
 
         assert_eq!(
-            resolve_primary_target(Some(&scripts), &javascript_targets, "c", &split("c")),
+            resolve_primary_target(Some(&scripts), &javascript_targets, &[], "c", &split("c")),
             Some(PrimaryTarget::JavaScript(&javascript_targets[0]))
         );
         assert_eq!(
-            resolve_primary_target(Some(&scripts), &javascript_targets, "c:d", &split("c:d")),
+            resolve_primary_target(
+                Some(&scripts),
+                &javascript_targets,
+                &[],
+                "c:d",
+                &split("c:d")
+            ),
             Some(PrimaryTarget::Script("core:docs"))
         );
     }
@@ -1004,8 +1201,46 @@ mod tests {
         }];
 
         assert_eq!(
-            resolve_primary_target(Some(&scripts), &javascript_targets, "cli", &split("cli")),
+            resolve_primary_target(
+                Some(&scripts),
+                &javascript_targets,
+                &[],
+                "cli",
+                &split("cli")
+            ),
             Some(PrimaryTarget::Script("cli"))
+        );
+    }
+
+    #[test]
+    fn prefers_a_more_specific_binary_over_a_javascript_target() {
+        let javascript_targets = vec![JavaScriptTarget {
+            name: "eslint.config.js".to_string(),
+            path: PathBuf::from("eslint.config.js"),
+        }];
+        let binaries = vec!["eslint".to_string()];
+
+        assert_eq!(
+            resolve_primary_target(None, &javascript_targets, &binaries, "esl", &split("esl")),
+            Some(PrimaryTarget::Binary("eslint"))
+        );
+    }
+
+    #[test]
+    fn prefers_a_javascript_target_when_binary_specificity_is_tied() {
+        let javascript_targets = vec![JavaScriptTarget {
+            name: "cli.js".to_string(),
+            path: PathBuf::from("cli.js"),
+        }];
+        let binaries = vec!["cli".to_string()];
+
+        assert_eq!(
+            resolve_primary_target(None, &javascript_targets, &binaries, "cli", &split("cli")),
+            Some(PrimaryTarget::JavaScript(&javascript_targets[0]))
+        );
+        assert_eq!(
+            resolve_primary_target(None, &[], &binaries, "cli", &split("cli")),
+            None
         );
     }
 
