@@ -384,6 +384,71 @@ fn resolve_package_filter(packages: &[String], query: &str) -> String {
         .map_or_else(|| query.to_string(), |(_, _, _, package)| package.clone())
 }
 
+fn workspace_package_scripts(root: &Path, package_name: &str) -> Vec<String> {
+    let patterns = workspace_patterns(root);
+    let exclusions: Vec<glob::Pattern> = patterns
+        .iter()
+        .filter_map(|pattern| pattern.strip_prefix('!'))
+        .filter_map(|pattern| glob::Pattern::new(pattern).ok())
+        .collect();
+    let root_manifest = root.join("package.json");
+    let manifests = std::iter::once(root_manifest).chain(
+        patterns
+            .iter()
+            .filter(|pattern| !pattern.starts_with('!'))
+            .filter_map(|pattern| {
+                root.join(pattern)
+                    .join("package.json")
+                    .to_str()
+                    .map(str::to_string)
+            })
+            .filter_map(|pattern| glob::glob(&pattern).ok())
+            .flatten()
+            .flatten(),
+    );
+
+    for manifest in manifests {
+        let relative_directory = manifest
+            .parent()
+            .and_then(|directory| directory.strip_prefix(root).ok());
+        if relative_directory.is_some_and(|directory| {
+            exclusions
+                .iter()
+                .any(|pattern| pattern.matches_path(directory))
+        }) {
+            continue;
+        }
+        let Some(package_json) = read_package_json(&manifest) else {
+            continue;
+        };
+        if package_json.name.as_deref() == Some(package_name) {
+            let mut scripts: Vec<String> = package_json
+                .scripts
+                .unwrap_or_default()
+                .into_keys()
+                .collect();
+            scripts
+                .sort_by(|left, right| left.len().cmp(&right.len()).then_with(|| left.cmp(right)));
+            return scripts;
+        }
+    }
+    Vec::new()
+}
+
+fn resolve_turbo_task_arguments(args: &[String], tasks: &[String]) -> Vec<String> {
+    let mut resolved = args.to_vec();
+    let task_start = usize::from(resolved.first().is_some_and(|argument| argument == "run"));
+    for argument in resolved.iter_mut().skip(task_start) {
+        if argument == "--" || argument.starts_with('-') {
+            break;
+        }
+        if let Some(task) = resolve(tasks, &split(argument)) {
+            *argument = task;
+        }
+    }
+    resolved
+}
+
 fn package_manager(root: &Path) -> PackageManager {
     let declared = read_package_json(&root.join("package.json"))
         .and_then(|package_json| package_json.package_manager)
@@ -444,6 +509,44 @@ fn format_filtered_binary(
     let formatted_args = format_shell_arguments(args);
     if !formatted_args.is_empty() {
         command.push(' ');
+        command.push_str(&formatted_args.join(" "));
+    }
+    format!(
+        "(cd {} && {}{})",
+        shell_quote(&root.to_string_lossy()),
+        node_flags,
+        command
+    )
+}
+
+fn format_filtered_script(
+    root: &Path,
+    manager: PackageManager,
+    package: &str,
+    script: &str,
+    args: &[String],
+    node_flags: &str,
+) -> String {
+    let mut command = match manager {
+        PackageManager::Pnpm => format!(
+            "pnpm --filter={} run {}",
+            shell_quote(package),
+            shell_quote(script)
+        ),
+        PackageManager::Yarn => format!(
+            "yarn workspace {} run {}",
+            shell_quote(package),
+            shell_quote(script)
+        ),
+        PackageManager::Npm => format!(
+            "npm run --workspace={} {}",
+            shell_quote(package),
+            shell_quote(script)
+        ),
+    };
+    let formatted_args = format_shell_arguments(args);
+    if !formatted_args.is_empty() {
+        command.push_str(" -- ");
         command.push_str(&formatted_args.join(" "));
     }
     format!(
@@ -685,6 +788,25 @@ fn main() {
         }
     }
 
+    if let Some(package) = resolved_filter.as_deref() {
+        let target_root = workspace_root.as_deref().unwrap_or(&cwd);
+        let scripts = workspace_package_scripts(target_root, package);
+        if let Some(script) = resolve(&scripts, &query_parts) {
+            println!(
+                "{}",
+                format_filtered_script(
+                    target_root,
+                    package_manager(target_root),
+                    package,
+                    &script,
+                    &args,
+                    &node_flags,
+                )
+            );
+            std::process::exit(0);
+        }
+    }
+
     let mut binary_candidates: Vec<String> = binary_map.keys().cloned().collect();
     binary_candidates.sort();
 
@@ -693,7 +815,10 @@ fn main() {
             let target_root = workspace_root.as_deref().unwrap_or(&cwd);
             let turbo_args = resolved_filter.as_deref().map_or_else(
                 || args.clone(),
-                |package| insert_turbo_filter(&args, package),
+                |package| {
+                    let tasks = workspace_package_scripts(target_root, package);
+                    insert_turbo_filter(&resolve_turbo_task_arguments(&args, &tasks), package)
+                },
             );
             let formatted_turbo_args = format_shell_arguments(&turbo_args);
             let args_str = if formatted_turbo_args.is_empty() {
@@ -966,6 +1091,98 @@ mod tests {
         assert_eq!(
             insert_turbo_filter(&args, "@arcgis/map-components"),
             vec!["build", "--filter=@arcgis/map-components", "--", "--watch"]
+        );
+    }
+
+    #[test]
+    fn resolves_leading_turbo_task_abbreviations() {
+        let tasks = vec![
+            "build".to_string(),
+            "test".to_string(),
+            "build-dev".to_string(),
+        ];
+
+        assert_eq!(
+            resolve_turbo_task_arguments(&["b".to_string()], &tasks),
+            vec!["build"]
+        );
+        assert_eq!(
+            resolve_turbo_task_arguments(
+                &["run".to_string(), "b-d".to_string(), "t".to_string()],
+                &tasks
+            ),
+            vec!["run", "build-dev", "test"]
+        );
+        assert_eq!(
+            resolve_turbo_task_arguments(
+                &["b".to_string(), "--dry".to_string(), "t".to_string(),],
+                &tasks
+            ),
+            vec!["build", "--dry", "t"]
+        );
+        assert_eq!(
+            resolve_turbo_task_arguments(
+                &["b".to_string(), "--".to_string(), "t".to_string()],
+                &tasks
+            ),
+            vec!["build", "--", "t"]
+        );
+    }
+
+    #[test]
+    fn reads_turbo_tasks_from_the_selected_package() {
+        let root = temporary_directory();
+        fs::create_dir_all(root.join("packages/map-components")).unwrap();
+        fs::write(
+            root.join("package.json"),
+            r#"{"name":"root","workspaces":["packages/*"]}"#,
+        )
+        .unwrap();
+        fs::write(
+            root.join("packages/map-components/package.json"),
+            r#"{"name":"@arcgis/map-components","scripts":{"build":"vite build","build-dev":"vite build --mode development"}}"#,
+        )
+        .unwrap();
+
+        assert_eq!(
+            workspace_package_scripts(&root, "@arcgis/map-components"),
+            vec!["build", "build-dev"]
+        );
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn resolves_filtered_package_script_abbreviations() {
+        let scripts = vec![
+            "start".to_string(),
+            "start-external-storybook".to_string(),
+            "start-internal-storybook".to_string(),
+        ];
+
+        for query in ["s-i", "start-in"] {
+            assert_eq!(
+                resolve(&scripts, &split(query)),
+                Some("start-internal-storybook".to_string())
+            );
+        }
+        assert_eq!(
+            resolve(&scripts, &split("sta-")),
+            Some("start-external-storybook".to_string())
+        );
+    }
+
+    #[test]
+    fn formats_filtered_package_scripts() {
+        assert_eq!(
+            format_filtered_script(
+                Path::new("/repo"),
+                PackageManager::Pnpm,
+                "@arcgis/map-components",
+                "start-internal-storybook",
+                &["--quiet".to_string()],
+                ""
+            ),
+            "(cd /repo && pnpm --filter=@arcgis/map-components run start-internal-storybook -- --quiet)"
         );
     }
 

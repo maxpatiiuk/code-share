@@ -44,12 +44,16 @@ x cli --help
 ▶︎ node cli.js --help
 
 # Filter Turbo tasks to a workspace package using an abbreviated package name
-x -f m-c tu build
+x -f m-c tu b
 ▶︎ turbo build --filter=@arcgis/map-components
 
 # Run a binary in a workspace package
 x --filter m-c vite --host
 ▶︎ pnpm --filter=@arcgis/map-components exec vite --host
+
+# Run a package script using abbreviated package and script names
+x -f m-c s-i
+▶︎ pnpm --filter=@arcgis/map-components run start-internal-storybook
 ```
 
 `-f`, `-F`, and `--filter` are equivalent when placed immediately after `x`.
@@ -61,20 +65,23 @@ name, exact unscoped name, match specificity, shortest unscoped name, and
 finally lexical full name.
 
 Filtered Turbo commands run from the workspace root and receive Turbo's
-`--filter` option. Other filtered binaries run through the detected package
-manager (`pnpm`, Yarn, or npm) in the selected workspace package.
+`--filter` option. Turbo task names are abbreviated using the same matching
+rules, so `b` resolves to `build`. Other filtered binaries run through the
+detected package manager (`pnpm`, Yarn, or npm) in the selected workspace
+package. Filtered package scripts use the same abbreviated matching and take
+precedence over binaries.
 
 Targets are resolved in this order:
 
 1. Scripts from the nearest `package.json` and `.js` files from the current
-  directory upward, ranked by match specificity
+   directory upward, ranked by match specificity
 2. Scripts from additional ancestor `package.json` files
 3. Executables from `node_modules/.bin` (nearest first)
 4. An `npx` fallback
 
 Specificity favors exact matches, fewer unmatched name segments, and shorter
-names, in that order. A script wins when its specificity ties a `.js` file.
-For example, `x c` prefers `cli.js` over `core:docs`, while `x c:d` resolves to
+names, in that order. A script wins when its specificity ties a `.js` file. For
+example, `x c` prefers `cli.js` over `core:docs`, while `x c:d` resolves to
 `core:docs`.
 
 ## Setup & Installation
