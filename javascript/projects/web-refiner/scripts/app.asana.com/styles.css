@@ -13,6 +13,9 @@
 .TopbarPageHeaderStructure-rightChildrenWrapper:not(:hover),
 .TaskPaneFields-assigneeRow:not(:hover),
 .FollowersBar:not(:hover),
+.SidebarModesHomeAndInbox-topSection:not(:hover),
+.SidebarModesSection:not(:nth-child(2)):not(:hover),
+.PageHeaderActionButtonsLayout:not(:hover),
 .TabNavigationBar:not(:hover) {
   opacity: 0.2;
 }
@@ -25,4 +28,17 @@
 /* Make side bar a bit wider */
 .FullWidthPageStructureWithDetailsOverlay-detailsOverlay {
   max-width: 65rem;
+}
+
+/* Hide ads about unused features */
+.SidebarModesRoot-modesSelector {
+  display: none !important;
+}
+.SidebarModesRoot-leftColumn {
+  width: 0 !important;
+}
+/* Move the only useful button out of it */
+.SidebarModesRoot-leftColumnBottomElements {
+  position: absolute;
+  bottom: 0;
 }

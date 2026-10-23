@@ -6,6 +6,11 @@
 
 'use strict';
 (() => {
+  const BYPASS = Symbol.for('maxpatiiuk.scroller.bypass');
+  /** @type {Record<symbol, unknown>} */
+  const flags = /** @type {Record<symbol, unknown>} */ (
+    /** @type {unknown} */ (globalThis)
+  );
   let isAutoScrolling = false;
   let startX = 0,
     startY = 0;
@@ -15,6 +20,9 @@
   let scrollRaf = null;
   let allowNativeMenu = false;
   const scrollMultiplier = 0.1;
+  const scrollExponent = 1.25;
+  const scrollReferenceDistance = 100;
+  const axisLockRatio = 3;
   const overlaySize = 100; // square overlay size in pixels
   /** @type {HTMLDialogElement | null} */
   let controlOverlay = null;
@@ -282,9 +290,11 @@
    */
   function isAtScrollEdge(el, dx, dy) {
     const atXEdge =
+      dx === 0 ||
       (dx > 0 && el.scrollLeft + el.clientWidth >= el.scrollWidth) ||
       (dx < 0 && el.scrollLeft <= 0);
     const atYEdge =
+      dy === 0 ||
       (dy > 0 && el.scrollTop + el.clientHeight >= el.scrollHeight) ||
       (dy < 0 && el.scrollTop <= 0);
     return atXEdge && atYEdge;
@@ -307,8 +317,11 @@
     lastFrameTime = timestamp;
 
     if (!isPointerInsideOverlay()) {
-      const dx = currentX - startX;
-      const dy = currentY - startY;
+      let dx = currentX - startX;
+      let dy = currentY - startY;
+      if (Math.abs(dy) >= Math.abs(dx) * axisLockRatio) {
+        dx = 0;
+      }
 
       if (needsRetarget || !scrollTarget) retargetScrollElement();
 
@@ -320,14 +333,32 @@
       }
 
       if (el) {
-        const factor = scrollMultiplier * (dt / 16);
-        el.scrollTop += dy * factor;
+        const factor =
+          scrollMultiplier *
+          Math.max(1, Math.hypot(dx, dy) / scrollReferenceDistance) **
+            (scrollExponent - 1) *
+          (dt / 16);
+        setScrollTop(el, el.scrollTop + dy * factor);
         el.scrollLeft += dx * factor;
         scrollTarget = el;
       }
     }
 
     scrollRaf = requestAnimationFrame(stepScroll);
+  }
+
+  /**
+   * @param {Element} el
+   * @param {number} top
+   */
+  function setScrollTop(el, top) {
+    const prev = flags[BYPASS];
+    flags[BYPASS] = true;
+    try {
+      el.scrollTop = top;
+    } finally {
+      flags[BYPASS] = prev;
+    }
   }
 
   /**

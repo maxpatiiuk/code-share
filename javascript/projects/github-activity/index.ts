@@ -36,7 +36,7 @@ async function runForHost(host: string): Promise<void> {
   // 1. "Same Day" Logic
   // We reset today's entry so we can re-run the script multiple times a day
   const today = new Date().toISOString().split('T')[0]!;
-  if (history.length > 0 && history[0]!.date === today) {
+  if (history[0]?.date === today) {
     console.error(
       `   Found existing run for today (${today}). Refreshing data...`
     );
@@ -153,6 +153,15 @@ function printReport(
     item: GithubItem,
     category: 'direct' | 'participated' | 'updated'
   ) => {
+    const isAuthor = item.author.login === currentUser;
+    const isAssignee = item.assignees.some((a) => a.login === currentUser);
+    const isDependabotPr =
+      item.url.includes('/pull/') && item.author.login === 'dependabot[bot]';
+
+    if (category !== 'updated' && !isAuthor && !isAssignee && isDependabotPr) {
+      return;
+    }
+
     const fullName = item.repository.nameWithOwner;
     if (!repoMap.has(fullName)) {
       repoMap.set(fullName, {
@@ -168,9 +177,6 @@ function printReport(
       group.updated.push(item);
       return;
     }
-
-    const isAuthor = item.author.login === currentUser;
-    const isAssignee = item.assignees.some((a) => a.login === currentUser);
 
     if (isAuthor || isAssignee) {
       group.direct.push(item);
@@ -235,7 +241,7 @@ function printItem(item: GithubItem, currentUser: string): void {
 
   // Format: - [PR](url) Title (by @user) (x days ago)
   console.log(
-    `  - [${type}](${item.url}) ${item.title}${authorSuffix}${daysSuffix}`
+    `  - [\\[${type}\\]](${item.url}) ${item.title}${authorSuffix}${daysSuffix}`
   );
 }
 

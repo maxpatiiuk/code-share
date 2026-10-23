@@ -6,20 +6,30 @@
   "web_accessible_resources": [
     {
       "resources": ["private-scripts/teams.microsoft.com/priorityData.json"],
-      "matches": ["https://teams.microsoft.com/*"]
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.cloud.microsoft/*"
+      ]
     }
   ],
   "content_scripts": [
     {
       "matches": ["https://*/*", "http://*/*"],
+      "exclude_matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
       "css": ["scripts/all/global.css"],
       "run_at": "document_start"
     },
     {
       "matches": ["https://*/*", "http://*/*"],
+      "exclude_matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
       "js": ["scripts/all/auto-scroll.js", "scripts/all/toggle-dark-mode.js"],
       "world": "MAIN",
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
+      "css": ["scripts/vscode.dev/styles.css", "scripts/vscode.dev/common.css"],
+      "run_at": "document_start"
     },
     {
       "matches": ["https://gemini.google.com/*"],
@@ -38,20 +48,30 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["https://teams.microsoft.com/*"],
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.cloud.microsoft/*"
+      ],
       "css": ["scripts/teams.microsoft.com/styles.css"],
       "run_at": "document_start"
     },
     {
-      "matches": ["https://teams.microsoft.com/dl/launcher/launcher.html*"],
+      "matches": [
+        "https://teams.microsoft.com/dl/launcher/launcher.html*",
+        "https://teams.cloud.microsoft/dl/launcher/launcher.html*"
+      ],
       "js": ["scripts/teams.microsoft.com/open-teams-in-browser.js"],
       "world": "MAIN",
       "run_at": "document_idle"
     },
     {
-      "matches": ["https://teams.microsoft.com/*"],
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.cloud.microsoft/*"
+      ],
       "exclude_matches": [
-        "https://teams.microsoft.com/dl/launcher/launcher.html*"
+        "https://teams.microsoft.com/dl/launcher/launcher.html*",
+        "https://teams.cloud.microsoft/dl/launcher/launcher.html*"
       ],
       "js": [
         "scripts/teams.microsoft.com/batch-notifications.js",
@@ -218,6 +238,12 @@
       "matches": ["https://www.amazon.com/*"],
       "css": ["scripts/amazon.com/styles.css"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["scripts/claude.ai/no-auto-scroll.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
     }
   ]
 }

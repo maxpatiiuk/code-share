@@ -1,0 +1,175 @@
+/*
+ * Common VSCode styles between VSCode web and VSCode desktop (using Custom UI
+ * Style extension)
+ */
+
+
+/*
+  * Hide editor title bar.
+  * While https://github.com/microsoft/vscode/issues/33607 is fixed, their
+  * fix hides the title bar buttons to - I don't want that
+  *
+  * The code is as per comment I left:
+  * https://github.com/microsoft/vscode/issues/33607#issuecomment-1663235122
+  */
+.title.show-file-icons.breadcrumbs {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  opacity: 0.5;
+}
+.title.show-file-icons.breadcrumbs:hover {
+  opacity: 1;
+}
+.title.show-file-icons.breadcrumbs .label-container {
+  display: none !important;
+}
+/*
+  * Hide line and column numbers from "Problems" view to save on space
+  */
+[id^="workbench.parts.auxiliarybar"] {
+  .markers-panel .marker-line {
+    display: none;
+  }
+
+  /*
+   * Only display error source on hover - to have more space for long
+   * error message
+   */
+  .markers-panel
+    .marker-message-line.details-container:not(:hover)
+    > :not(.marker-message) {
+    display: none !important;
+  }
+
+  /* Align all error source names to the end */
+  .markers-panel .marker-message {
+    flex: 1;
+  }
+
+  /* Display more compact */
+  .markers-panel .monaco-tl-twistie {
+    padding: 0 !important;
+  }
+}
+
+/**
+  * "Sticky Scroll" widget is very useful, but a bit too
+  * obtrusive/distracting. This fixes that.
+  */
+.sticky-widget {
+  /* Add border to separate sticky line from normal line */
+  border-bottom: 1px solid var(--vscode-editor-lineHighlightBorder);
+  border-right: 1px solid var(--vscode-editor-lineHighlightBorder);
+}
+
+.sticky-widget:not(:hover) {
+  /* Make widget not obscure content behind it */
+  opacity: 0.6;
+}
+
+/* Force widget to not occupy full width, but only what's needed */
+.monaco-editor .sticky-widget {
+  right: 0;
+  width: unset !important;
+}
+.monaco-editor .sticky-line-root {
+  width: 100% !important;
+}
+.monaco-editor .sticky-line-content {
+  width: initial !important;
+  position: static !important;
+}
+.monaco-editor .sticky-widget-lines {
+  display: inline-flex;
+  flex-direction: column;
+  position: static !important;
+}
+.monaco-editor .sticky-widget-lines-scrollable {
+  width: unset !important;
+  position: static !important;
+}
+
+/* Hide the absolutely useless giant title bar on the right sidebar */
+.auxiliarybar .composite.title {
+  display: none !important;
+}
+/* Make the sidebar take the freed up height */
+.auxiliarybar,
+.auxiliarybar > .content {
+  height: 100%;
+}
+
+/* Make use of space by TODO Tree less wasteful */
+.monaco-list[aria-label="TODOs"] .monaco-list-row .custom-view-tree-node-item {
+  padding-left: 0;
+  margin-left: -30px;
+}
+.monaco-list[aria-label="TODOs"]
+  .monaco-list-row
+  .monaco-tl-twistie.collapsible.codicon.codicon-tree-item-expanded {
+  opacity: 0;
+}
+.monaco-list[aria-label="TODOs"] .monaco-list-row .monaco-tl-indent {
+  margin-left: -15px;
+}
+
+/* Hide briefly blinking badge when fetching from remote */
+.action-item[aria-label^="Source Control"] .badge.progress-badge {
+  display: none;
+}
+
+/* Make side panels occupy full screen height*/
+.custom-sidebar-titlebar .auxiliarybar,
+.custom-sidebar-titlebar .sidebar {
+  display: flex;
+  flex-direction: column;
+}
+.custom-sidebar-titlebar .auxiliarybar .content,
+.custom-sidebar-titlebar .sidebar .content {
+  flex: 1;
+  height: unset !important;
+}
+
+/* Hide the tab selector in the sidebar */
+.auxiliarybar .composite.header-or-footer {
+  display: none !important;
+}
+
+/*
+ * Taken from
+ * https://github.com/yoavbls/pretty-ts-errors/blob/main/docs/pretty-ts-errors-hack.css
+ */
+.codicon-none {
+  user-select: text !important;
+}
+
+/**
+ * Disable cursor blinking in PR review comments
+ */
+.cursor.monaco-mouse-cursor-text {
+  visibility: inherit !important;
+}
+
+/* Disable distracting copilot prompt animation */
+.shimmer-progress .rendered-markdown.progress-step > p,
+.shimmer-progress .rendered-markdown.progress-step .chat-progress-shimmer-text {
+  display: none;
+}
+span.chat-thinking-spinner-label {
+  animation-duration: 0s !important;
+}
+
+/* Reduce modern UI margin */
+.monaco-workbench.floating-panels {
+  --modern-ui-floating-card-margin: 0 !important;
+  --modern-ui-floating-card-inner-margin: 0 !important;
+  --modern-ui-floating-card-outer-margin: 0 !important;
+  --modern-ui-floating-card-statusbar-margin: 0 !important;
+}
+.monaco-workbench.floating-panels.modern-ui-compact
+  .part:is(.activitybar, .sidebar, .panel, .auxiliarybar, .editor) {
+  /** Disable gradient border */
+  background: none !important;
+}
