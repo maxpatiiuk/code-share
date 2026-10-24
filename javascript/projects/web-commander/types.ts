@@ -1,5 +1,6 @@
 export interface RuleNode {
   path: string;
+  label?: string;
   leaf?: string;
   children?: Record<string, RuleNode>;
 }

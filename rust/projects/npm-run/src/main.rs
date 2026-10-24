@@ -690,13 +690,22 @@ fn format_javascript_command(
             )
         },
         |root| {
-            format!(
-                "(cd {} && {}node {}{})",
-                shell_quote(&root.to_string_lossy()),
+            let command = format!(
+                "{}node {}{}",
                 node_flags,
                 shell_quote(&target.name),
                 args_string
-            )
+            );
+            let canonical_cwd = fs::canonicalize(cwd).unwrap_or_else(|_| cwd.to_path_buf());
+            if canonical_cwd == root {
+                command
+            } else {
+                format!(
+                    "(cd {} && {})",
+                    shell_quote(&root.to_string_lossy()),
+                    command
+                )
+            }
         },
     )
 }
@@ -1134,6 +1143,18 @@ mod tests {
                 "(cd {} && node cli.js --help)",
                 shell_quote(&root.canonicalize().unwrap().to_string_lossy())
             )
+        );
+        assert_eq!(
+            format_javascript_command(
+                &root,
+                &JavaScriptTarget {
+                    name: "cli.js".to_string(),
+                    path: PathBuf::from("cli.js"),
+                },
+                &["d-b".to_string()],
+                ""
+            ),
+            "node cli.js detect-broken-links"
         );
         fs::remove_dir_all(root).unwrap();
     }

@@ -1,6 +1,7 @@
 # Web Commander
 
-Keyboard-driven navigation for Chrome. Quickly jump to frequently visited URLs using a command palette interface.
+Keyboard-driven navigation for Chrome. Quickly jump to frequently visited URLs
+using a command palette interface.
 
 ## Installation
 
@@ -42,20 +43,24 @@ export const rules = {
     g: {
       path: 'https://github.com/',
       children: {
-        t: { path: 'microsoft/TypeScript', children: repoChildren },
+        t: {
+          path: 'microsoft/TypeScript',
+          label: 'TypeScript',
+          children: repoChildren,
+        },
         v: { path: 'vitejs/vite', children: repoChildren },
         r: { path: 'facebook/react', children: repoChildren },
         n: { path: 'nodejs/node', children: repoChildren },
         d: { path: 'denoland/deno', children: repoChildren },
-      }
+      },
     },
     // Add more domains...
-  }
+  },
 };
 ```
 
-Type `gt` → opens github.com/microsoft/TypeScript
-Type `gti` → opens github.com/microsoft/TypeScript/issues
-Type `vp` → opens github.com/vitejs/vite/pulls
+Type `gt` → opens github.com/microsoft/TypeScript Type `gti` → opens
+github.com/microsoft/TypeScript/issues Type `vp` → opens
+github.com/vitejs/vite/pulls
 
 Build deeper trees for complex navigation patterns.

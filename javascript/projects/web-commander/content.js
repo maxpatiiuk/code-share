@@ -5,6 +5,7 @@
  */
 
 (() => {
+  // Toggle itself if it is already open
   const symbolKey = Symbol.for('@maxpatiiuk/web-commander');
   /** @type {typeof globalThis & { [symbolKey]?: () => void }} */
   const global = globalThis;
@@ -149,36 +150,38 @@
     document.body.appendChild(shadowHost);
 
     // Event Listeners
-    document.addEventListener(
+    for (const eventType of /** @type {const} */ ([
       'keydown',
-      (event) => {
-        if (!isVisible) return;
-        const target = /** @type {Node} */ (event.target);
-        if (shadowHost?.contains(target) !== true) return;
-        event.stopImmediatePropagation();
-        if (event.key === 'Enter' && results !== undefined) {
-          const result = results[resultIndex];
-          event.preventDefault();
-          if (event.shiftKey) {
-            window.location.href = result.url;
-          } else if (event.metaKey || event.ctrlKey) {
-            window.open(result.url, '_blank');
-          } else {
-            chrome.runtime.sendMessage({
-              action: 'open-tab',
-              url: result.url,
-              active: true,
-            });
+      'keypress',
+      'keyup',
+    ]))
+      window.addEventListener(
+        eventType,
+        (event) => {
+          if (!isVisible) return;
+          event.stopImmediatePropagation();
+          if (event.type !== 'keydown') return;
+          if (event.key === 'Enter' && results !== undefined) {
+            const result = results[resultIndex];
+            event.preventDefault();
+            if (event.shiftKey) {
+              window.location.href = result.url;
+            } else {
+              chrome.runtime.sendMessage({
+                action: 'open-tab',
+                url: result.url,
+                active: !(event.metaKey || event.ctrlKey),
+              });
+            }
+            toggle();
           }
-          toggle();
-        }
-        if (event.key === 'Escape') {
-          event.preventDefault();
-          toggle();
-        }
-      },
-      { capture: true }
-    );
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            toggle();
+          }
+        },
+        { capture: true }
+      );
 
     input.addEventListener(
       'input',
@@ -243,8 +246,9 @@
           labelParts.push(trimNoise(part.path));
         }
         url += tree.leaf ?? '';
+        if (tree.leaf) labelParts.push(trimNoise(tree.leaf));
         results.push({
-          labelParts,
+          labelParts: tree.label === undefined ? labelParts : [tree.label],
           url,
           branches: tree.children,
         });
@@ -284,7 +288,7 @@
             const keySpan = document.createElement('span');
             keySpan.textContent = key;
             keySpan.className = 'branch-key' + (index === 0 ? ' first' : '');
-            const labelText = node.path || node.leaf || '';
+            const labelText = node.label ?? (node.path || node.leaf || '');
             suggestionContainer.append(keySpan);
             suggestionContainer.append(document.createTextNode(labelText));
             /** @type {HTMLElement} */ (preview).append(suggestionContainer);
@@ -293,10 +297,13 @@
       }
   }
 
+  toggle();
   loadRules()
     .then((loadedRules) => {
       rules = loadedRules;
-      toggle();
+      results = reComputeResults(input?.value ?? '');
+      resultIndex = 0;
+      renderResults();
     })
     .catch((error) => {
       console.error('Web Commander: failed to load rules.', error);
