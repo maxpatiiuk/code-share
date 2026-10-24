@@ -174,7 +174,12 @@ git show hash # show info about a commit
 # - shared stash not always desirable
 # - can't checkout same branch in multiple worktrees by default. very annoying
 #   bypassable with --ignore-other-worktrees but causes git status noise when
-#   doing `git pull` in another worktree
+#   doing `git pull` in another worktree.
+#
+#   Better workaround is to create main.2 branch tracking main
+#   (`git switch -c main.2 --track origin/main`) and then have an alias that
+#   in 2nd worktree switches to main.2 over main
+#
 # Current worktree id
 basename $(git rev-parse --git-dir)
 
@@ -213,7 +218,6 @@ git log \
 git am \
   --committer-date-is-author-date \
   --whitespace=nowarn \
-  --empty=keep \
   < commits.patch
 
 # TODO:
