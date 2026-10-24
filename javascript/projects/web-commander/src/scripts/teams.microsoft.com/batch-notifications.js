@@ -7,12 +7,11 @@
  * }} StubNotification
  */
 (async () => {
-  // Can't use chrome.runtime.getURL as we run in world:MAIN. Must run in
-  // world:MAIN because we need to override window.Notifications
-  const dataUrl =
-    'chrome-extension://ijagjceofmifbnefgdjgmoojkbaopgnj/private-scripts/teams.microsoft.com/priorityData.json';
+  const dataUrl = /** @type {string} */ (
+    document.documentElement.dataset.webCommanderPriorityDataUrl
+  );
   /**
-   * Pre-requisite: create private-scripts/teams.microsoft.com/priorityData.json
+   * Pre-requisite: create src/private-scripts/teams.microsoft.com/priorityData.json
    * @type {{ priorityContacts: string[], priorityKeywords: string[] }}
    */
   let priorityData = { priorityContacts: [], priorityKeywords: [] };

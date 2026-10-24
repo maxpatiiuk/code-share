@@ -43,7 +43,7 @@
   let rules = undefined;
 
   async function loadRules() {
-    const rulesUrl = chrome.runtime.getURL('rules.js');
+    const rulesUrl = chrome.runtime.getURL('src/ui/rules.js');
     const module = await import(rulesUrl);
     if (!module?.rules) {
       throw new Error('Rules module did not export `rules`.');
@@ -297,7 +297,16 @@
       }
   }
 
-  toggle();
+  if (window.location.protocol === 'chrome-extension:') {
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message?.action !== 'toggle-nav') return;
+      chrome.tabs.getCurrent((tab) => {
+        if (tab?.id === message.tabId) toggle();
+      });
+    });
+  } else {
+    toggle();
+  }
   loadRules()
     .then((loadedRules) => {
       rules = loadedRules;

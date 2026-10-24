@@ -1,6 +1,7 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["src"],
   "compilerOptions": {
+    "allowJs": true,
     "allowUnreachableCode": false,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -16,7 +17,6 @@
     "declaration": true,
     "noEmitOnError": true,
     "noEmit": true,
-    "outDir": "${configDir}/dist",
     "esModuleInterop": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,

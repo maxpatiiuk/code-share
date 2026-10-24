@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+}
+
+/*
+ * The new tab page may be used to quickly prototype new ideas. Only apply
+ * these styles to default new tab content to prevent interference
+ */
+body.default-content {
+  overflow: hidden;
+
+  main {
+    height: 100vh;
+    background: #000;
+  }
+
+  .vertical-filled,
+  .horizontal-filled {
+    --filled-background: #444;
+    background: var(--filled-background);
+  }
+
+  .horizontal-filled {
+    --year-height: calc(100vh / var(--minimum-lifetime, 100));
+    --border-radius: calc(var(--year-height) / 2);
+    height: var(--year-height);
+    border-bottom-right-radius: var(--border-radius);
+    position: relative;
+  }
+
+  .inverted-border-radius {
+    position: absolute;
+    right: calc(-1 * var(--border-radius));
+    height: 50%;
+    width: var(--border-radius);
+    background: radial-gradient(
+      circle at 100% 100%,
+      transparent var(--border-radius),
+      var(--filled-background) var(--border-radius)
+    );
+  }
+
+  h1 {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    font-family: monospace;
+  }
+}
+
+textarea.default-content {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: #221;
+  outline: none;
+  padding: 1rem;
+  backdrop-filter: blur(2rem);
+  color: #ddc;
+}

@@ -1,3 +1,4 @@
+// List top history entries to determine bookmarks to define
 import fs from "fs";
 import H from "/Users/mak13180/d/Takeout/Chrome/History.json" with {type:"json"};
 
