@@ -107,6 +107,9 @@
   }
   .preview {
     padding: 12px 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
     background: #252526;
     border-top: 1px solid #333;
     color: #858585;
@@ -114,6 +117,10 @@
     flex-direction: column;
 
     span.branch-key {
+      display: inline-block;
+      font-family: monospace;
+      width: 1ch;
+      text-align: center;
       border: 1px solid #555;
       border-radius: 0.25rem;
       padding: 0.125rem;
@@ -163,8 +170,16 @@
           if (event.type !== 'keydown') return;
           if (event.key === 'Enter' && results !== undefined) {
             const result = results[resultIndex];
+            if (result.url === '') return;
             event.preventDefault();
-            if (event.shiftKey) {
+            const isEmptyNewTab =
+              window.location.href ===
+                chrome.runtime.getURL('src/new-tab/index.html') &&
+              !document.querySelector('textarea')?.value;
+            if (
+              event.shiftKey ||
+              (isEmptyNewTab && !event.metaKey && !event.ctrlKey)
+            ) {
               window.location.href = result.url;
             } else {
               chrome.runtime.sendMessage({
@@ -218,7 +233,8 @@
    * @returns {Result[] | undefined}
    */
   function reComputeResults(inputValue) {
-    if (!rules) return undefined;
+    if (!rules || inputValue === '?') return undefined;
+    if (inputValue.startsWith('?')) inputValue = inputValue.slice(1);
 
     let tree = rules;
     /** @type {Result[]} */
@@ -258,43 +274,76 @@
     return results.length === 0 ? undefined : results;
   }
 
-  /** @param {string} path */
-  function trimNoise(path) {
+  /**
+   * @param {string} path
+   * @param {boolean} [trimTrailingSlash]
+   * @param {boolean} [trimLeadingSlash]
+   */
+  function trimNoise(
+    path,
+    trimTrailingSlash = false,
+    trimLeadingSlash = false
+  ) {
     if (path.startsWith('https://')) {
       path = path.substring('https://'.length);
       if (path.startsWith('www.')) path = path.substring('www.'.length);
     }
-    return path;
+    if (trimLeadingSlash && path.startsWith('/')) path = path.substring(1);
+    return trimTrailingSlash && path.endsWith('/') ? path.slice(0, -1) : path;
   }
 
   function renderResults() {
     if (preview === undefined) return;
 
     preview.textContent = '';
+    if (input?.value === '?') {
+      renderBranches(rules?.children, true);
+      return;
+    }
     if (results !== undefined)
       for (const result of results) {
         const resultContainer = document.createElement('div');
+        const firstPartIndex = result.labelParts.findIndex(
+          (part) => part !== ''
+        );
+        const lastPartIndex = result.labelParts.findLastIndex(
+          (part) => part !== ''
+        );
         for (let index = 0; index < result.labelParts.length; ++index) {
           const part = result.labelParts[index];
           const span = document.createElement('span');
-          span.textContent = part;
+          span.textContent = trimNoise(
+            part,
+            index === lastPartIndex,
+            index === firstPartIndex
+          );
           span.style.color = urlPartColors[index % urlPartColors.length];
           resultContainer.append(span);
         }
         preview.append(resultContainer);
-        if (result.branches !== undefined) {
-          Object.entries(result.branches).forEach(([key, node], index) => {
-            const suggestionContainer = document.createElement('div');
-            const keySpan = document.createElement('span');
-            keySpan.textContent = key;
-            keySpan.className = 'branch-key' + (index === 0 ? ' first' : '');
-            const labelText = node.label ?? (node.path || node.leaf || '');
-            suggestionContainer.append(keySpan);
-            suggestionContainer.append(document.createTextNode(labelText));
-            /** @type {HTMLElement} */ (preview).append(suggestionContainer);
-          });
-        }
+        renderBranches(result.branches);
       }
+  }
+
+  /**
+   * @param {RuleNode['children']} branches
+   * @param {boolean} [showPaths]
+   */
+  function renderBranches(branches, showPaths = false) {
+    if (preview === undefined || branches === undefined) return;
+    Object.entries(branches).forEach(([key, node], index) => {
+      const suggestionContainer = document.createElement('div');
+      const keySpan = document.createElement('span');
+      keySpan.textContent = key;
+      keySpan.className = 'branch-key' + (index === 0 ? ' first' : '');
+      const url = showPaths ? reComputeResults(key)?.[0]?.url : undefined;
+      const labelText = node.label ?? url ?? (node.path || node.leaf || '');
+      suggestionContainer.append(keySpan);
+      suggestionContainer.append(
+        document.createTextNode(trimNoise(labelText, true, true))
+      );
+      /** @type {HTMLElement} */ (preview).append(suggestionContainer);
+    });
   }
 
   if (window.location.protocol === 'chrome-extension:') {

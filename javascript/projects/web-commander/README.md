@@ -54,6 +54,7 @@ This serves as a minimalistic clone of tampermonkey. Notable features:
 
 - **Command+D** (Mac) or **Alt+K** (Windows/Linux) - Toggle command palette
 - Type keys to navigate the rule tree
+- **?** - List defined rules
 - **Enter** - Open in new tab
 - **Shift+Enter** - Navigate in current tab
 - **Cmd/Ctrl+Enter** - Open in new background tab
