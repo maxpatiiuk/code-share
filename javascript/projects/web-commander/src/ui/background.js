@@ -29,8 +29,10 @@ chrome.commands.onCommand.addListener((command) => {
   }
 });
 
-chrome.runtime.onMessage.addListener((msg) => {
+chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg?.action === 'open-tab' && typeof msg.url === 'string') {
     chrome.tabs.create({ url: msg.url, active: msg.active !== false });
+  } else if (msg?.action === 'close-tab' && sender.tab?.id !== undefined) {
+    chrome.tabs.remove(sender.tab.id);
   }
 });

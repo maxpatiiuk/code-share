@@ -47,6 +47,13 @@
       "run_at": "document_idle"
     },
     {
+      "matches": ["https://*/*", "http://*/*"],
+      "exclude_matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
+      "js": ["src/ui/page-actions.js"],
+      "world": "ISOLATED",
+      "run_at": "document_idle"
+    },
+    {
       "matches": [
         "https://teams.microsoft.com/*",
         "https://teams.cloud.microsoft/*"

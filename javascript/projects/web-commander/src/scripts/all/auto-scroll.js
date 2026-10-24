@@ -88,7 +88,12 @@
     // Define the button actions.
     /** @type {Record<string, (() => void) | undefined>} */
     const actions = {
-      X: () => window.close(),
+      X: () =>
+        // Can't use window.close() as Chrome sometimes doesn't
+        // permit that method depending on how the tab was opened.
+        document.dispatchEvent(
+          new Event('@maxpatiiuk/web-commander:close-tab')
+        ),
       ' ': undefined,
       O: () => {
         allowNativeMenu = true;
