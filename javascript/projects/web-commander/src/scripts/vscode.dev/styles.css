@@ -1,3 +1,9 @@
 html {
+  /** Disable chrome's automatic dark mode */
   color-scheme: only light;
+}
+body {
+  /** Support VSCode's dark mode */
+  background: black;
+  color-scheme: dark only;
 }

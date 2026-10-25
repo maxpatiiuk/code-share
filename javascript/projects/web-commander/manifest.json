@@ -3,7 +3,8 @@
   "name": "Web Commander",
   "version": "1.0.0",
   "description": "Personal keyboard navigation, website customizations, and a New Tab scratchpad.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage", "system.display", "tabGroups"],
+  "host_permissions": ["*://vscode.localhost/*", "*://vscode.dev/*"],
   "background": {
     "service_worker": "src/ui/background.js",
     "type": "module"
@@ -48,10 +49,11 @@
     },
     {
       "matches": ["https://*/*", "http://*/*"],
-      "exclude_matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
       "js": ["src/ui/page-actions.js"],
       "world": "ISOLATED",
-      "run_at": "document_idle"
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
     },
     {
       "matches": [
@@ -79,6 +81,12 @@
         "src/scripts/vscode.dev/common.css"
       ],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["http://vscode.localhost/*", "https://vscode.dev/"],
+      "js": ["src/scripts/vscode.dev/notifications.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
     },
     {
       "matches": ["https://gemini.google.com/*"],

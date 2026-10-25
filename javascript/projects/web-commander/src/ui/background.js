@@ -1,3 +1,5 @@
+import './tab-management.js';
+
 chrome.commands.onCommand.addListener((command) => {
   if (command === 'toggle-nav') {
     chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {

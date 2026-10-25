@@ -1,6 +1,7 @@
 # Web Commander
 
-An uber extension for bookmarks, styling the web, tab management, and quick note taking
+An uber extension for bookmarks, styling the web, tab management, and quick note
+taking
 
 ## Installation
 
@@ -46,7 +47,30 @@ This serves as a minimalistic clone of tampermonkey. Notable features:
 - No UI - scripts are edited in an IDE (benefit from TypeScript, Prettier,
   ESLint, Vim shortcuts)
 - No sandboxing overhead - only run the scripts I trust
-- Low overhead. No background worker
+- Low overhead. Event-driven background worker
+
+## Tab shortcuts
+
+- **Option+Z/X/C/V/B/N/M/,/.** selects VS Code tab 1 through 9 across windows.
+  See
+  [VS Code in the browser](https://github.com/maxpatiiuk/dotfiles/blob/main/vscode/README.md)
+- **Option+I** cycles backward through recently viewed tabs.
+- **Option+Shift+I** cycles forward through the same sequence.
+- **Ctrl+Option+Command+I** consolidates ordinary tabs and whole tab groups on
+  the first display. Ungrouped VS Code tabs are balanced across remaining
+  screens.
+- **Ctrl+Option+N/M** moves the current tab left; **Ctrl+Option+,/.** moves it
+  right. Ungrouped tabs jump over adjacent tab groups. Grouped tabs stay within
+  their group, and pinned tabs stay within the pinned section.
+- In addition, hold **Command** to move the current tab between windows: **N**
+  left, **M** down, **,** up, **.** right. If there is no window in that
+  direction, an available display gets a new fullscreen window. Fallbacks are
+  down/right and up/left in both directions.
+
+Set `displayOrder` in [src/ui/tab-management.js](src/ui/tab-management.js) to an
+ordered array of monitors. Monitor IDs are not stable so matching is based on
+screen sizes. Run `await chrome.system.display.getInfo()` in the extension
+service worker console to get the work area sizes.
 
 ## Navigator
 
@@ -106,3 +130,10 @@ github.com/microsoft/TypeScript/issues Type `vp` → opens
 github.com/vitejs/vite/pulls
 
 Build deeper trees for complex navigation patterns.
+
+## TODO
+
+- Move keyboard listening into a Swift companion background app. That way it can
+  handle keys even on protected pages, and outside Chrome. That also permits
+  moving the mouse to match the keyboard navigation. And that permits
+  integration with Kensignton's hardware buttons.
