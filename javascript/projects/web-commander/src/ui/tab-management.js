@@ -26,9 +26,13 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   const tabId = sender.tab?.id;
   if (
     tabId === undefined ||
-    !['cycle-tabs', 'select-vscode-tab', 'tab-interaction', 'rearrange-tabs', 'move-tab'].includes(
-      message?.action
-    )
+    ![
+      'cycle-tabs',
+      'select-vscode-tab',
+      'tab-interaction',
+      'rearrange-tabs',
+      'move-tab',
+    ].includes(message?.action)
   )
     return;
 
@@ -42,7 +46,10 @@ chrome.runtime.onMessage.addListener((message, sender) => {
       ?.tabs?.find((tab) => tab.active);
     if (foreground?.id !== tabId) return;
 
-    if (message.action === 'move-tab' && ['left', 'down', 'up', 'right'].includes(message.direction)) {
+    if (
+      message.action === 'move-tab' &&
+      ['left', 'down', 'up', 'right'].includes(message.direction)
+    ) {
       await moveCurrentTab(
         foreground,
         windows.filter((window) => window.incognito === foreground.incognito),
@@ -150,13 +157,17 @@ async function moveCurrentTab(tab, windows, direction, betweenWindows) {
     );
     if (target) {
       if (isGrouped(tab)) await chrome.tabs.ungroup(tab.id);
-      await chrome.tabs.move(tab.id, { windowId: target.id, index: tab.pinned ? 0 : -1 });
+      await chrome.tabs.move(tab.id, {
+        windowId: target.id,
+        index: tab.pinned ? 0 : -1,
+      });
       return;
     }
     if (!sourceDisplay) continue;
     const display = nearestInDirection(
       sourceDisplay.bounds,
-      displays.filter((candidate) => candidate.id !== sourceDisplay.id)
+      displays
+        .filter((candidate) => candidate.id !== sourceDisplay.id)
         .map((candidate) => ({ ...candidate.bounds, display: candidate })),
       nextDirection
     )?.display;
@@ -165,10 +176,10 @@ async function moveCurrentTab(tab, windows, direction, betweenWindows) {
     const window = await chrome.windows.create({
       tabId: tab.id,
       incognito: tab.incognito,
-      focused: false,
+      focused: true,
       ...display.workArea,
     });
-    await placeWindow(window, display, displays);
+    await enterFullscreen(window);
     return;
   }
 }
@@ -183,7 +194,8 @@ async function moveWithinWindow(tab, window, step) {
   if (isGrouped(tab)) {
     if (neighbor.groupId !== tab.groupId) return;
   } else if (isGrouped(neighbor)) {
-    while (tabs[targetIndex + step]?.groupId === neighbor.groupId) targetIndex += step;
+    while (tabs[targetIndex + step]?.groupId === neighbor.groupId)
+      targetIndex += step;
   }
   await chrome.tabs.move(tab.id, { windowId: window.id, index: targetIndex });
 }
@@ -233,44 +245,71 @@ export async function rearrangeTabs(windows, displays) {
   const firstDisplay = displays[0];
   if (!firstDisplay) return;
   const tabs = windows.flatMap((window) => window.tabs ?? []);
-  const codeTabs = tabs.filter((tab) => isVsCodeTab(tab) && !isGrouped(tab));
-  const browsingTabs = tabs.filter((tab) => !isVsCodeTab(tab) || isGrouped(tab));
-  const browser = browsingTabs.length > 0
-    ? windows.find((window) =>
-      displayForWindow(window, displays)?.id === firstDisplay.id &&
-      window.tabs?.some((tab) => browsingTabs.includes(tab))) ??
-      windows.find((window) => window.tabs?.some((tab) => browsingTabs.includes(tab)))
-    : undefined;
+  const codeTabs = tabs.filter(
+    (tab) => !tab.pinned && isVsCodeTab(tab) && !isGrouped(tab)
+  );
+  const browsingTabs = tabs.filter(
+    (tab) => !tab.pinned && (!isVsCodeTab(tab) || isGrouped(tab))
+  );
+  let browser =
+    browsingTabs.length > 0
+      ? windows.find(
+          (window) => displayForWindow(window, displays)?.id === firstDisplay.id
+        )
+      : undefined;
 
+  if (!browser && browsingTabs.length > 0) {
+    browser = await chrome.windows.create({
+      incognito: browsingTabs[0]?.incognito,
+      focused: true,
+      ...firstDisplay.workArea,
+    });
+  }
   if (browser) {
+    const placeholders =
+      browser.tabs?.filter(
+        (tab) => !tabs.some((original) => original.id === tab.id)
+      ) ?? [];
     const movedGroups = new Set();
     for (const tab of browsingTabs) {
       if (tab.windowId === browser.id) continue;
       if (isGrouped(tab)) {
         if (movedGroups.has(tab.groupId)) continue;
-        await chrome.tabGroups.move(tab.groupId, { windowId: browser.id, index: -1 });
+        await chrome.tabGroups.move(tab.groupId, {
+          windowId: browser.id,
+          index: -1,
+        });
         movedGroups.add(tab.groupId);
       } else {
-        await chrome.tabs.move(tab.id, { windowId: browser.id, index: tab.pinned ? 0 : -1 });
+        await chrome.tabs.move(tab.id, {
+          windowId: browser.id,
+          index: tab.pinned ? 0 : -1,
+        });
       }
     }
-    await placeWindow(browser, firstDisplay, displays);
+    for (const tab of placeholders) await chrome.tabs.remove(tab.id);
+    await enterFullscreen(browser);
   }
 
   if (codeTabs.length === 0) return;
   const freeDisplays = browser ? displays.slice(1) : displays;
-  const candidates = windows.filter((window) =>
-    window.id !== browser?.id && window.tabs?.some((tab) => codeTabs.includes(tab))
+  const candidates = windows.filter(
+    (window) =>
+      window.id !== browser?.id &&
+      window.tabs?.some((tab) => codeTabs.includes(tab))
   );
-  const count = Math.min(codeTabs.length, freeDisplays.length || Math.max(1, candidates.length));
+  const count = Math.min(
+    codeTabs.length,
+    freeDisplays.length || Math.max(1, candidates.length)
+  );
   /** @type {{ window: chrome.windows.Window, display: chrome.system.display.DisplayUnitInfo, anchor: chrome.tabs.Tab }[]} */
   const destinations = [];
   const reserved = new Set();
   for (let index = 0; index < count; index += 1) {
     const display = freeDisplays[index] ?? firstDisplay;
-    const candidate = candidates.find((window) =>
-      displayForWindow(window, displays)?.id === display.id
-    ) ?? candidates[0];
+    const candidate = candidates.find(
+      (window) => displayForWindow(window, displays)?.id === display.id
+    );
     if (candidate) {
       candidates.splice(candidates.indexOf(candidate), 1);
       const anchor = codeTabs.find((tab) => tab.windowId === candidate.id);
@@ -285,7 +324,7 @@ export async function rearrangeTabs(windows, displays) {
       const window = await chrome.windows.create({
         tabId: anchor.id,
         incognito: anchor.incognito,
-        focused: false,
+        focused: true,
         ...display.workArea,
       });
       destinations.push({ window, display, anchor });
@@ -294,18 +333,15 @@ export async function rearrangeTabs(windows, displays) {
 
   const remaining = codeTabs.filter((tab) => !reserved.has(tab.id));
   for (const [index, destination] of destinations.entries()) {
-    const size = Math.floor(codeTabs.length / destinations.length) +
+    const size =
+      Math.floor(codeTabs.length / destinations.length) +
       (index < codeTabs.length % destinations.length ? 1 : 0);
     const assigned = [destination.anchor, ...remaining.splice(0, size - 1)];
-    const pinned = assigned.filter((tab) => tab.pinned);
-    const unpinned = assigned.filter((tab) => !tab.pinned);
-    if (pinned.length > 0) {
-      await chrome.tabs.move(pinned.map((tab) => tab.id), { windowId: destination.window.id, index: 0 });
-    }
-    if (unpinned.length > 0) {
-      await chrome.tabs.move(unpinned.map((tab) => tab.id), { windowId: destination.window.id, index: -1 });
-    }
-    await placeWindow(destination.window, destination.display, displays);
+    await chrome.tabs.move(
+      assigned.map((tab) => tab.id),
+      { windowId: destination.window.id, index: -1 }
+    );
+    await enterFullscreen(destination.window);
   }
 }
 
@@ -319,22 +355,25 @@ function isVsCodeTab(tab) {
 
 /** @param {chrome.tabs.Tab} tab */
 function isGrouped(tab) {
-  return tab.groupId !== undefined && tab.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE;
+  return (
+    tab.groupId !== undefined &&
+    tab.groupId !== chrome.tabGroups.TAB_GROUP_ID_NONE
+  );
 }
 
-/** @param {chrome.windows.Window} window @param {chrome.system.display.DisplayUnitInfo} display @param {chrome.system.display.DisplayUnitInfo[]} displays */
-async function placeWindow(window, display, displays) {
-  if (displayForWindow(window, displays)?.id !== display.id) {
-    await chrome.windows.update(window.id, { state: 'normal' });
-    await chrome.windows.update(window.id, { ...display.workArea });
-  }
+/** @param {chrome.windows.Window} window */
+async function enterFullscreen(window) {
+  if (window.state === 'fullscreen') return;
+  await chrome.windows.update(window.id, { focused: true });
   await chrome.windows.update(window.id, { state: 'fullscreen' });
 }
 
 async function orderedDisplays() {
   const displays = await chrome.system.display.getInfo();
-  return displays.sort((first, second) =>
-    displayPriority(first) - displayPriority(second) || first.bounds.left - second.bounds.left
+  return displays.sort(
+    (first, second) =>
+      displayPriority(first) - displayPriority(second) ||
+      first.bounds.left - second.bounds.left
   );
 }
 

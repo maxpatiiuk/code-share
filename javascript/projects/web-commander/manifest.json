@@ -3,7 +3,13 @@
   "name": "Web Commander",
   "version": "1.0.0",
   "description": "Personal keyboard navigation, website customizations, and a New Tab scratchpad.",
-  "permissions": ["activeTab", "scripting", "storage", "system.display", "tabGroups"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "system.display",
+    "tabGroups"
+  ],
   "host_permissions": ["*://vscode.localhost/*", "*://vscode.dev/*"],
   "background": {
     "service_worker": "src/ui/background.js",
@@ -301,6 +307,11 @@
       "js": ["src/scripts/claude.ai/no-auto-scroll.js"],
       "world": "MAIN",
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.lesswrong.com/*"],
+      "css": ["src/scripts/lesswrong.com/styles.css"],
+      "run_at": "document_start"
     }
   ]
 }

@@ -454,6 +454,17 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
         assert.ok(tab);
         tab.groupId = -1;
       },
+      /** @param {number} id */
+      remove: async (id) => {
+        const window = windows.find((candidate) =>
+          candidate.tabs.some((tab) => tab.id === id)
+        );
+        assert.ok(window);
+        window.tabs.splice(
+          window.tabs.findIndex((tab) => tab.id === id),
+          1
+        );
+      },
     },
     tabGroups: {
       TAB_GROUP_ID_NONE: -1,
@@ -477,13 +488,26 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
         updates.push({ id, ...options });
         const window = windows.find((candidate) => candidate.id === id);
         assert.ok(window);
+        assert.notEqual(
+          options.state,
+          'normal',
+          'never exit fullscreen during automatic placement'
+        );
+        if (options.state === 'fullscreen') {
+          assert.equal(
+            window.focused,
+            true,
+            'focus a window before requesting native fullscreen'
+          );
+        }
         if (options.focused) {
           for (const candidate of windows) candidate.focused = false;
         }
         Object.assign(window, options);
       },
-      /** @param {Bounds & { tabId: number, incognito?: boolean }} options */
+      /** @param {Bounds & { tabId?: number, incognito?: boolean, focused?: boolean }} options */
       create: async (options) => {
+        /** @type {MockWindow} */
         const window = {
           id: Math.max(...windows.map((candidate) => candidate.id)) + 1,
           left: options.left,
@@ -492,11 +516,24 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
           height: options.height,
           state: 'normal',
           tabs: [],
-          focused: false,
+          focused: options.focused ?? true,
           incognito: options.incognito ?? false,
         };
         windows.push(window);
-        move(options.tabId, { windowId: window.id, index: -1 });
+        if (options.tabId !== undefined) {
+          move(options.tabId, { windowId: window.id, index: -1 });
+        } else {
+          const placeholder = makeTab(
+            Math.max(
+              ...windows.flatMap((candidate) =>
+                candidate.tabs.map((tab) => tab.id)
+              )
+            ) + 1
+          );
+          placeholder.windowId = window.id;
+          placeholder.url = 'chrome://newtab/';
+          window.tabs.push(placeholder);
+        }
         return window;
       },
     },
@@ -512,9 +549,12 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
     system: { display: { getInfo: async () => displays } },
   };
   Reflect.set(globalThis, 'chrome', browserApi);
-  addWindow(1, firstDisplay, [makeTab(1, true), makeTab(2, true)]);
+  const pinnedCode = { ...makeTab(13, true), pinned: true };
+  const otherPinnedCode = { ...makeTab(14, true), pinned: true };
+  addWindow(1, firstDisplay, [pinnedCode, makeTab(1, true), makeTab(2, true)]);
   addWindow(2, secondDisplay, [makeTab(3), makeTab(4, true), makeTab(5, true)]);
   addWindow(3, thirdDisplay, [
+    otherPinnedCode,
     makeTab(6),
     makeTab(7),
     makeTab(8, true),
@@ -537,7 +577,7 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
   assert.ok(browser);
   assert.deepEqual(
     browser.tabs.map((tab) => tab.id),
-    [3, 6, 7, 10, 11]
+    [13, 3, 6, 7, 10, 11]
   );
   assert.equal(browser.left, 0);
   assert.deepEqual(groupsMoved, [8]);
@@ -547,7 +587,9 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
   );
   const codeWindows = windows.filter((window) => window !== browser);
   assert.deepEqual(
-    codeWindows.map((window) => window.tabs.length).sort(),
+    codeWindows
+      .map((window) => window.tabs.filter((tab) => !tab.pinned).length)
+      .sort(),
     [3, 4]
   );
   assert.deepEqual(
@@ -556,13 +598,16 @@ test('rearranging and directional moves preserve groups, fullscreen placement, a
   );
   assert.ok(windows.every((window) => window.state === 'fullscreen'));
   assert.equal(windows.length, 3);
-  assert.equal(windows.flatMap((window) => window.tabs).length, 12);
-  const normalUpdate = updates.findIndex(
-    (update) => update.id === browser.id && update.state === 'normal'
+  assert.equal(windows.flatMap((window) => window.tabs).length, 14);
+  assert.equal(pinnedCode.windowId, 1);
+  assert.equal(pinnedCode.pinned, true);
+  assert.equal(otherPinnedCode.windowId, 3);
+  assert.equal(otherPinnedCode.pinned, true);
+  assert.equal(
+    updates.length,
+    0,
+    'existing fullscreen windows must not be transitioned or repositioned'
   );
-  assert.ok(normalUpdate >= 0);
-  assert.equal(updates[normalUpdate + 1]?.left, 0);
-  assert.equal(updates[normalUpdate + 2]?.state, 'fullscreen');
 
   windows.splice(0);
   addWindow(1, firstDisplay, [makeTab(1), makeTab(2, true), makeTab(3, true)]);

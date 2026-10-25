@@ -125,15 +125,8 @@ export const rules = {
 };
 ```
 
-Type `gt` → opens github.com/microsoft/TypeScript Type `gti` → opens
-github.com/microsoft/TypeScript/issues Type `vp` → opens
-github.com/vitejs/vite/pulls
+Type `gt` → opens github.com/microsoft/TypeScript  
+Type `gti` → opens github.com/microsoft/TypeScript/issues  
+Type `vp` → opens github.com/vitejs/vite/pulls
 
 Build deeper trees for complex navigation patterns.
-
-## TODO
-
-- Move keyboard listening into a Swift companion background app. That way it can
-  handle keys even on protected pages, and outside Chrome. That also permits
-  moving the mouse to match the keyboard navigation. And that permits
-  integration with Kensignton's hardware buttons.
