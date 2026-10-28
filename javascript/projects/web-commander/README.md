@@ -3,20 +3,103 @@
 An uber extension for bookmarks, styling the web, tab management, and quick note
 taking.
 
+[A blog post about it](https://max.patii.uk/articles/google-chrome-is-my-window-manager/).
+
 ## Installation
 
 1. Clone this repository
-2. Create `src/ui/rules.js` to define fast navigation between common
+2. Create `src/ui/rules.js` to define fast navigation rules for your common
    destinations (see [Navigator](#navigator)).
-3. Load unpacked extension in Chrome from this directory
+3. [Load unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world)
+   extension in Chrome from this directory.
+
+## Navigator
+
+Navigate to a precise URL with just a few keystrokes using rules you define:
+
+For example, typing `gecia` navigates to "**G**ithub.com / **E**sri /
+**C**alcite-design-system / **I**ssues / **A**uthored by me".
+
+![](./docs/github-commander.avif)
+
+And `mmnc` goes to "np**m**js.com / @arcgis/**m**ap-components / **n**ext
+version / code".
+
+![](./docs/npm-commander.avif)
+
+### Usage
+
+- **Command+D** (Mac) or **Alt+K** (Windows/Linux) - Toggle command palette
+- Type keys to navigate the rule tree
+- **?** - List defined rules
+- **Enter** - Open in new tab
+- **Shift+Enter** - Navigate in current tab
+- **Cmd/Ctrl+Enter** - Open in new background tab
+- **Escape** - Close palette
+
+### Configuration
+
+Create `src/ui/rules.js` (not checked into git):
+
+```js
+/**
+ * @import { RuleNode } from './types';
+ */
+
+// Example: GitHub navigation with reusable repo structure
+/** @type {RuleNode['children']} */
+const repoChildren = {
+  i: { path: '/issues' },
+  p: { path: '/pulls' },
+  a: { path: '/actions' },
+  w: { path: '/wiki' },
+};
+
+/** @type {RuleNode} */
+export const rules = {
+  path: '',
+  children: {
+    g: {
+      path: 'https://github.com/',
+      children: {
+        t: {
+          path: 'microsoft/TypeScript',
+          label: 'TypeScript',
+          children: repoChildren,
+        },
+        v: { path: 'vitejs/vite', children: repoChildren },
+        r: { path: 'facebook/react', children: repoChildren },
+        n: { path: 'nodejs/node', children: repoChildren },
+        d: { path: 'denoland/deno', children: repoChildren },
+      },
+    },
+    // Add more domains...
+  },
+};
+```
+
+Type `gt` → opens github.com/microsoft/TypeScript  
+Type `gti` → opens github.com/microsoft/TypeScript/issues  
+Type `gvp` → opens github.com/vitejs/vite/pulls
+
+Build deeper trees for complex navigation patterns.
 
 ## Web refinements
 
-Refine commonly used webpages:
+The extension injects custom styles and JavaScript to refine behavior of sites I
+use frequently. Examples:
 
 - Add [right-click "do anything" menu](./src/scripts/all/auto-scroll.js)
-- Improve UX
-- Fix Readability.js or Chrome Auto Dark Mode compatibility issues
+
+  ![](./docs/auto-scroll-menu.avif)
+
+- Fix Readability.js or Chrome Auto Dark Mode compatibility issues.
+- Disable conversation auto-scroll in
+  [Claude](./src/scripts/claude.ai/no-auto-scroll.js) and
+  [Gemini](./src/scripts/gemini.google.com/no-auto-scroll.js).
+- Reduce noise. For example, simplify Outlook calendar menu
+
+  ![](./docs/simplify-outlook.avif)
 
 This serves as a minimalistic clone of tampermonkey. Notable features:
 
@@ -75,62 +158,3 @@ Then open Chrome DevTools to use for quick snippets:
 - `vlu` - also unique
 - `vls` - also sorted
 - `vlsu` and `vlus` - also sorted and unique
-
-## Navigator
-
-### Usage
-
-- **Command+D** (Mac) or **Alt+K** (Windows/Linux) - Toggle command palette
-- Type keys to navigate the rule tree
-- **?** - List defined rules
-- **Enter** - Open in new tab
-- **Shift+Enter** - Navigate in current tab
-- **Cmd/Ctrl+Enter** - Open in new background tab
-- **Escape** - Close palette
-
-### Configuration
-
-Create `src/ui/rules.js` (not checked into git):
-
-```javascript
-/**
- * @import { RuleNode } from './types';
- */
-
-// Example: GitHub navigation with reusable repo structure
-/** @type {RuleNode['children']} */
-const repoChildren = {
-  i: { path: '/issues' },
-  p: { path: '/pulls' },
-  a: { path: '/actions' },
-  w: { path: '/wiki' },
-};
-
-/** @type {RuleNode} */
-export const rules = {
-  path: '',
-  children: {
-    g: {
-      path: 'https://github.com/',
-      children: {
-        t: {
-          path: 'microsoft/TypeScript',
-          label: 'TypeScript',
-          children: repoChildren,
-        },
-        v: { path: 'vitejs/vite', children: repoChildren },
-        r: { path: 'facebook/react', children: repoChildren },
-        n: { path: 'nodejs/node', children: repoChildren },
-        d: { path: 'denoland/deno', children: repoChildren },
-      },
-    },
-    // Add more domains...
-  },
-};
-```
-
-Type `gt` → opens github.com/microsoft/TypeScript  
-Type `gti` → opens github.com/microsoft/TypeScript/issues  
-Type `vp` → opens github.com/vitejs/vite/pulls
-
-Build deeper trees for complex navigation patterns.
