@@ -1,13 +1,57 @@
 # Web Commander
 
 An uber extension for bookmarks, styling the web, tab management, and quick note
-taking
+taking.
 
 ## Installation
 
 1. Clone this repository
-2. Create `src/ui/rules.js` with your navigation rules (see Configuration below)
+2. Create `src/ui/rules.js` to define fast navigation between common
+   destinations (see [Navigator](#navigator)).
 3. Load unpacked extension in Chrome from this directory
+
+## Web refinements
+
+Refine commonly used webpages:
+
+- Add [right-click "do anything" menu](./src/scripts/all/auto-scroll.js)
+- Improve UX
+- Fix Readability.js or Chrome Auto Dark Mode compatibility issues
+
+This serves as a minimalistic clone of tampermonkey. Notable features:
+
+- All scripts are stored on the file system, in a Git-versioned folder - very
+  easy to sync between machines
+- No UI - scripts are edited in an IDE (benefit from TypeScript, Prettier,
+  ESLint, Vim shortcuts)
+- No sandboxing overhead - only run the scripts I trust
+- Low overhead. Event-driven background worker
+
+## Tab shortcuts
+
+Web Commander provides additional keyboard shortcuts for fast navigation and
+management of browser tabs:
+
+- **Option+Z/X/C/V/B/N/M/,/.** selects VS Code tab 1 through 9 across windows.
+  See
+  [VS Code in the browser](https://github.com/maxpatiiuk/dotfiles/blob/main/vscode/README.md)
+- **Option+I** cycles backward through recently viewed tabs.
+- **Option+Shift+I** cycles forward through the same sequence.
+- **Ctrl+Option+Command+I** consolidates ordinary tabs and whole tab groups on
+  the first display. Ungrouped VS Code tabs are balanced across remaining
+  screens.
+- **Ctrl+Option+N/M** moves the current tab left; **Ctrl+Option+,/.** moves it
+  right. Ungrouped tabs jump over adjacent tab groups. Grouped tabs stay within
+  their group, and pinned tabs stay within the pinned section.
+- In addition, hold **Command** to move the current tab between windows: **N**
+  left, **M** down, **,** up, **.** right. If there is no window in that
+  direction, an available display gets a new fullscreen window. Fallbacks are
+  down/right and up/left in both directions.
+
+Set `displayOrder` in [src/ui/tab-management.js](src/ui/tab-management.js) to an
+ordered array of monitors. Monitor IDs are not stable so matching is based on
+screen sizes. Run `await chrome.system.display.getInfo()` in the extension
+service worker console to get the work area sizes.
 
 ## New Tab
 
@@ -31,46 +75,6 @@ Then open Chrome DevTools to use for quick snippets:
 - `vlu` - also unique
 - `vls` - also sorted
 - `vlsu` and `vlus` - also sorted and unique
-
-## Web refinements
-
-Refine commonly used webpages:
-
-- Add [right-click "do anything" menu](./src/scripts/all/auto-scroll.js)
-- Improve UX
-- Fix Readability.js or Chrome Auto Dark Mode compatibility issues
-
-This serves as a minimalistic clone of tampermonkey. Notable features:
-
-- All scripts are stored on the file system, in a Git-versioned folder - very
-  easy to sync between machines
-- No UI - scripts are edited in an IDE (benefit from TypeScript, Prettier,
-  ESLint, Vim shortcuts)
-- No sandboxing overhead - only run the scripts I trust
-- Low overhead. Event-driven background worker
-
-## Tab shortcuts
-
-- **Option+Z/X/C/V/B/N/M/,/.** selects VS Code tab 1 through 9 across windows.
-  See
-  [VS Code in the browser](https://github.com/maxpatiiuk/dotfiles/blob/main/vscode/README.md)
-- **Option+I** cycles backward through recently viewed tabs.
-- **Option+Shift+I** cycles forward through the same sequence.
-- **Ctrl+Option+Command+I** consolidates ordinary tabs and whole tab groups on
-  the first display. Ungrouped VS Code tabs are balanced across remaining
-  screens.
-- **Ctrl+Option+N/M** moves the current tab left; **Ctrl+Option+,/.** moves it
-  right. Ungrouped tabs jump over adjacent tab groups. Grouped tabs stay within
-  their group, and pinned tabs stay within the pinned section.
-- In addition, hold **Command** to move the current tab between windows: **N**
-  left, **M** down, **,** up, **.** right. If there is no window in that
-  direction, an available display gets a new fullscreen window. Fallbacks are
-  down/right and up/left in both directions.
-
-Set `displayOrder` in [src/ui/tab-management.js](src/ui/tab-management.js) to an
-ordered array of monitors. Monitor IDs are not stable so matching is based on
-screen sizes. Run `await chrome.system.display.getInfo()` in the extension
-service worker console to get the work area sizes.
 
 ## Navigator
 

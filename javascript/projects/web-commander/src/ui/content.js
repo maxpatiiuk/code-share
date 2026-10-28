@@ -259,12 +259,22 @@
             labelParts = [];
           }
           url += part.path;
-          labelParts.push(trimNoise(part.path));
+          if (part.label === undefined) {
+            labelParts.push(trimNoise(part.path));
+          } else {
+            const separator =
+              labelParts.some((label) => label !== '') &&
+              !labelParts.at(-1)?.endsWith('/')
+                ? '/'
+                : '';
+            labelParts.push(separator + part.label);
+          }
         }
         url += tree.leaf ?? '';
-        if (tree.leaf) labelParts.push(trimNoise(tree.leaf));
+        if (tree.leaf && tree.label === undefined)
+          labelParts.push(trimNoise(tree.leaf));
         results.push({
-          labelParts: tree.label === undefined ? labelParts : [tree.label],
+          labelParts,
           url,
           branches: tree.children,
         });
